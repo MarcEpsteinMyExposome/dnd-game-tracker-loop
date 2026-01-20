@@ -12,6 +12,7 @@ import { Character } from '@/lib/schemas'
 import { useGameStore } from '@/lib/store/gameStore'
 import { CharacterCard } from './CharacterCard'
 import { CharacterForm } from './CharacterForm'
+import { ConfirmDialog } from '../ui/ConfirmDialog'
 
 export function CharacterList() {
   const characters = useGameStore((state) => state.characters)
@@ -19,6 +20,7 @@ export function CharacterList() {
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingCharacter, setEditingCharacter] = useState<Character | undefined>()
+  const [deletingCharacter, setDeletingCharacter] = useState<Character | undefined>()
 
   // Sort characters alphabetically by name
   const sortedCharacters = [...characters].sort((a, b) => a.name.localeCompare(b.name))
@@ -34,10 +36,18 @@ export function CharacterList() {
   }
 
   const handleDeleteClick = (character: Character) => {
-    // TODO: This will be replaced with confirmation dialog in Task 3.8
-    if (window.confirm(`Are you sure you want to delete ${character.name}?`)) {
-      deleteCharacter(character.id)
+    setDeletingCharacter(character)
+  }
+
+  const confirmDelete = () => {
+    if (deletingCharacter) {
+      deleteCharacter(deletingCharacter.id)
+      setDeletingCharacter(undefined)
     }
+  }
+
+  const cancelDelete = () => {
+    setDeletingCharacter(undefined)
   }
 
   const handleFormClose = () => {
@@ -99,6 +109,19 @@ export function CharacterList() {
             />
           </div>
         </div>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {deletingCharacter && (
+        <ConfirmDialog
+          title="Delete Character"
+          message={`Are you sure you want to delete ${deletingCharacter.name}? This action cannot be undone.`}
+          confirmText="Delete"
+          cancelText="Cancel"
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+          isDangerous={true}
+        />
       )}
     </div>
   )
