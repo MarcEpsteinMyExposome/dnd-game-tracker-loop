@@ -7,8 +7,10 @@
  * Shows name, class, level, HP bar, AC, and action buttons.
  */
 
+import { useState } from 'react'
 import { Character } from '@/lib/schemas'
 import { getAvatarSource } from '@/lib/utils/avatar'
+import { useGameStore } from '@/lib/store/gameStore'
 
 interface CharacterCardProps {
   character: Character
@@ -17,6 +19,8 @@ interface CharacterCardProps {
 }
 
 export function CharacterCard({ character, onEdit, onDelete }: CharacterCardProps) {
+  const updateCharacterHp = useGameStore((state) => state.updateCharacterHp)
+  const [directHpInput, setDirectHpInput] = useState(character.currentHp.toString())
   const hpPercentage = (character.currentHp / character.maxHp) * 100
 
   // Determine HP bar color based on percentage
@@ -28,6 +32,39 @@ export function CharacterCard({ character, onEdit, onDelete }: CharacterCardProp
   }
 
   const isUnconscious = character.currentHp === 0
+  const [hpFlash, setHpFlash] = useState(false)
+
+  // Adjust HP by amount
+  const adjustHp = (amount: number) => {
+    const newHp = character.currentHp + amount
+    updateCharacterHp(character.id, newHp)
+    setDirectHpInput(Math.max(0, Math.min(character.maxHp, newHp)).toString())
+
+    // Flash animation
+    setHpFlash(true)
+    setTimeout(() => setHpFlash(false), 300)
+  }
+
+  // Handle direct HP input
+  const handleDirectHpChange = (value: string) => {
+    setDirectHpInput(value)
+  }
+
+  const handleDirectHpBlur = () => {
+    const numValue = parseInt(directHpInput)
+    if (!isNaN(numValue)) {
+      updateCharacterHp(character.id, numValue)
+    } else {
+      // Reset to current HP if invalid
+      setDirectHpInput(character.currentHp.toString())
+    }
+  }
+
+  const handleDirectHpKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.currentTarget.blur()
+    }
+  }
 
   // Get avatar source (custom image, generated avatar, or fallback)
   const avatarSrc = getAvatarSource(
@@ -70,7 +107,7 @@ export function CharacterCard({ character, onEdit, onDelete }: CharacterCardProp
         </div>
         <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
           <div
-            className={`h-full ${hpColor} transition-all duration-300`}
+            className={`h-full ${hpColor} transition-all duration-300 ${hpFlash ? 'opacity-70' : 'opacity-100'}`}
             style={{ width: `${Math.max(0, Math.min(100, hpPercentage))}%` }}
           />
         </div>
@@ -79,6 +116,59 @@ export function CharacterCard({ character, onEdit, onDelete }: CharacterCardProp
             UNCONSCIOUS
           </p>
         )}
+      </div>
+
+      {/* HP Adjustment Controls */}
+      <div className="mb-3 space-y-2">
+        {/* Quick adjustment buttons */}
+        <div className="grid grid-cols-4 gap-1">
+          <button
+            onClick={() => adjustHp(-5)}
+            className="bg-red-100 text-red-700 px-2 py-1 rounded text-sm font-semibold hover:bg-red-200 transition-colors"
+            title="Decrease HP by 5"
+          >
+            -5
+          </button>
+          <button
+            onClick={() => adjustHp(-1)}
+            className="bg-red-50 text-red-600 px-2 py-1 rounded text-sm font-semibold hover:bg-red-100 transition-colors"
+            title="Decrease HP by 1"
+          >
+            -1
+          </button>
+          <button
+            onClick={() => adjustHp(1)}
+            className="bg-green-50 text-green-600 px-2 py-1 rounded text-sm font-semibold hover:bg-green-100 transition-colors"
+            title="Increase HP by 1"
+          >
+            +1
+          </button>
+          <button
+            onClick={() => adjustHp(5)}
+            className="bg-green-100 text-green-700 px-2 py-1 rounded text-sm font-semibold hover:bg-green-200 transition-colors"
+            title="Increase HP by 5"
+          >
+            +5
+          </button>
+        </div>
+
+        {/* Direct HP input */}
+        <div className="flex items-center gap-2">
+          <label htmlFor={`hp-${character.id}`} className="text-xs text-gray-600">
+            Set HP:
+          </label>
+          <input
+            id={`hp-${character.id}`}
+            type="number"
+            min="0"
+            max={character.maxHp}
+            value={directHpInput}
+            onChange={(e) => handleDirectHpChange(e.target.value)}
+            onBlur={handleDirectHpBlur}
+            onKeyDown={handleDirectHpKeyDown}
+            className="flex-1 px-2 py-1 border rounded text-sm text-center"
+          />
+        </div>
       </div>
 
       {/* Armor Class */}
