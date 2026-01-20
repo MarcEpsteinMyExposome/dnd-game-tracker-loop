@@ -21,6 +21,9 @@ export function CharacterList() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingCharacter, setEditingCharacter] = useState<Character | undefined>()
   const [deletingCharacter, setDeletingCharacter] = useState<Character | undefined>()
+  const [managingConditionsCharacter, setManagingConditionsCharacter] = useState<
+    Character | undefined
+  >()
 
   // Sort characters alphabetically by name
   const sortedCharacters = [...characters].sort((a, b) => a.name.localeCompare(b.name))
@@ -48,6 +51,14 @@ export function CharacterList() {
 
   const cancelDelete = () => {
     setDeletingCharacter(undefined)
+  }
+
+  const handleManageConditions = (character: Character) => {
+    setManagingConditionsCharacter(character)
+  }
+
+  const closeConditionsModal = () => {
+    setManagingConditionsCharacter(undefined)
   }
 
   const handleFormClose = () => {
@@ -90,6 +101,7 @@ export function CharacterList() {
               character={character}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
+              onManageConditions={handleManageConditions}
             />
           ))}
         </div>

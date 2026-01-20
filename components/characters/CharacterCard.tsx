@@ -11,14 +11,21 @@ import { useState } from 'react'
 import { Character } from '@/lib/schemas'
 import { getAvatarSource } from '@/lib/utils/avatar'
 import { useGameStore } from '@/lib/store/gameStore'
+import { ConditionBadge } from '../conditions/ConditionBadge'
 
 interface CharacterCardProps {
   character: Character
   onEdit: (character: Character) => void
   onDelete: (character: Character) => void
+  onManageConditions: (character: Character) => void
 }
 
-export function CharacterCard({ character, onEdit, onDelete }: CharacterCardProps) {
+export function CharacterCard({
+  character,
+  onEdit,
+  onDelete,
+  onManageConditions,
+}: CharacterCardProps) {
   const updateCharacterHp = useGameStore((state) => state.updateCharacterHp)
   const [directHpInput, setDirectHpInput] = useState(character.currentHp.toString())
   const hpPercentage = (character.currentHp / character.maxHp) * 100
@@ -179,18 +186,23 @@ export function CharacterCard({ character, onEdit, onDelete }: CharacterCardProp
       </div>
 
       {/* Conditions */}
-      {character.conditions.length > 0 && (
-        <div className="mb-3 flex flex-wrap gap-1 justify-center">
-          {character.conditions.map((condition) => (
-            <span
-              key={condition}
-              className="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded"
-            >
-              {condition}
-            </span>
-          ))}
-        </div>
-      )}
+      <div className="mb-3">
+        {character.conditions.length > 0 ? (
+          <div className="flex flex-wrap gap-1 justify-center mb-2">
+            {character.conditions.map((condition) => (
+              <ConditionBadge key={condition} condition={condition} size="sm" />
+            ))}
+          </div>
+        ) : (
+          <p className="text-xs text-gray-400 text-center mb-2">No active conditions</p>
+        )}
+        <button
+          onClick={() => onManageConditions(character)}
+          className="w-full bg-purple-100 text-purple-700 px-3 py-1.5 rounded-md text-xs font-medium hover:bg-purple-200 transition-colors"
+        >
+          Manage Conditions
+        </button>
+      </div>
 
       {/* Action Buttons */}
       <div className="flex gap-2">
