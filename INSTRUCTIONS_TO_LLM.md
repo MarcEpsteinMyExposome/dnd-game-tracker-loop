@@ -60,6 +60,7 @@ The loop consists of these phases:
 - **Commit often** - After each task or logical group of changes
 - **Testing is critical** - Tests are part of the learning process, not optional
 - **Focus on loop project only** - Ignore the old `dnd-game-tracker` directory
+- **DOCUMENTATION IS MANDATORY** - See "Documentation Requirements" section below
 
 ### Tech Stack
 - Next.js 16.1+ (App Router)
@@ -83,6 +84,9 @@ The loop consists of these phases:
 - `COMPLETED.md` - Historical record of finished iterations
 - `RETROSPECTIVE.md` - Lessons learned after each iteration
 - `INSTRUCTIONS_TO_LLM.md` - This file - context for AI assistants
+- `ARCHITECTURE.md` - **LIVING DOCUMENT** - System architecture, folder structure, data flow
+- `DECISIONS.md` - **LIVING DOCUMENT** - Architectural decision records (WHY choices were made)
+- `PATTERNS.md` - **LIVING DOCUMENT** - Code patterns, conventions, examples to follow
 
 ### Code Structure
 ```
@@ -103,6 +107,90 @@ components/            # React components
   └── ui/
 __tests__/            # Jest tests (mirror structure of lib/ and components/)
 ```
+
+---
+
+## Documentation Requirements
+
+**CRITICAL:** Documentation is not optional. The user must be able to understand all code and decisions.
+
+### Code Documentation Standards
+
+**Every file must have:**
+1. **File header comment** explaining purpose
+2. **JSDoc comments** for all exported functions/components
+3. **Inline comments** explaining WHY (not WHAT) for complex logic
+4. **Type annotations** for all parameters and returns
+
+**Example:**
+```typescript
+/**
+ * Character validation schema
+ * Defines structure and validation rules for Character entities
+ */
+import { z } from 'zod'
+
+/**
+ * Validates character data against schema
+ *
+ * @param data - Raw character data to validate
+ * @returns Validated character or validation error
+ *
+ * @example
+ * const result = validateCharacter({ name: 'Raul', hp: 30 })
+ */
+export function validateCharacter(data: unknown) {
+  // Use safeParse instead of parse to avoid throwing exceptions
+  // This allows graceful error handling in the UI
+  return CharacterSchema.safeParse(data)
+}
+```
+
+### Documentation Files to Update
+
+**After EVERY task:**
+- ✅ Update `PROGRESS.md` with completion status
+
+**When architectural changes occur:**
+- ✅ Update `ARCHITECTURE.md` if folder structure or data flow changes
+- ✅ Add entry to `DECISIONS.md` when making significant technical choices
+- ✅ Update `PATTERNS.md` when establishing new code patterns
+
+**When iterations complete:**
+- ✅ Update `COMPLETED.md` with iteration summary
+- ✅ Add retrospective entry to `RETROSPECTIVE.md`
+
+### What to Document
+
+**In ARCHITECTURE.md:**
+- New folders created
+- New major components added
+- Data flow changes
+- Integration points
+
+**In DECISIONS.md:**
+- Why technology X over Y?
+- Why pattern A over B?
+- Trade-offs and consequences
+- Context for future maintainers
+
+**In PATTERNS.md:**
+- How to write a component (with example)
+- How to write a test (with example)
+- How to create a schema (with example)
+- Common patterns to follow
+- Anti-patterns to avoid
+
+### Documentation Checklist for Tasks
+
+Before marking a task complete:
+- [ ] All code has JSDoc comments
+- [ ] Complex logic has explanatory inline comments
+- [ ] PROGRESS.md updated
+- [ ] ARCHITECTURE.md updated (if structural changes)
+- [ ] DECISIONS.md updated (if architectural choice made)
+- [ ] PATTERNS.md updated (if new pattern established)
+- [ ] README updated (if user-facing changes)
 
 ---
 
