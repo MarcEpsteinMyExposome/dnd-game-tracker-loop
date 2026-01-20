@@ -13,6 +13,7 @@ import { useGameStore } from '@/lib/store/gameStore'
 import { CharacterCard } from './CharacterCard'
 import { CharacterForm } from './CharacterForm'
 import { ConfirmDialog } from '../ui/ConfirmDialog'
+import { ConditionsModal } from '../conditions/ConditionsModal'
 
 export function CharacterList() {
   const characters = useGameStore((state) => state.characters)
@@ -134,6 +135,11 @@ export function CharacterList() {
           onCancel={cancelDelete}
           isDangerous={true}
         />
+      )}
+
+      {/* Conditions Management Modal */}
+      {managingConditionsCharacter && (
+        <ConditionsModal character={managingConditionsCharacter} onClose={closeConditionsModal} />
       )}
     </div>
   )
