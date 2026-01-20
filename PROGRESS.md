@@ -3,7 +3,7 @@
 **Project:** dnd-game-tracker-loop v2.0
 **Current Iteration:** 1 (Foundation & Data Models)
 **Last Updated:** 2026-01-20
-**Status:** Ready to begin tasks
+**Status:** In Progress - Function 2
 
 ---
 
@@ -20,13 +20,14 @@
 
 ## Task Progress (16 total tasks)
 
-### ✅ Completed Tasks (5)
+### ✅ Completed Tasks (6)
 
 - [x] **Task 1.1: Install Testing Dependencies** - Installed Jest, React Testing Library, @testing-library/jest-dom, @testing-library/user-event, @types/jest, jest-environment-jsdom. Verified in package.json. Test script exists.
 - [x] **Task 1.2: Configure Jest** - Created jest.config.js with Next.js settings, jest.setup.js with test environment setup. Created __tests__ folder structure (components, lib, schemas, utils, hooks). Verified Jest runs successfully.
 - [x] **Task 1.3: Create First Test Example** - Created Button component (components/ui/Button.tsx) with full JSDoc documentation. Created comprehensive test file (__tests__/components/ui/Button.test.tsx) with 11 passing tests demonstrating all key testing patterns (accessible queries, user events, mocks, edge cases). Established testing conventions.
 - [x] **Task 1.4: Install State Management (Zustand)** - Verified Zustand 5.0.3 installed. Created lib/store/ folder structure with slices/ subdirectory. Created gameStore.ts with devtools middleware and comprehensive documentation. Created slices/README.md explaining slice pattern for future use.
 - [x] **Task 1.5: Install Validation (Zod)** - Verified Zod 3.24.1 installed. Created lib/schemas/ folder. Created example.schema.ts demonstrating all Zod patterns (validation rules, type inference, parse/safeParse, defaults). Created example.schema.test.ts with 15 passing tests. Schema validation patterns established and validated.
+- [x] **Task 2.1: Create Character Schema** - Created lib/schemas/character.schema.ts with full Character data model. Includes: CharacterSchema (main validation), CreateCharacterSchema (for forms), UpdateCharacterSchema (for edits), TypeScript types, parse/validate helper functions, clampHp utility, comprehensive JSDoc documentation. Supports all DEFINE.md requirements (name, class, level, HP, AC, image, avatar, conditions). TypeScript compiles without errors.
 
 ---
 
@@ -36,13 +37,12 @@
 
 ---
 
-### ⏳ Pending Tasks (11)
+### ⏳ Pending Tasks (10)
 
 **Function 1: Project Foundation & Testing Infrastructure**
 ✅ All tasks complete!
 
 **Function 2: Data Models & Validation**
-- [ ] Task 2.1: Create Character Schema
 - [ ] Task 2.2: Create Monster Schema
 - [ ] Task 2.3: Create Condition Schema
 - [ ] Task 2.4: Create Combatant Schema
@@ -61,17 +61,17 @@
 
 ## Next Action
 
-**Next Task:** Task 2.1 - Create Character Schema
+**Next Task:** Task 2.2 - Create Monster Schema
 
 **What needs to happen:**
-- Define Character interface properties (name, class, level, hp, maxHp, ac, etc.)
-- Create Zod schema for Character
+- Define Monster interface properties (name, type, ac, hp, damage, abilities)
+- Create Zod schema for Monster
 - Export TypeScript type from schema
 - Add JSDoc comments explaining each field
 
 **Ready to proceed:** Yes
 
-**Note:** Function 1 (Foundation) is complete! Moving to Function 2 (Data Models)
+**Note:** Task 2.1 (Character Schema) complete! Moving to Task 2.2 (Monster Schema)
 
 ---
 
