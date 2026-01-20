@@ -1,7 +1,7 @@
 # Architecture Overview
 
 **Project:** dnd-game-tracker-loop v2.0
-**Last Updated:** 2026-01-20 (Task 1.5 complete - Function 1 DONE)
+**Last Updated:** 2026-01-20 (Iteration 2 COMPLETE)
 **Purpose:** Living document explaining how the codebase is structured and how pieces connect
 
 ---
@@ -255,61 +255,59 @@ npm start            # Start production server
 
 ## Current Implementation Status
 
-### ✅ Completed (Iteration 1 in progress)
-**Function 1: Project Foundation & Testing Infrastructure - COMPLETE ✅**
-- Next.js project structure
-- Jest + React Testing Library setup
-- Test folder structure (components, lib, schemas, utils, hooks)
-- Zustand and Zod installed and configured
-- Zustand store configured (lib/store/gameStore.ts with devtools)
-- Store slice pattern documented (lib/store/slices/README.md)
-- Zod validation configured (lib/schemas/example.schema.ts)
-- Schema validation patterns established with 15 passing tests
-- First component created (Button) with full documentation
-- First test file created (Button.test.tsx) - 11 passing tests
-- Testing patterns established and validated
-- components/ui/ folder created
-- lib/store/ folder structure created
-- lib/schemas/ folder created
+### ✅ Completed
+
+**Iteration 2: Character Management & Conditions System**
+- Character Zustand store slice (CRUD operations, HP tracking, conditions)
+- Character management UI (CharacterForm, CharacterCard, CharacterList)
+- HP tracking with visual feedback (±1, ±5 buttons, direct input, color-coded bar)
+- Avatar system (DiceBear integration + custom uploads)
+- Conditions system (ConditionBadge, ConditionToggle, ConditionsModal)
+- Reusable ConfirmDialog component
+- Navigation bar in layout
+- Character management page at /characters
+- 30 component tests (274 total tests passing)
+
+**Iteration 1: Foundation & Data Models**
+- Complete testing infrastructure (Jest, React Testing Library)
+- Zustand state management configured
+- Zod validation configured
+- All data model schemas (Character, Monster, Condition, Combatant)
+- Mock data factory
+- Generic validation helpers
+- 244 schema and unit tests
 
 ### 🔄 In Progress
-**Function 2: Data Models & Validation**
-- Creating Character, Monster, Combatant, Condition schemas
+- Nothing currently - Iteration 2 complete!
 
-### ⏳ Planned
-- Zod schemas for data models
-- Zustand store setup
-- Component library
-- Feature implementation (6 iterations)
+### ⏳ Planned (Next: Iteration 3)
+**Function 5: Combat Tracker - Basic**
+- Combat encounter management
+- Initiative tracking
+- Turn management
+- Combatant HP tracking during combat
 
 ---
 
 ## Update History
 
-**2026-01-20 (Task 1.5)** - Configured Zod validation - FUNCTION 1 COMPLETE
-- Created lib/schemas/ folder structure
-- Created example.schema.ts demonstrating all Zod patterns
-- Created example.schema.test.ts with 15 passing tests
-- Established schema validation patterns
-- Function 1 (Foundation & Testing) complete - ready for Function 2
+**2026-01-20 (Iteration 2)** - Character Management & Conditions System Complete
+- Created character Zustand store slice with CRUD operations
+- Built complete character management UI (form, card, list)
+- Implemented HP tracking with visual feedback
+- Added avatar system (DiceBear + custom uploads)
+- Built conditions system (badges, toggles, modal)
+- Created /characters page with navigation
+- Added reusable ConfirmDialog component
+- Wrote 30 component tests (274 total passing)
 
-**2026-01-20 (Task 1.4)** - Configured Zustand store
-- Created lib/store/ folder structure
-- Created gameStore.ts with devtools middleware
-- Added comprehensive documentation and architecture notes
-- Created slices/README.md explaining slice pattern
-
-**2026-01-20 (Task 1.3)** - Added first component and test
-- Created components/ui/ folder
-- Added Button component as reference implementation
-- Created Button.test.tsx with 11 passing tests
-- Established testing patterns in practice
-
-**2026-01-20 (Task 1.2)** - Initial architecture documentation
-- Documented folder structure
-- Explained tech stack choices
-- Outlined data flow architecture
-- Defined testing strategy
+**2026-01-20 (Iteration 1)** - Foundation & Data Models Complete
+- Set up testing infrastructure (Jest, React Testing Library)
+- Configured Zustand state management
+- Configured Zod validation
+- Created all data model schemas
+- Created mock data factory and validation helpers
+- Wrote 244 schema and unit tests
 
 ---
 
