@@ -20,7 +20,7 @@
 
 ## Task Progress (16 total tasks)
 
-### ✅ Completed Tasks (8)
+### ✅ Completed Tasks (9)
 
 - [x] **Task 1.1: Install Testing Dependencies** - Installed Jest, React Testing Library, @testing-library/jest-dom, @testing-library/user-event, @types/jest, jest-environment-jsdom. Verified in package.json. Test script exists.
 - [x] **Task 1.2: Configure Jest** - Created jest.config.js with Next.js settings, jest.setup.js with test environment setup. Created __tests__ folder structure (components, lib, schemas, utils, hooks). Verified Jest runs successfully.
@@ -30,6 +30,7 @@
 - [x] **Task 2.1: Create Character Schema** - Created lib/schemas/character.schema.ts with full Character data model. Includes: CharacterSchema (main validation), CreateCharacterSchema (for forms), UpdateCharacterSchema (for edits), TypeScript types, parse/validate helper functions, clampHp utility, comprehensive JSDoc documentation. Supports all DEFINE.md requirements (name, class, level, HP, AC, image, avatar, conditions). TypeScript compiles without errors.
 - [x] **Task 2.2: Create Monster Schema** - Created lib/schemas/monster.schema.ts with full Monster data model. Includes: MonsterSchema (main validation), MonsterAbilitySchema (nested abilities), MonsterTypeEnum (19 creature types), CreateMonsterSchema (for forms), UpdateMonsterSchema (for edits), TypeScript types, parse/validate helper functions, isValidDiceNotation utility, comprehensive JSDoc documentation. Supports all DEFINE.md requirements (name, type, AC, HP, damage, abilities, challenge rating, size, speed). TypeScript compiles without errors.
 - [x] **Task 2.3: Create Condition Schema** - Created lib/schemas/condition.schema.ts with complete condition/status effect system. Includes: ConditionEnum (7 standard conditions: Poisoned, Prone, Paralyzed, Stunned, Blinded, Frightened, Charmed), ConditionsArraySchema, Condition type, ALL_CONDITIONS array, CONDITION_DETAILS with descriptions/effects/colors for UI display, helper functions (isValidCondition, addCondition, removeCondition, toggleCondition, hasCondition, getConditionDetails), comprehensive JSDoc documentation. TypeScript compiles without errors.
+- [x] **Task 2.4: Create Combatant Schema** - Created lib/schemas/combatant.schema.ts with combat entity data model. Includes: CombatantSchema (main validation with combat-specific fields: initiative, isActive, currentHp), CombatantTypeEnum ('character' or 'monster'), CreateCombatantFromCharacterSchema and CreateCombatantFromMonsterSchema (for adding to combat), UpdateCombatantSchema (for combat updates), helper functions (createCombatantFromCharacter, createCombatantFromMonster, isCombatantDefeated, isCombatantBloodied, getCombatantHpPercentage, sortByInitiative, getActiveCombatant, getNextCombatant), comprehensive JSDoc documentation. TypeScript compiles without errors.
 
 ---
 
@@ -39,13 +40,12 @@
 
 ---
 
-### ⏳ Pending Tasks (8)
+### ⏳ Pending Tasks (7)
 
 **Function 1: Project Foundation & Testing Infrastructure**
 ✅ All tasks complete!
 
 **Function 2: Data Models & Validation**
-- [ ] Task 2.4: Create Combatant Schema
 - [ ] Task 2.5: Create Schema Barrel Export
 - [ ] Task 2.6: Write Schema Tests
 - [ ] Task 2.7: Create Mock Data Factory
@@ -61,17 +61,17 @@
 
 ## Next Action
 
-**Next Task:** Task 2.4 - Create Combatant Schema
+**Next Task:** Task 2.5 - Create Schema Barrel Export
 
 **What needs to happen:**
-- Define Combatant interface (extends Character/Monster for combat)
-- Add combat-specific fields (initiative, isActive, currentHp)
-- Create Zod schema for Combatant
-- Export TypeScript type
+- Create lib/schemas/index.ts
+- Export all schemas (Character, Monster, Condition, Combatant)
+- Export all TypeScript types
+- Add documentation comment
 
 **Ready to proceed:** Yes
 
-**Note:** Task 2.3 (Condition Schema) complete! Moving to Task 2.4 (Combatant Schema)
+**Note:** Task 2.4 (Combatant Schema) complete! Moving to Task 2.5 (Schema Barrel Export)
 
 ---
 
