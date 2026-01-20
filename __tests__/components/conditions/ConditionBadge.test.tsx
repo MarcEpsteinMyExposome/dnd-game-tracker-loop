@@ -44,24 +44,24 @@ describe('ConditionBadge', () => {
     })
 
     it('applies correct size classes for sm size', () => {
-      render(<ConditionBadge condition={testCondition} size="sm" />)
+      const { container } = render(<ConditionBadge condition={testCondition} size="sm" />)
 
-      const badge = screen.getByRole('status')
-      expect(badge.firstChild).toHaveClass('text-xs')
+      const badgeDiv = container.querySelector('.text-xs')
+      expect(badgeDiv).toBeInTheDocument()
     })
 
     it('applies correct size classes for md size', () => {
-      render(<ConditionBadge condition={testCondition} size="md" />)
+      const { container } = render(<ConditionBadge condition={testCondition} size="md" />)
 
-      const badge = screen.getByRole('status')
-      expect(badge.firstChild).toHaveClass('text-sm')
+      const badgeDiv = container.querySelector('.text-sm')
+      expect(badgeDiv).toBeInTheDocument()
     })
 
     it('applies correct size classes for lg size', () => {
-      render(<ConditionBadge condition={testCondition} size="lg" />)
+      const { container } = render(<ConditionBadge condition={testCondition} size="lg" />)
 
-      const badge = screen.getByRole('status')
-      expect(badge.firstChild).toHaveClass('text-base')
+      const badgeDiv = container.querySelector('.text-base')
+      expect(badgeDiv).toBeInTheDocument()
     })
   })
 

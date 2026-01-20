@@ -24,18 +24,19 @@ describe('ConditionToggle', () => {
   })
 
   describe('Rendering', () => {
-    it('renders all 7 conditions', () => {
+    it('renders all 7 conditions as checkboxes', () => {
       render(
         <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
       )
 
-      expect(screen.getByText('Poisoned')).toBeInTheDocument()
-      expect(screen.getByText('Prone')).toBeInTheDocument()
-      expect(screen.getByText('Paralyzed')).toBeInTheDocument()
-      expect(screen.getByText('Stunned')).toBeInTheDocument()
-      expect(screen.getByText('Blinded')).toBeInTheDocument()
-      expect(screen.getByText('Frightened')).toBeInTheDocument()
-      expect(screen.getByText('Charmed')).toBeInTheDocument()
+      // Verify all conditions are present as checkboxes
+      expect(screen.getByRole('checkbox', { name: /poisoned/i })).toBeInTheDocument()
+      expect(screen.getByRole('checkbox', { name: /prone/i })).toBeInTheDocument()
+      expect(screen.getByRole('checkbox', { name: /paralyzed/i })).toBeInTheDocument()
+      expect(screen.getByRole('checkbox', { name: /stunned/i })).toBeInTheDocument()
+      expect(screen.getByRole('checkbox', { name: /blinded/i })).toBeInTheDocument()
+      expect(screen.getByRole('checkbox', { name: /frightened/i })).toBeInTheDocument()
+      expect(screen.getByRole('checkbox', { name: /charmed/i })).toBeInTheDocument()
     })
 
     it('marks active conditions as checked', () => {
