@@ -20,9 +20,9 @@
 
 ## Task Progress (16 total tasks)
 
-### ✅ Completed Tasks (0)
+### ✅ Completed Tasks (1)
 
-*No tasks completed yet*
+- [x] **Task 1.1: Install Testing Dependencies** - Installed Jest, React Testing Library, @testing-library/jest-dom, @testing-library/user-event, @types/jest, jest-environment-jsdom. Verified in package.json. Test script exists.
 
 ---
 
@@ -32,14 +32,13 @@
 
 ---
 
-### ⏳ Pending Tasks (16)
+### ⏳ Pending Tasks (15)
 
 **Function 1: Project Foundation & Testing Infrastructure**
-- [ ] Task 1.1: Install Testing Dependencies
 - [ ] Task 1.2: Configure Jest
 - [ ] Task 1.3: Create First Test Example
-- [ ] Task 1.4: Install State Management (Zustand)
-- [ ] Task 1.5: Install Validation (Zod)
+- [ ] Task 1.4: Install State Management (Zustand) - **NOTE: Already installed!**
+- [ ] Task 1.5: Install Validation (Zod) - **NOTE: Already installed!**
 
 **Function 2: Data Models & Validation**
 - [ ] Task 2.1: Create Character Schema
@@ -61,12 +60,13 @@
 
 ## Next Action
 
-**Next Task:** Task 1.1 - Install Testing Dependencies
+**Next Task:** Task 1.2 - Configure Jest
 
 **What needs to happen:**
-- Install Jest, React Testing Library, @testing-library/jest-dom, @types/jest
-- Verify dependencies appear in package.json
-- Confirm `npm test` command exists
+- Create jest.config.js with Next.js settings
+- Create jest.setup.js for test environment
+- Update test scripts in package.json if needed
+- Create __tests__ folder structure
 
 **Ready to proceed:** Yes
 
