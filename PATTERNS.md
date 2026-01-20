@@ -2,7 +2,7 @@
 
 **Project:** dnd-game-tracker-loop v2.0
 **Purpose:** Document coding patterns, conventions, and examples to follow
-**Last Updated:** 2026-01-20
+**Last Updated:** 2026-01-20 (Updated after Task 1.3)
 
 ---
 
@@ -492,6 +492,15 @@ function updateCharacter(data: Partial<Character>) { }
 ---
 
 ## Update History
+
+**2026-01-20 (Task 1.3)** - Established real testing patterns
+- Created Button component (components/ui/Button.tsx) as reference implementation
+- Created Button.test.tsx with 11 passing tests demonstrating all patterns
+- Validated that testing patterns work in practice
+- Established accessible query pattern (getByRole)
+- Demonstrated user-event simulation
+- Showed mock function usage
+- Proved test organization with describe blocks
 
 **2026-01-20** - Initial patterns documentation
 - File naming conventions

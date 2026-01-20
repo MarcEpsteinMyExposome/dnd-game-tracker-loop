@@ -1,7 +1,7 @@
 # Architecture Overview
 
 **Project:** dnd-game-tracker-loop v2.0
-**Last Updated:** 2026-01-20 (Task 1.2 complete)
+**Last Updated:** 2026-01-20 (Task 1.3 complete)
 **Purpose:** Living document explaining how the codebase is structured and how pieces connect
 
 ---
@@ -258,12 +258,16 @@ npm start            # Start production server
 ### ✅ Completed (Iteration 1 in progress)
 - Next.js project structure
 - Jest + React Testing Library setup
-- Test folder structure
+- Test folder structure (components, lib, schemas, utils, hooks)
 - Zustand and Zod installed (not configured yet)
+- First component created (Button) with full documentation
+- First test file created (Button.test.tsx) - 11 passing tests
+- Testing patterns established and validated
+- components/ui/ folder created
 
 ### 🔄 In Progress
-- Creating first test example
-- Setting up testing patterns
+- Setting up Zustand store structure
+- Configuring Zod schemas
 
 ### ⏳ Planned
 - Zod schemas for data models
@@ -275,7 +279,13 @@ npm start            # Start production server
 
 ## Update History
 
-**2026-01-20** - Initial architecture documentation created after Task 1.2
+**2026-01-20 (Task 1.3)** - Added first component and test
+- Created components/ui/ folder
+- Added Button component as reference implementation
+- Created Button.test.tsx with 11 passing tests
+- Established testing patterns in practice
+
+**2026-01-20 (Task 1.2)** - Initial architecture documentation
 - Documented folder structure
 - Explained tech stack choices
 - Outlined data flow architecture
