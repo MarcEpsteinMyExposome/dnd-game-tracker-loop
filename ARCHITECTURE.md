@@ -1,7 +1,7 @@
 # Architecture Overview
 
 **Project:** dnd-game-tracker-loop v2.0
-**Last Updated:** 2026-01-20 (Task 1.4 complete)
+**Last Updated:** 2026-01-20 (Task 1.5 complete - Function 1 DONE)
 **Purpose:** Living document explaining how the codebase is structured and how pieces connect
 
 ---
@@ -256,20 +256,25 @@ npm start            # Start production server
 ## Current Implementation Status
 
 ### ✅ Completed (Iteration 1 in progress)
+**Function 1: Project Foundation & Testing Infrastructure - COMPLETE ✅**
 - Next.js project structure
 - Jest + React Testing Library setup
 - Test folder structure (components, lib, schemas, utils, hooks)
-- Zustand and Zod installed
+- Zustand and Zod installed and configured
 - Zustand store configured (lib/store/gameStore.ts with devtools)
 - Store slice pattern documented (lib/store/slices/README.md)
+- Zod validation configured (lib/schemas/example.schema.ts)
+- Schema validation patterns established with 15 passing tests
 - First component created (Button) with full documentation
 - First test file created (Button.test.tsx) - 11 passing tests
 - Testing patterns established and validated
 - components/ui/ folder created
 - lib/store/ folder structure created
+- lib/schemas/ folder created
 
 ### 🔄 In Progress
-- Configuring Zod schemas and validation
+**Function 2: Data Models & Validation**
+- Creating Character, Monster, Combatant, Condition schemas
 
 ### ⏳ Planned
 - Zod schemas for data models
@@ -280,6 +285,13 @@ npm start            # Start production server
 ---
 
 ## Update History
+
+**2026-01-20 (Task 1.5)** - Configured Zod validation - FUNCTION 1 COMPLETE
+- Created lib/schemas/ folder structure
+- Created example.schema.ts demonstrating all Zod patterns
+- Created example.schema.test.ts with 15 passing tests
+- Established schema validation patterns
+- Function 1 (Foundation & Testing) complete - ready for Function 2
 
 **2026-01-20 (Task 1.4)** - Configured Zustand store
 - Created lib/store/ folder structure
