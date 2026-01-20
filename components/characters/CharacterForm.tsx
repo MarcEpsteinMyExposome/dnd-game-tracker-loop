@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react'
 import { Character, CreateCharacter } from '@/lib/schemas'
 import { validateWithSchema, CreateCharacterSchema } from '@/lib/schemas'
 import { useGameStore } from '@/lib/store/gameStore'
+import { fileToBase64, validateImageFile, getAvatarUrl } from '@/lib/utils/avatar'
 
 interface CharacterFormProps {
   character?: Character // If provided, form is in edit mode
@@ -30,10 +31,13 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
     currentHp: character?.currentHp || 10,
     armorClass: character?.armorClass || 10,
     avatarSeed: character?.avatarSeed || '',
+    customImage: character?.customImage,
     conditions: character?.conditions || [],
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [imagePreview, setImagePreview] = useState<string | undefined>(character?.customImage)
+  const [imageError, setImageError] = useState<string | undefined>()
 
   // Update currentHp when maxHp changes (for new characters)
   useEffect(() => {
@@ -87,6 +91,36 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
         return newErrors
       })
     }
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    // Clear previous errors
+    setImageError(undefined)
+
+    // Validate file
+    const validation = validateImageFile(file)
+    if (!validation.isValid) {
+      setImageError(validation.error)
+      return
+    }
+
+    try {
+      // Convert to base64
+      const base64 = await fileToBase64(file)
+      setFormData((prev) => ({ ...prev, customImage: base64 }))
+      setImagePreview(base64)
+    } catch (error) {
+      setImageError('Failed to upload image. Please try again.')
+    }
+  }
+
+  const handleRemoveImage = () => {
+    setFormData((prev) => ({ ...prev, customImage: undefined }))
+    setImagePreview(undefined)
+    setImageError(undefined)
   }
 
   return (
@@ -192,6 +226,75 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
           {errors.currentHp && (
             <p className="text-red-600 text-sm mt-1">{errors.currentHp}</p>
           )}
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-2">Avatar</label>
+        <div className="space-y-3">
+          {/* Image Preview */}
+          {imagePreview ? (
+            <div className="flex items-center gap-3">
+              <img
+                src={imagePreview}
+                alt="Avatar preview"
+                className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+              />
+              <button
+                type="button"
+                onClick={handleRemoveImage}
+                className="text-red-600 text-sm hover:text-red-700"
+              >
+                Remove Image
+              </button>
+            </div>
+          ) : formData.avatarSeed ? (
+            <div className="flex items-center gap-3">
+              <img
+                src={getAvatarUrl(formData.avatarSeed)}
+                alt="Generated avatar preview"
+                className="w-20 h-20 rounded-full border-2 border-gray-200"
+              />
+              <p className="text-sm text-gray-600">Auto-generated avatar</p>
+            </div>
+          ) : null}
+
+          {/* Image Upload */}
+          <div>
+            <label
+              htmlFor="imageUpload"
+              className="inline-block bg-gray-100 px-4 py-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
+            >
+              Upload Custom Image
+            </label>
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+            {imageError && <p className="text-red-600 text-sm mt-1">{imageError}</p>}
+            <p className="text-xs text-gray-500 mt-1">JPEG, PNG, GIF, or WebP (max 2MB)</p>
+          </div>
+
+          {/* Avatar Seed (for generated avatars) */}
+          <div>
+            <label htmlFor="avatarSeed" className="block text-sm mb-1">
+              Or use seed for generated avatar
+            </label>
+            <input
+              id="avatarSeed"
+              type="text"
+              value={formData.avatarSeed}
+              onChange={(e) => handleChange('avatarSeed', e.target.value)}
+              className="w-full px-3 py-2 border rounded-md"
+              placeholder="Leave blank to use character name"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Optional: Any text generates a unique avatar (defaults to character name)
+            </p>
+          </div>
         </div>
       </div>
 

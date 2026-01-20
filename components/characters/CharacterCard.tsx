@@ -8,6 +8,7 @@
  */
 
 import { Character } from '@/lib/schemas'
+import { getAvatarSource } from '@/lib/utils/avatar'
 
 interface CharacterCardProps {
   character: Character
@@ -28,11 +29,27 @@ export function CharacterCard({ character, onEdit, onDelete }: CharacterCardProp
 
   const isUnconscious = character.currentHp === 0
 
+  // Get avatar source (custom image, generated avatar, or fallback)
+  const avatarSrc = getAvatarSource(
+    character.customImage,
+    character.avatarSeed || character.name, // Use name as fallback seed
+    character.name
+  )
+
   return (
     <div className="bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-      {/* Avatar placeholder */}
-      <div className="w-20 h-20 rounded-full bg-gray-200 mx-auto mb-3 flex items-center justify-center text-2xl font-bold text-gray-500">
-        {character.name.charAt(0).toUpperCase()}
+      {/* Avatar */}
+      <div className="w-20 h-20 rounded-full mx-auto mb-3 overflow-hidden border-2 border-gray-200">
+        <img
+          src={avatarSrc}
+          alt={`${character.name}'s avatar`}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Fallback to initial if image fails to load
+            e.currentTarget.style.display = 'none'
+            e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-500">${character.name.charAt(0).toUpperCase()}</div>`
+          }}
+        />
       </div>
 
       {/* Character Info */}
