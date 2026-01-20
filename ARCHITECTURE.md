@@ -1,7 +1,7 @@
 # Architecture Overview
 
 **Project:** dnd-game-tracker-loop v2.0
-**Last Updated:** 2026-01-20 (Task 1.3 complete)
+**Last Updated:** 2026-01-20 (Task 1.4 complete)
 **Purpose:** Living document explaining how the codebase is structured and how pieces connect
 
 ---
@@ -259,15 +259,17 @@ npm start            # Start production server
 - Next.js project structure
 - Jest + React Testing Library setup
 - Test folder structure (components, lib, schemas, utils, hooks)
-- Zustand and Zod installed (not configured yet)
+- Zustand and Zod installed
+- Zustand store configured (lib/store/gameStore.ts with devtools)
+- Store slice pattern documented (lib/store/slices/README.md)
 - First component created (Button) with full documentation
 - First test file created (Button.test.tsx) - 11 passing tests
 - Testing patterns established and validated
 - components/ui/ folder created
+- lib/store/ folder structure created
 
 ### 🔄 In Progress
-- Setting up Zustand store structure
-- Configuring Zod schemas
+- Configuring Zod schemas and validation
 
 ### ⏳ Planned
 - Zod schemas for data models
@@ -278,6 +280,12 @@ npm start            # Start production server
 ---
 
 ## Update History
+
+**2026-01-20 (Task 1.4)** - Configured Zustand store
+- Created lib/store/ folder structure
+- Created gameStore.ts with devtools middleware
+- Added comprehensive documentation and architecture notes
+- Created slices/README.md explaining slice pattern
 
 **2026-01-20 (Task 1.3)** - Added first component and test
 - Created components/ui/ folder
