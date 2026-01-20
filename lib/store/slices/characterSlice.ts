@@ -17,7 +17,7 @@ import {
   UpdateCharacter,
   validateCharacter,
   clampHp,
-} from '@/lib/schemas/character.schema'
+} from '../../schemas/character.schema'
 
 /**
  * Character slice state

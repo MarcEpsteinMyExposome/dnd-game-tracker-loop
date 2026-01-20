@@ -15,27 +15,22 @@
 
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
+import { CharacterSlice, createCharacterSlice } from './slices/characterSlice'
 
 /**
  * Game Store State Interface
  *
- * This will be composed of multiple slice interfaces as we build them.
- * For now, it's a placeholder with basic structure.
+ * Composed of multiple slice interfaces.
+ *
+ * Current slices:
+ * - CharacterSlice (Iteration 2) ✅
  *
  * Future slices:
- * - CharacterSlice (Iteration 2)
  * - CombatSlice (Iteration 3)
  * - MonsterSlice (Iteration 4)
  * - SettingsSlice (Iteration 6)
  */
-export interface GameStore {
-  // Placeholder: Will add slice properties here
-  // Example structure:
-  // characters: Character[]
-  // addCharacter: (character: Character) => void
-  // updateCharacter: (id: string, updates: Partial<Character>) => void
-  // deleteCharacter: (id: string) => void
-
+export interface GameStore extends CharacterSlice {
   /**
    * Version of the store schema
    * Useful for data migrations if store structure changes
@@ -63,15 +58,12 @@ export interface GameStore {
  */
 export const useGameStore = create<GameStore>()(
   devtools(
-    (set) => ({
-      // Initial state
+    (...a) => ({
+      // Store version
       version: 1,
 
-      // Actions will be added here as we build slices
-      // Example pattern:
-      // addCharacter: (character) => set((state) => ({
-      //   characters: [...state.characters, character]
-      // })),
+      // Character slice
+      ...createCharacterSlice(...a),
     }),
     {
       // DevTools configuration
