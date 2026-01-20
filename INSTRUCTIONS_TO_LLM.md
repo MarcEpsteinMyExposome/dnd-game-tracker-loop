@@ -6,6 +6,19 @@
 
 ---
 
+## ⚠️ IMPORTANT: Working Directory
+
+**ALWAYS work in:** `/c/Users/marce/Documents/Projects/dnd-game-tracker-loop`
+
+**If you start in the wrong directory:**
+1. Run: `cd /c/Users/marce/Documents/Projects/dnd-game-tracker-loop`
+2. Verify with: `pwd`
+3. You should see: `/c/Users/marce/Documents/Projects/dnd-game-tracker-loop`
+
+**Note:** There is an OLD project called `dnd-game-tracker` (without `-loop`) - ignore it! Only work on the `-loop` version.
+
+---
+
 ## What This Project Is About
 
 This is a **learning project** to understand and practice the **"Ralph Loop" methodology** for iterative software development. The user is **manually walking through the loop process** to experience how it works, rather than using automated tools.
