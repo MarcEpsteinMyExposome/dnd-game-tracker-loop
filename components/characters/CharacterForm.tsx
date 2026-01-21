@@ -126,7 +126,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-1">
+        <label htmlFor="name" className="block text-sm font-medium mb-1 text-slate-700">
           Name *
         </label>
         <input
@@ -134,14 +134,14 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
           type="text"
           value={formData.name}
           onChange={(e) => handleChange('name', e.target.value)}
-          className="w-full px-3 py-2 border rounded-md"
+          className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900 placeholder-slate-400"
           placeholder="Character name"
         />
         {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name}</p>}
       </div>
 
       <div>
-        <label htmlFor="characterClass" className="block text-sm font-medium mb-1">
+        <label htmlFor="characterClass" className="block text-sm font-medium mb-1 text-slate-700">
           Class *
         </label>
         <input
@@ -149,7 +149,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
           type="text"
           value={formData.characterClass}
           onChange={(e) => handleChange('characterClass', e.target.value)}
-          className="w-full px-3 py-2 border rounded-md"
+          className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900 placeholder-slate-400"
           placeholder="Fighter, Wizard, Rogue..."
         />
         {errors.characterClass && (
@@ -159,7 +159,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="level" className="block text-sm font-medium mb-1">
+          <label htmlFor="level" className="block text-sm font-medium mb-1 text-slate-700">
             Level *
           </label>
           <input
@@ -169,13 +169,13 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
             max="20"
             value={formData.level}
             onChange={(e) => handleChange('level', parseInt(e.target.value))}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900"
           />
           {errors.level && <p className="text-red-600 text-sm mt-1">{errors.level}</p>}
         </div>
 
         <div>
-          <label htmlFor="armorClass" className="block text-sm font-medium mb-1">
+          <label htmlFor="armorClass" className="block text-sm font-medium mb-1 text-slate-700">
             Armor Class *
           </label>
           <input
@@ -185,7 +185,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
             max="30"
             value={formData.armorClass}
             onChange={(e) => handleChange('armorClass', parseInt(e.target.value))}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900"
           />
           {errors.armorClass && (
             <p className="text-red-600 text-sm mt-1">{errors.armorClass}</p>
@@ -195,7 +195,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="maxHp" className="block text-sm font-medium mb-1">
+          <label htmlFor="maxHp" className="block text-sm font-medium mb-1 text-slate-700">
             Max HP *
           </label>
           <input
@@ -205,13 +205,13 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
             max="999"
             value={formData.maxHp}
             onChange={(e) => handleChange('maxHp', parseInt(e.target.value))}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900"
           />
           {errors.maxHp && <p className="text-red-600 text-sm mt-1">{errors.maxHp}</p>}
         </div>
 
         <div>
-          <label htmlFor="currentHp" className="block text-sm font-medium mb-1">
+          <label htmlFor="currentHp" className="block text-sm font-medium mb-1 text-slate-700">
             Current HP *
           </label>
           <input
@@ -221,7 +221,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
             max={formData.maxHp || 999}
             value={formData.currentHp}
             onChange={(e) => handleChange('currentHp', parseInt(e.target.value))}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900"
           />
           {errors.currentHp && (
             <p className="text-red-600 text-sm mt-1">{errors.currentHp}</p>
@@ -230,7 +230,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
       </div>
 
       <div>
-        <label className="block text-sm font-medium mb-2">Avatar</label>
+        <label className="block text-sm font-medium mb-2 text-slate-700">Avatar</label>
         <div className="space-y-3">
           {/* Image Preview */}
           {imagePreview ? (
@@ -255,7 +255,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
                 alt="Generated avatar preview"
                 className="w-20 h-20 rounded-full border-2 border-gray-200"
               />
-              <p className="text-sm text-gray-600">Auto-generated avatar</p>
+              <p className="text-sm text-slate-600">Auto-generated avatar</p>
             </div>
           ) : null}
 
@@ -263,7 +263,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
           <div>
             <label
               htmlFor="imageUpload"
-              className="inline-block bg-gray-100 px-4 py-2 rounded-md text-sm cursor-pointer hover:bg-gray-200"
+              className="inline-block bg-slate-100 px-4 py-2 rounded-md text-sm text-slate-700 cursor-pointer hover:bg-slate-200"
             >
               Upload Custom Image
             </label>
@@ -275,12 +275,12 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
               className="hidden"
             />
             {imageError && <p className="text-red-600 text-sm mt-1">{imageError}</p>}
-            <p className="text-xs text-gray-500 mt-1">JPEG, PNG, GIF, or WebP (max 2MB)</p>
+            <p className="text-xs text-slate-500 mt-1">JPEG, PNG, GIF, or WebP (max 2MB)</p>
           </div>
 
           {/* Avatar Seed (for generated avatars) */}
           <div>
-            <label htmlFor="avatarSeed" className="block text-sm mb-1">
+            <label htmlFor="avatarSeed" className="block text-sm mb-1 text-slate-700">
               Or use seed for generated avatar
             </label>
             <input
@@ -288,10 +288,10 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
               type="text"
               value={formData.avatarSeed}
               onChange={(e) => handleChange('avatarSeed', e.target.value)}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900 placeholder-slate-400"
               placeholder="Leave blank to use character name"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Optional: Any text generates a unique avatar (defaults to character name)
             </p>
           </div>
@@ -301,14 +301,14 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
       <div className="flex gap-2 pt-4">
         <button
           type="submit"
-          className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 font-medium"
         >
           {character ? 'Update Character' : 'Create Character'}
         </button>
         <button
           type="button"
           onClick={onClose}
-          className="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300"
+          className="flex-1 bg-slate-200 text-slate-800 px-4 py-2 rounded-md hover:bg-slate-300 font-medium"
         >
           Cancel
         </button>
