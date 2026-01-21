@@ -14,7 +14,7 @@
  */
 
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 import { CharacterSlice, createCharacterSlice } from './slices/characterSlice'
 import { CombatSlice, createCombatSlice } from './slices/combatSlice'
 
@@ -40,14 +40,26 @@ export interface GameStore extends CharacterSlice, CombatSlice {
 }
 
 /**
+ * Storage key for persisted state
+ * Version-prefixed to enable future migrations
+ */
+const STORAGE_KEY = 'dnd-game-tracker-v2'
+
+/**
  * Create the game store
  *
- * Uses Zustand's create function with devtools middleware for debugging.
- * The store is empty for now - slices will be added in subsequent tasks.
+ * Uses Zustand with persist and devtools middleware:
+ * - persist: Automatically saves state to localStorage
+ * - devtools: Enables Redux DevTools debugging
+ *
+ * Persistence Strategy:
+ * - Persists: characters, combatants, combat state, round counter
+ * - Does NOT persist: temporary UI state (modals, loading states)
+ * - Version number enables future state migrations
  *
  * @example
  * ```tsx
- * // In a component (future):
+ * // In a component:
  * import { useGameStore } from '@/lib/store/gameStore'
  *
  * function MyComponent() {
@@ -59,16 +71,32 @@ export interface GameStore extends CharacterSlice, CombatSlice {
  */
 export const useGameStore = create<GameStore>()(
   devtools(
-    (...a) => ({
-      // Store version
-      version: 1,
+    persist(
+      (...a) => ({
+        // Store version
+        version: 1,
 
-      // Character slice
-      ...createCharacterSlice(...a),
+        // Character slice
+        ...createCharacterSlice(...a),
 
-      // Combat slice
-      ...createCombatSlice(...a),
-    }),
+        // Combat slice
+        ...createCombatSlice(...a),
+      }),
+      {
+        // Persistence configuration
+        name: STORAGE_KEY,
+
+        // Specify which parts of state to persist
+        // We persist characters and combat state, but not temporary UI state
+        partialize: (state) => ({
+          version: state.version,
+          characters: state.characters,
+          combatants: state.combatants,
+          round: state.round,
+          isInCombat: state.isInCombat,
+        }),
+      }
+    ),
     {
       // DevTools configuration
       name: 'GameStore', // Name shown in Redux DevTools
@@ -93,12 +121,20 @@ export const useGameStore = create<GameStore>()(
  *    - Access state with selector functions: useGameStore(state => state.characters)
  *    - This allows React to optimize re-renders (only re-render when selected data changes)
  *
- * 4. DEVTOOLS
+ * 4. PERSISTENCE (Iteration 4)
+ *    - State automatically persisted to localStorage via persist middleware
+ *    - Storage key: 'dnd-game-tracker-v2'
+ *    - Persisted: characters, combat state, round counter, version
+ *    - NOT persisted: temporary UI state, loading states, modal open/close
+ *    - Version field enables future data migrations
+ *
+ * 5. DEVTOOLS
  *    - Redux DevTools extension works with Zustand via middleware
  *    - Enables time-travel debugging, action inspection
  *
- * 5. TESTING
+ * 6. TESTING
  *    - Store can be tested independently of components
  *    - Mock the store for component tests
  *    - Test actions and state updates in isolation
+ *    - Persist middleware can be tested separately for save/load behavior
  */
