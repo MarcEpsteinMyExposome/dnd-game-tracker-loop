@@ -25,6 +25,7 @@ import { ConfirmDialog } from '../ui/ConfirmDialog'
 
 interface CombatTrackerProps {
   onAddCombatants?: () => void
+  onAddMonsters?: () => void
 }
 
 /**
@@ -38,16 +39,18 @@ interface CombatTrackerProps {
  * - Handles removing individual combatants
  * - Shows empty state when no combatants present
  *
- * @param onAddCombatants - Optional callback to open "Add to Combat" modal
+ * @param onAddCombatants - Optional callback to open "Add Characters" modal
+ * @param onAddMonsters - Optional callback to open "Add Monsters" modal
  *
  * @example
  * ```tsx
  * <CombatTracker
  *   onAddCombatants={() => setShowAddModal(true)}
+ *   onAddMonsters={() => setShowAddMonstersModal(true)}
  * />
  * ```
  */
-export function CombatTracker({ onAddCombatants }: CombatTrackerProps) {
+export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerProps) {
   // Access state directly instead of calling selector functions during render
   const combatants = useGameStore((state) => state.combatants)
   const round = useGameStore((state) => state.round)
@@ -84,14 +87,24 @@ export function CombatTracker({ onAddCombatants }: CombatTrackerProps) {
         <p className="text-gray-600 mb-6">
           Add characters and monsters to begin combat
         </p>
-        {onAddCombatants && (
-          <button
-            onClick={onAddCombatants}
-            className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-          >
-            ➕ Add Combatants
-          </button>
-        )}
+        <div className="flex gap-3 justify-center">
+          {onAddCombatants && (
+            <button
+              onClick={onAddCombatants}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              ➕ Add Characters
+            </button>
+          )}
+          {onAddMonsters && (
+            <button
+              onClick={onAddMonsters}
+              className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+            >
+              🐉 Add Monsters
+            </button>
+          )}
+        </div>
       </div>
     )
   }
@@ -113,14 +126,23 @@ export function CombatTracker({ onAddCombatants }: CombatTrackerProps) {
           </div>
 
           {/* Controls */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             {onAddCombatants && (
               <button
                 onClick={onAddCombatants}
-                className="bg-white/20 text-white px-4 py-2 rounded-lg font-semibold hover:bg-white/30 transition-colors backdrop-blur-sm"
-                title="Add more combatants to combat"
+                className="bg-blue-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors"
+                title="Add characters to combat"
               >
-                ➕ Add
+                ➕ Characters
+              </button>
+            )}
+            {onAddMonsters && (
+              <button
+                onClick={onAddMonsters}
+                className="bg-orange-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-orange-600 transition-colors"
+                title="Add monsters to combat"
+              >
+                🐉 Monsters
               </button>
             )}
             <button

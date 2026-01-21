@@ -35,7 +35,7 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 - Function 8: LocalStorage Persistence (7 tasks - PRIORITY 1)
 - Function 7: Monster Library (8 tasks - PRIORITY 2, includes 1 integration task)
 
-### ✅ Completed Tasks (11/16)
+### ✅ Completed Tasks (12/16)
 
 **Function 8: LocalStorage Persistence**
 - [x] **Task 8.1: Create LocalStorage Utility Module** - Created lib/storage/localStorage.ts with typed localStorage operations. Functions: saveToLocalStorage (with quota exceeded handling), loadFromLocalStorage (with JSON parse error handling), removeFromLocalStorage, clearAllLocalStorage, isLocalStorageAvailable (detects private/incognito mode), getLocalStorageSize (returns approximate bytes used). Custom error classes: QuotaExceededError, InvalidDataError. All functions fully typed with generics. Comprehensive JSDoc documentation with examples. Created __tests__/storage/localStorage.test.ts with comprehensive tests covering success cases, error cases, quota exceeded, corrupted data, and browser compatibility. All tests passing.
@@ -60,12 +60,13 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 
 - [x] **Task 7.4: Create Monster Library Page** - Created app/monsters/page.tsx at /monsters route. Features: page header with red dragon emoji and description, integrates MonsterLibrary component, handleAddToCombat converts Monster → Combatant using createCombatantFromMonster helper (initiative defaults to AC), handleAddAllToCombat batch adds monsters with name disambiguation for duplicates (e.g., "Goblin 1", "Goblin 2"), Toast notifications for success/error feedback (3-second duration), quick action links to Combat Tracker, Dashboard, and Characters pages, red-slate gradient background matching monster theme. Updated app/layout.tsx to add "Monsters" navigation link in header (between Combat and Settings). Uses Zustand store addCombatant action. Error handling with try-catch and user-friendly error messages. Created __tests__/app/monsters/page.test.tsx with 15 comprehensive tests covering basic rendering (title, description, MonsterLibrary integration, navigation links), single monster add (store integration, toast notifications, dismiss), batch add (multiple monsters, count display, proper combatant structure), error handling (error toasts), name disambiguation logic (Goblin 1, 2, 3), Zustand store integration. All 15 tests passing. Total test count: 760 tests passing.
 
-### ⏳ Pending Tasks (4)
+- [x] **Task 7.5: Integrate Monsters with Combat Tracker** - Created components/combat/AddMonstersModal.tsx for adding monsters directly from combat page. Features: modal with red/orange theme (matches monster styling), displays all 15 monsters from library with avatars and stats, multi-select checkboxes, instance count selector (1-10) for adding multiple copies of same monster, initiative input per monster (defaults to AC), shows count of each monster type already in combat, automatic name disambiguation (e.g., "Goblin 1", "Goblin 2", "Goblin 3"), Select All / Clear All buttons, total instance count display in footer, modal overlay with ESC key and backdrop click support. Updated components/combat/CombatTracker.tsx to add onAddMonsters prop, separate "Add Characters" and "Add Monsters" buttons in both empty state and active combat header (color-coded: blue for characters, red/orange for monsters). Updated app/combat/page.tsx to manage AddMonstersModal state, integrate both character and monster modals, add "Monster Library" quick action link. Users can now add monsters to combat from two places: Monster Library page (/monsters) or directly from Combat Tracker page (/combat). All 760 tests still passing.
+
+### ⏳ Pending Tasks (3)
 
 **Function 8: LocalStorage Persistence** ✅ COMPLETE (7/7 tasks)
 
-**Function 7: Monster Library** (4 remaining)
-- [ ] **Task 7.5: Integrate Monsters with Combat Tracker**
+**Function 7: Monster Library** (3 remaining)
 - [ ] **Task 7.6: Add Monster Quick Actions**
 - [ ] **Task 7.7: Write Monster Component Tests**
 - [ ] **Task 7.8: Write Monster Data Tests**
@@ -258,7 +259,7 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 
 **Current Status:**
 - ✅ Function 8 COMPLETE (7/7 tasks) - Persistence layer fully implemented and tested ✅
-- 11/16 tasks completed (69% done)
+- 12/16 tasks completed (75% done)
 - 325 new tests (760 total)
 - All tests passing ✅
 
@@ -275,7 +276,7 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 - Error boundary wraps entire app to catch persistence failures
 - **16 integration tests verify complete persistence flows end-to-end**
 
-**What's Working - Monster Library Progress (Tasks 7.1-7.4):**
+**What's Working - Monster Library Progress (Tasks 7.1-7.5):**
 - 15 pre-defined monsters with complete stat blocks (CR 0.25 to CR 15)
 - 8 different monster categories with color-coded badges
 - MonsterCard component with red/orange theme (distinct from character cards)
@@ -292,20 +293,23 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 - Toast notifications for user feedback
 - Navigation link in header
 - All monsters and UI validated with 158 comprehensive tests
+- **NEW: AddMonstersModal component for adding monsters from Combat Tracker**
+- **NEW: Dual add buttons in combat (Characters + Monsters)**
+- **NEW: Instance count selector (add 3x Goblins at once)**
+- **NEW: Shows existing monster counts in combat**
+- **NEW: Two pathways to add monsters: from /monsters page OR from /combat page**
 
-**Next Up: Task 7.5 - Integrate Monsters with Combat Tracker**
-- Add "Add Monsters" button to Combat Tracker component
-- Create modal for adding monsters to active combat
-- Filter out monsters already in combat
-- Show monster selection with search/filter
-- Initiative input for each monster
-- Batch add multiple monsters to combat
-- Update CombatTracker UI to show add monsters option
+**Next Up: Task 7.6 - Add Monster Quick Actions**
+- "Quick Encounter" button on Monster Library
+- Pre-defined encounters (e.g., "Goblin Ambush", "Undead Horde")
+- One-click to add full encounter to combat
+- Create lib/data/encounters.ts with 3-5 pre-built encounters
+- Each encounter: name, description, monster list with counts
 
 **Remaining in Iteration 4:**
 - Function 8: ✅ COMPLETE (7/7)
-- Function 7: 4 tasks (7.5-7.8)
-- Total: 4 tasks remaining (69% done)
+- Function 7: 3 tasks (7.6-7.8)
+- Total: 3 tasks remaining (75% done)
 
 ---
 
