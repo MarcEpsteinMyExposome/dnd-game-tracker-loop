@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
+import { PersistenceProvider } from "@/components/layout/PersistenceProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,46 +27,48 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Navigation */}
-        <nav className="bg-gray-800 text-white shadow-lg">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between h-16">
-              <Link href="/" className="text-xl font-bold hover:text-gray-300 transition-colors">
-                🎲 D&D Game Tracker
-              </Link>
-              <div className="flex gap-6">
-                <Link
-                  href="/dashboard"
-                  className="hover:text-gray-300 transition-colors font-medium"
-                >
-                  Dashboard
+        <PersistenceProvider>
+          {/* Navigation */}
+          <nav className="bg-gray-800 text-white shadow-lg">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center justify-between h-16">
+                <Link href="/" className="text-xl font-bold hover:text-gray-300 transition-colors">
+                  🎲 D&D Game Tracker
                 </Link>
-                <Link
-                  href="/characters"
-                  className="hover:text-gray-300 transition-colors font-medium"
-                >
-                  Characters
-                </Link>
-                <Link
-                  href="/combat"
-                  className="hover:text-gray-300 transition-colors font-medium"
-                >
-                  Combat
-                </Link>
-                <Link
-                  href="/settings"
-                  className="hover:text-gray-300 transition-colors font-medium"
-                >
-                  Settings
-                </Link>
-                {/* Future navigation links will go here (Monsters, etc.) */}
+                <div className="flex gap-6">
+                  <Link
+                    href="/dashboard"
+                    className="hover:text-gray-300 transition-colors font-medium"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="/characters"
+                    className="hover:text-gray-300 transition-colors font-medium"
+                  >
+                    Characters
+                  </Link>
+                  <Link
+                    href="/combat"
+                    className="hover:text-gray-300 transition-colors font-medium"
+                  >
+                    Combat
+                  </Link>
+                  <Link
+                    href="/settings"
+                    className="hover:text-gray-300 transition-colors font-medium"
+                  >
+                    Settings
+                  </Link>
+                  {/* Future navigation links will go here (Monsters, etc.) */}
+                </div>
               </div>
             </div>
-          </div>
-        </nav>
+          </nav>
 
-        {/* Main Content */}
-        {children}
+          {/* Main Content */}
+          {children}
+        </PersistenceProvider>
       </body>
     </html>
   );

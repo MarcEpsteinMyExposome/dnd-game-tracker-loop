@@ -18,16 +18,22 @@
 
 'use client'
 
-import { useState, useRef, ChangeEvent } from 'react'
+import { useState, useRef, ChangeEvent, useEffect } from 'react'
 import { useGameStore } from '@/lib/store/gameStore'
 import { downloadGameState, importGameStateFromFile } from '@/lib/storage/exportImport'
 import { getLocalStorageSize } from '@/lib/storage/localStorage'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
+import { Toast, ToastType } from '@/components/ui/Toast'
 
 export default function SettingsPage() {
-  const [importError, setImportError] = useState<string | null>(null)
-  const [importSuccess, setImportSuccess] = useState<string | null>(null)
+  const [isImporting, setIsImporting] = useState(false)
+  const [toastMessage, setToastMessage] = useState<{
+    type: ToastType
+    message: string
+  } | null>(null)
   const [showClearConfirm, setShowClearConfirm] = useState(false)
+  const [storageBytes, setStorageBytes] = useState<number>(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Get store data and actions
@@ -43,9 +49,11 @@ export default function SettingsPage() {
     const state = useGameStore.getState()
     downloadGameState(state)
 
-    // Show success message briefly
-    setImportSuccess('Data exported successfully!')
-    setTimeout(() => setImportSuccess(null), 3000)
+    // Show success toast
+    setToastMessage({
+      type: 'success',
+      message: 'Data exported successfully!',
+    })
   }
 
   /**
@@ -56,22 +64,30 @@ export default function SettingsPage() {
     const file = event.target.files?.[0]
     if (!file) return
 
-    // Clear previous messages
-    setImportError(null)
-    setImportSuccess(null)
+    // Clear previous messages and show loading
+    setToastMessage(null)
+    setIsImporting(true)
 
     // Import and validate file
     const result = await importGameStateFromFile(file)
 
+    setIsImporting(false)
+
     if (result.success && result.data) {
       // Load data into store
       useGameStore.setState(result.data)
-      setImportSuccess('Data imported successfully! Page will refresh...')
+      setToastMessage({
+        type: 'success',
+        message: 'Data imported successfully! Page will refresh...',
+      })
 
       // Refresh page after brief delay to re-render with new data
       setTimeout(() => window.location.reload(), 1500)
     } else {
-      setImportError(result.error || 'Import failed')
+      setToastMessage({
+        type: 'error',
+        message: result.error || 'Import failed',
+      })
     }
 
     // Reset file input
@@ -94,17 +110,36 @@ export default function SettingsPage() {
     })
 
     setShowClearConfirm(false)
-    setImportSuccess('All data cleared successfully!')
-    setTimeout(() => setImportSuccess(null), 3000)
+    setToastMessage({
+      type: 'success',
+      message: 'All data cleared successfully!',
+    })
   }
 
-  // Calculate localStorage usage
-  const storageBytes = getLocalStorageSize()
+  // Calculate localStorage usage on client-side only to avoid hydration mismatch
+  useEffect(() => {
+    setStorageBytes(getLocalStorageSize())
+  }, [characters, combatants]) // Recalculate when data changes
+
   const storageMB = (storageBytes / (1024 * 1024)).toFixed(2)
   const storageKB = (storageBytes / 1024).toFixed(2)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+      {/* Loading overlay during import */}
+      {isImporting && (
+        <LoadingSpinner overlay message="Importing your data..." size="lg" />
+      )}
+
+      {/* Toast notifications */}
+      {toastMessage && (
+        <Toast
+          type={toastMessage.type}
+          message={toastMessage.message}
+          onDismiss={() => setToastMessage(null)}
+        />
+      )}
+
       <div className="max-w-4xl mx-auto">
         {/* Page Header */}
         <div className="mb-8">
@@ -115,18 +150,6 @@ export default function SettingsPage() {
             Manage your game data: export backups, import saves, or clear everything.
           </p>
         </div>
-
-        {/* Success/Error Messages */}
-        {importSuccess && (
-          <div className="mb-6 p-4 bg-green-500/20 border border-green-500 rounded-lg text-green-200">
-            ✅ {importSuccess}
-          </div>
-        )}
-        {importError && (
-          <div className="mb-6 p-4 bg-red-500/20 border border-red-500 rounded-lg text-red-200">
-            ❌ {importError}
-          </div>
-        )}
 
         {/* Data Statistics */}
         <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8">

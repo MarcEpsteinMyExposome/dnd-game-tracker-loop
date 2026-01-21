@@ -35,7 +35,7 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 - Function 8: LocalStorage Persistence (7 tasks - PRIORITY 1)
 - Function 7: Monster Library (8 tasks - PRIORITY 2, includes 1 integration task)
 
-### ✅ Completed Tasks (5/16)
+### ✅ Completed Tasks (6/16)
 
 **Function 8: LocalStorage Persistence**
 - [x] **Task 8.1: Create LocalStorage Utility Module** - Created lib/storage/localStorage.ts with typed localStorage operations. Functions: saveToLocalStorage (with quota exceeded handling), loadFromLocalStorage (with JSON parse error handling), removeFromLocalStorage, clearAllLocalStorage, isLocalStorageAvailable (detects private/incognito mode), getLocalStorageSize (returns approximate bytes used). Custom error classes: QuotaExceededError, InvalidDataError. All functions fully typed with generics. Comprehensive JSDoc documentation with examples. Created __tests__/storage/localStorage.test.ts with comprehensive tests covering success cases, error cases, quota exceeded, corrupted data, and browser compatibility. All tests passing.
@@ -46,12 +46,13 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 
 - [x] **Task 8.4: Create Export/Import Functionality** - Created lib/storage/exportImport.ts with complete export/import system. Functions: exportGameState (returns formatted JSON string), importGameState (validates with Zod schema and returns ImportResult), downloadGameState (triggers browser download with timestamped filename), importGameStateFromFile (handles file upload with size validation), validateImportCompatibility (checks version compatibility with warnings). ExportedStateSchema validates structure including version, timestamp, characters, combatants, round, isInCombat. File size limit: 10MB. Import validates JSON format, schema structure, and provides user-friendly error messages. Created __tests__/storage/exportImport.test.ts with comprehensive tests covering export format, import validation, file handling, error cases, and version compatibility. All tests passing.
 
-- [x] **Task 8.5: Create Settings/Data Management Page** - Created app/settings/page.tsx at /settings route. Features: Export Data button (downloads JSON with timestamp), Import Data button (file upload with validation), Clear All Data button (with ConfirmDialog), data statistics display (character count, combat status, localStorage usage in MB/KB), success/error message notifications, purple-slate gradient background. Uses downloadGameState, importGameStateFromFile, getLocalStorageSize functions. Integrates with Zustand store for state management. Page refreshes after successful import to re-render with new data. Added Settings link to app/layout.tsx navigation. Also fixed pre-existing TypeScript errors in CharacterCard.tsx and ConditionToggle.tsx by adding Condition type import and type assertions.
+- [x] **Task 8.5: Create Settings/Data Management Page** - Created app/settings/page.tsx at /settings route. Features: Export Data button (downloads JSON with timestamp), Import Data button (file upload with validation), Clear All Data button (with ConfirmDialog), data statistics display (character count, combat status, localStorage usage in MB/KB), success/error message notifications, purple-slate gradient background. Uses downloadGameState, importGameStateFromFile, getLocalStorageSize functions. Integrates with Zustand store for state management. Page refreshes after successful import to re-render with new data. Added Settings link to app/layout.tsx navigation. Also fixed pre-existing TypeScript errors in CharacterCard.tsx and ConditionToggle.tsx by adding Condition type import and type assertions. Fixed hydration error by moving getLocalStorageSize() call into useEffect to run only on client-side.
 
-### ⏳ Pending Tasks (11)
+- [x] **Task 8.6: Add Loading States for Persistence** - Created components/ui/LoadingSpinner.tsx with size variants (sm/md/lg), optional message display, and overlay mode that blocks interaction. Created components/ui/Toast.tsx with 4 toast types (success/error/warning/info), auto-dismiss with configurable duration, manual dismiss button, and slide-in animation. Added slide-in-right animation to app/globals.css using Tailwind CSS 4 @keyframes. Updated app/settings/page.tsx to use LoadingSpinner overlay during import operations and Toast notifications for all user feedback (replacing old inline success/error divs). Created components/layout/PersistenceProvider.tsx to handle initial localStorage hydration, showing LoadingSpinner while Zustand persist middleware loads data on app mount. Created components/ui/ErrorBoundary.tsx class component to catch persistence errors, display fallback UI with error details, and provide recovery options (Try Again, Go Home, Clear Data & Reload). Updated app/layout.tsx to wrap entire app in PersistenceProvider (which includes ErrorBoundary). Created __tests__/components/ui/LoadingSpinner.test.tsx with 22 comprehensive tests covering rendering, size variants, overlay mode, custom styling, and accessibility. Created __tests__/components/ui/Toast.test.tsx with 21 tests covering rendering, toast types, auto-dismiss, manual dismiss, positioning/animation, and accessibility. All 38 new tests passing. Total test count: 586 tests passing.
 
-**Function 8: LocalStorage Persistence** (2 remaining)
-- [ ] **Task 8.6: Add Loading States for Persistence**
+### ⏳ Pending Tasks (10)
+
+**Function 8: LocalStorage Persistence** (1 remaining)
 - [ ] **Task 8.7: Write Persistence Integration Tests**
 
 **Function 7: Monster Library** (8 tasks)
@@ -157,11 +158,11 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 
 ## Test Suite Status
 
-**Total Tests:** 548 (all passing ✅)
+**Total Tests:** 586 (all passing ✅)
 - Iteration 1 Tests: 244
 - Iteration 2 Tests: 30
 - Iteration 3 Tests: 161 (stats utilities: 45, dashboard components: 48, combat store: 38, combat components: 30)
-- Iteration 4 Tests: 113 (localStorage utilities, migrations, exportImport)
+- Iteration 4 Tests: 151 (localStorage utilities, migrations, exportImport, LoadingSpinner, Toast)
 
 **Components/Utilities Tested:**
 - CharacterCard (15+ tests)
@@ -175,6 +176,8 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 - LocalStorage utilities (comprehensive)
 - State migrations (comprehensive)
 - Export/Import functionality (comprehensive)
+- LoadingSpinner (22 tests)
+- Toast (21 tests)
 
 **Coverage:**
 - Core character management functionality
@@ -215,9 +218,9 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 🚧 **ITERATION 4 IN PROGRESS**
 
 **Current Status:**
-- ✅ Tasks 8.1, 8.2, 8.3, 8.4, 8.5 COMPLETE - Persistence & Settings UI
-- 5/16 tasks completed (31% done)
-- 113 new tests (548 total)
+- ✅ Tasks 8.1-8.6 COMPLETE - Persistence layer fully functional with loading states
+- 6/16 tasks completed (38% done)
+- 151 new tests (586 total)
 - All tests passing ✅
 
 **What's Working:**
@@ -227,19 +230,23 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 - Export/import functionality ready (JSON download & upload)
 - Settings page at /settings with data management UI
 - Comprehensive error handling for quota exceeded and corrupted data
+- Loading states during import operations (fullscreen overlay)
+- Toast notifications for all user feedback (success/error/warning/info)
+- App-wide loading screen during initial localStorage hydration
+- Error boundary wraps entire app to catch persistence failures gracefully
 
-**Next Up: Task 8.6 - Add Loading States for Persistence**
-- Create loading spinner component (if not exists)
-- Add loading state while localStorage is being read on mount
-- Show loading indicator during import
-- Show success/error toast notifications (or use existing)
-- Prevent UI interactions during load
-- Add error boundary for persistence failures
+**Next Up: Task 8.7 - Write Persistence Integration Tests**
+- Test: Create character → refresh → character persists
+- Test: Add to combat → refresh → combat persists
+- Test: Export → clear → import → data restored
+- Test: Corrupted localStorage → graceful fallback
+- Test: Quota exceeded → error message shown
+- Test: Migration from old version works
 
 **Remaining in Iteration 4:**
-- Function 8: 2 more tasks (8.6-8.7)
+- Function 8: 1 more task (8.7)
 - Function 7: 8 tasks (7.1-7.8)
-- Total: 10 tasks remaining (63% to go)
+- Total: 9 tasks remaining (56% to go)
 
 ---
 
