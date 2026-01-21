@@ -124,9 +124,9 @@ export function validateImageFile(
  * Get avatar source
  *
  * Returns the appropriate avatar URL based on character data.
- * Priority: customImage > avatarSeed > fallback
+ * Priority: imageUrl (custom image) > avatarSeed > fallback
  *
- * @param customImage - Base64 image string (optional)
+ * @param imageUrl - Base64 image string or URL (optional)
  * @param avatarSeed - Seed for generated avatar (optional)
  * @param fallbackSeed - Fallback seed if others unavailable
  * @returns Avatar URL or data URL
@@ -143,13 +143,13 @@ export function validateImageFile(
  * ```
  */
 export function getAvatarSource(
-  customImage: string | undefined,
+  imageUrl: string | undefined,
   avatarSeed: string | undefined,
   fallbackSeed: string = 'default'
 ): string {
   // Priority 1: Use custom uploaded image
-  if (customImage && customImage.startsWith('data:image')) {
-    return customImage
+  if (imageUrl && imageUrl.startsWith('data:image')) {
+    return imageUrl
   }
 
   // Priority 2: Use avatar seed for generated image

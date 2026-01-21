@@ -30,12 +30,12 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
     currentHp: character?.currentHp || 10,
     armorClass: character?.armorClass || 10,
     avatarSeed: character?.avatarSeed || '',
-    customImage: character?.customImage,
+    imageUrl: character?.imageUrl,
     conditions: character?.conditions || [],
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [imagePreview, setImagePreview] = useState<string | undefined>(character?.customImage)
+  const [imagePreview, setImagePreview] = useState<string | undefined>(character?.imageUrl)
   const [imageError, setImageError] = useState<string | undefined>()
 
   // Update currentHp when maxHp changes (for new characters)
@@ -110,7 +110,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
     try {
       // Convert to base64
       const base64 = await fileToBase64(file)
-      setFormData((prev) => ({ ...prev, customImage: base64 }))
+      setFormData((prev) => ({ ...prev, imageUrl: base64 }))
       setImagePreview(base64)
     } catch (error) {
       setImageError('Failed to upload image. Please try again.')
@@ -118,7 +118,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
   }
 
   const handleRemoveImage = () => {
-    setFormData((prev) => ({ ...prev, customImage: undefined }))
+    setFormData((prev) => ({ ...prev, imageUrl: undefined }))
     setImagePreview(undefined)
     setImageError(undefined)
   }

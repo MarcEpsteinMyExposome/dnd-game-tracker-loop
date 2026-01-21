@@ -75,7 +75,7 @@ export function CharacterCard({
 
   // Get avatar source (custom image, generated avatar, or fallback)
   const avatarSrc = getAvatarSource(
-    character.customImage,
+    character.imageUrl,
     character.avatarSeed || character.name, // Use name as fallback seed
     character.name
   )
