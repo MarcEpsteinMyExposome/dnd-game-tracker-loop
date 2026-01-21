@@ -17,7 +17,7 @@ export default function Home() {
         {/* Status Cards */}
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
           {/* Iteration 2 Status */}
-          <div className="bg-green-900 bg-opacity-30 border-2 border-green-500 border-opacity-50 rounded-xl p-8 shadow-2xl">
+          <div className="bg-green-900/30 border-2 border-green-500/50 rounded-xl p-8 shadow-2xl">
             <h2 className="text-2xl font-bold text-green-400 mb-4">
               ✅ Iteration 2 Complete
             </h2>
@@ -40,7 +40,7 @@ export default function Home() {
           </div>
 
           {/* Iteration 1 Status */}
-          <div className="bg-blue-900 bg-opacity-30 border-2 border-blue-500 border-opacity-50 rounded-xl p-8 shadow-2xl">
+          <div className="bg-blue-900/30 border-2 border-blue-500/50 rounded-xl p-8 shadow-2xl">
             <h2 className="text-2xl font-bold text-blue-400 mb-4">
               ✅ Iteration 1 Complete
             </h2>
@@ -64,7 +64,7 @@ export default function Home() {
           </h3>
           <div className="grid md:grid-cols-3 gap-6">
             {/* Feature 1 */}
-            <div className="bg-slate-800 bg-opacity-50 border border-purple-500 border-opacity-30 rounded-lg p-6 hover:border-opacity-60 transition-colors">
+            <div className="bg-slate-800/50 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500/60 transition-colors">
               <div className="text-4xl mb-4">⚔️</div>
               <h4 className="text-xl font-bold text-purple-300 mb-2">Characters</h4>
               <p className="text-slate-400 text-sm">
@@ -73,7 +73,7 @@ export default function Home() {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-slate-800 bg-opacity-50 border border-amber-500 border-opacity-30 rounded-lg p-6 hover:border-opacity-60 transition-colors">
+            <div className="bg-slate-800/50 border border-amber-500/30 rounded-lg p-6 hover:border-amber-500/60 transition-colors">
               <div className="text-4xl mb-4">🩹</div>
               <h4 className="text-xl font-bold text-amber-300 mb-2">HP Tracking</h4>
               <p className="text-slate-400 text-sm">
@@ -82,7 +82,7 @@ export default function Home() {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-slate-800 bg-opacity-50 border border-green-500 border-opacity-30 rounded-lg p-6 hover:border-opacity-60 transition-colors">
+            <div className="bg-slate-800/50 border border-green-500/30 rounded-lg p-6 hover:border-green-500/60 transition-colors">
               <div className="text-4xl mb-4">🌟</div>
               <h4 className="text-xl font-bold text-green-300 mb-2">Conditions</h4>
               <p className="text-slate-400 text-sm">
@@ -93,7 +93,7 @@ export default function Home() {
         </div>
 
         {/* Next Iteration Teaser */}
-        <div className="mt-16 max-w-4xl mx-auto bg-orange-900 bg-opacity-30 border-2 border-orange-500 border-opacity-50 rounded-xl p-8 text-center">
+        <div className="mt-16 max-w-4xl mx-auto bg-orange-900/30 border-2 border-orange-500/50 rounded-xl p-8 text-center">
           <h3 className="text-2xl font-bold text-orange-400 mb-4">
             🚀 Coming Next: Iteration 3
           </h3>

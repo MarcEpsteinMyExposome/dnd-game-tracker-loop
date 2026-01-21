@@ -262,12 +262,13 @@ Use **test-aware development** - tests required for task completion, but not str
 
 ## Outstanding Issues
 
-### ISSUE-001: Tailwind CSS 4 Compatibility Runtime Error
+### ISSUE-001: Tailwind CSS 4 Syntax (RESOLVED ✅)
 **Date Discovered:** 2026-01-20
-**Status:** UNRESOLVED
+**Date Resolved:** 2026-01-20
+**Status:** ✅ RESOLVED
 
 **Problem:**
-Homepage at localhost:3001 displays "undefined Runtime Error" and spins endlessly. Error message: "Next.js 16.1.1 (stale) Turbopack Runtime Error undefined"
+Homepage at localhost:3001 displayed "undefined Runtime Error" and spun endlessly. Error message: "Next.js 16.1.1 (stale) Turbopack Runtime Error undefined"
 
 **Technical Context:**
 - Project uses Tailwind CSS 4 (`@import "tailwindcss"` in app/globals.css)
@@ -275,28 +276,36 @@ Homepage at localhost:3001 displays "undefined Runtime Error" and spins endlessl
 - React 19.2.3
 - Visual styling added to app/page.tsx and app/characters/page.tsx
 
-**Investigation Attempted:**
-1. Identified Tailwind 4 uses different syntax than Tailwind 3
-2. Converted opacity syntax from slash format (e.g., `bg-green-900/30`, `border-green-500/50`) to explicit opacity classes (e.g., `bg-green-900 bg-opacity-30`, `border-green-500 border-opacity-50`)
-3. Simplified gradient text classes
-4. Error persists after changes
+**Investigation Process:**
+1. Initially identified potential Tailwind 4 syntax incompatibility
+2. **First attempt (WRONG):** Converted slash opacity syntax to explicit opacity classes
+   - Changed `bg-green-900/30` to `bg-green-900 bg-opacity-30`
+   - This actually **caused** the error (old Tailwind 3 syntax incompatible with Tailwind 4)
+3. **Second attempt (CORRECT):** Reverted to proper Tailwind 4 slash syntax
+   - Tailwind 4 **requires** slash syntax for opacity: `bg-green-900/30`
+   - The old `bg-opacity-X` utility classes are not supported in Tailwind 4
 
-**Files Affected:**
-- app/page.tsx (homepage with status cards)
-- app/characters/page.tsx (character management page)
-- app/globals.css (Tailwind 4 configuration)
+**Root Cause:**
+Misunderstanding of Tailwind 4 syntax changes. The slash syntax (`/30`) is the **correct** way to specify opacity in Tailwind 4, not the old separate utility approach.
 
-**Next Steps for Resolution:**
-- Check browser console for detailed error stack trace
-- Review Tailwind CSS 4 documentation for syntax changes
-- Test if /characters page loads (to isolate homepage-specific issue)
-- Consider checking Next.js 16.1.1 + Tailwind 4 compatibility
-- May need to downgrade to Tailwind 3 or update to compatible syntax
+**Solution:**
+Reverted all opacity modifiers to Tailwind 4 slash syntax:
+- ✓ `bg-green-900/30` (correct)
+- ✓ `border-green-500/50` (correct)
+- ✓ `bg-slate-800/50` (correct)
+- ✗ `bg-green-900 bg-opacity-30` (wrong, incompatible)
 
-**Impact:**
-- Homepage completely non-functional
-- Blocks visual verification of Iteration 2 completion
-- /characters route may or may not be affected
+**Files Fixed:**
+- app/page.tsx (corrected all opacity modifiers)
+
+**Outcome:**
+- Server runs successfully on localhost:3001
+- Homepage loads with 200 status codes
+- All visual styling displays correctly
+- No runtime errors
+
+**Lesson Learned:**
+When migrating to major versions, the "obvious" fix may be wrong. Tailwind 4 represents a breaking change where slash syntax is **required**, not optional. Always verify syntax against current documentation rather than assuming backward compatibility.
 
 ---
 
@@ -320,7 +329,7 @@ Homepage at localhost:3001 displays "undefined Runtime Error" and spins endlessl
 - ADR-003: Jest + React Testing Library
 - ADR-004: Next.js App Router
 - ADR-005: Test-aware development approach
-- ISSUE-001: Tailwind CSS 4 runtime error documented (unresolved)
+- ISSUE-001: Tailwind CSS 4 syntax issue (resolved - slash syntax required)
 
 ---
 
