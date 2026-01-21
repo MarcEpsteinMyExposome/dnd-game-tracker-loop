@@ -58,8 +58,8 @@ jest.mock('@/components/monsters/MonsterLibrary', () => {
 })
 
 // Mock Toast component
-jest.mock('@/components/ui/Toast', () => {
-  return function MockToast({
+jest.mock('@/components/ui/Toast', () => ({
+  Toast: function MockToast({
     type,
     message,
     onDismiss,
@@ -74,8 +74,8 @@ jest.mock('@/components/ui/Toast', () => {
         <button onClick={onDismiss}>Dismiss</button>
       </div>
     )
-  }
-})
+  },
+}))
 
 // Mock Next.js Link
 jest.mock('next/link', () => {

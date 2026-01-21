@@ -25,7 +25,7 @@ import MonsterLibrary from '@/components/monsters/MonsterLibrary'
 import { Monster } from '@/lib/schemas/monster.schema'
 import { createCombatantFromMonster } from '@/lib/schemas/combatant.schema'
 import { useGameStore } from '@/lib/store/gameStore'
-import Toast from '@/components/ui/Toast'
+import { Toast } from '@/components/ui/Toast'
 
 /**
  * MonstersPage - Monster library browser page
