@@ -1,24 +1,64 @@
 # PROGRESS: Current State
 
 **Project:** dnd-game-tracker-loop v2.0
-**Current Iteration:** 2 (Character Management & Conditions System)
+**Current Iteration:** 3 (Dashboard & Combat Tracker)
 **Last Updated:** 2026-01-20
-**Status:** ✅ ITERATION 2 COMPLETE!
+**Status:** 📋 PLANNING
 
 ---
 
-## Current Iteration: Loop 2
+## Current Iteration: Loop 3
 
 **Focus Areas:**
-- Function 3: Character Management (CRUD operations, HP tracking, image support)
-- Function 4: Conditions System (apply/remove conditions, visual display)
+- Function 5: Dashboard & Statistics (team stats, health overview)
+- Function 6: Combat Tracker - Basic (initiative order, turn management, HP tracking)
 
 **Started:** 2026-01-20
-**Completed:** 2026-01-20 ✅
+**Completed:** Not yet started
+**Planning Phase:** In progress
 
 ---
 
-## Task Progress (15 total tasks)
+## Previous Iteration: Loop 2 (COMPLETE ✅)
+
+**Focus:** Character Management & Conditions System
+**Completed:** 2026-01-20
+
+All 15 tasks completed successfully. See Session History for details.
+
+---
+
+## Task Progress for Iteration 3 (15 total tasks)
+
+### 📋 Planning Phase
+- Created TASKS-ITERATION-3.md with all 15 tasks
+- Function 5: Dashboard & Statistics (5 tasks)
+- Function 6: Combat Tracker - Basic (10 tasks)
+
+### ⏳ Pending Tasks (15 - NOT YET STARTED)
+
+**Function 5: Dashboard & Statistics**
+- [ ] Task 5.1: Create Stats Calculation Utilities
+- [ ] Task 5.2: Create StatCard Component
+- [ ] Task 5.3: Create Dashboard Component
+- [ ] Task 5.4: Create Dashboard Page
+- [ ] Task 5.5: Write Dashboard Component Tests
+
+**Function 6: Combat Tracker - Basic**
+- [ ] Task 6.1: Create Combatant Schema Extensions
+- [ ] Task 6.2: Create Combat Zustand Store Slice
+- [ ] Task 6.3: Integrate Combat Slice into Main Store
+- [ ] Task 6.4: Create CombatantCard Component
+- [ ] Task 6.5: Create CombatTracker Component
+- [ ] Task 6.6: Create Add to Combat Modal
+- [ ] Task 6.7: Create Combat Page
+- [ ] Task 6.8: Implement Turn Management Logic
+- [ ] Task 6.9: Write Combat Store Tests
+- [ ] Task 6.10: Write Combat Component Tests
+
+---
+
+## Iteration 2 Summary (ARCHIVED)
 
 ### ✅ Completed Tasks (15 - ALL COMPLETE!)
 
@@ -78,26 +118,42 @@
 
 ## Next Action
 
-🎉 **ITERATION 2 COMPLETE!**
+📋 **PLANNING ITERATION 3**
 
-All 15 tasks completed successfully. Functions 3 and 4 are done.
+Created comprehensive task breakdown for Iteration 3 (15 tasks total).
 
-**What's Working:**
-- Full character CRUD operations via Zustand store
-- Character cards with HP tracking, avatars, and conditions
-- Condition management system with badges, toggles, and modal
-- Responsive character list with grid layout
-- Delete confirmation dialogs
-- Character management page at /characters
-- DiceBear avatar generation and custom image uploads
-- All 274 tests passing
+**Planning Complete:**
+- ✅ Created TASKS-ITERATION-3.md with all task details
+- ✅ Updated PROGRESS.md to reflect Iteration 3 planning
+- ⏳ Next: Update ARCHITECTURE.md with planned structure
+- ⏳ Next: Update DECISIONS.md if architectural choices needed
+- ⏳ Next: Begin Task 5.1 when ready to start execution
 
-**Next steps:**
-1. Test the app manually at localhost:3001/characters
-2. Create characters and test HP tracking
-3. Test condition management
-4. Review and update RETROSPECTIVE.md for Iteration 2
-5. Plan Iteration 3 (Combat Tracker System - Function 5)
+**Iteration 3 Scope:**
+- Function 5: Dashboard & Statistics (5 tasks)
+  - Stats calculation utilities
+  - StatCard component
+  - Dashboard component with team overview
+  - Dashboard page at /dashboard
+  - Component tests
+
+- Function 6: Combat Tracker - Basic (10 tasks)
+  - Combatant schema helpers
+  - Combat store slice (add, remove, HP updates, turn management)
+  - CombatantCard and CombatTracker components
+  - Add to Combat modal
+  - Combat page at /combat
+  - Turn advancement and round tracking
+  - Comprehensive testing
+
+**Technical Notes:**
+- Initiative = AC for now (proper d20 rolls in Iteration 5)
+- Use hardcoded monsters initially (full library in Iteration 4)
+- Combat state in memory only (LocalStorage in Iteration 4)
+- HP changes in combat don't sync to roster yet (future iteration)
+
+**Ready to Start?**
+When you're ready to begin execution, we'll start with Task 5.1: Create Stats Calculation Utilities
 
 ---
 

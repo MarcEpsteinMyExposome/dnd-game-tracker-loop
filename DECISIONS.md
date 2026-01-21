@@ -309,19 +309,140 @@ When migrating to major versions, the "obvious" fix may be wrong. Tailwind 4 rep
 
 ---
 
+## Iteration 3 Decisions
+
+### ADR-006: Initiative = AC for Iteration 3 (Temporary Solution)
+**Date:** 2026-01-20
+**Status:** ✅ ACCEPTED (Temporary)
+**Context:** Need combat tracker with initiative-based turn order
+
+**Decision:** Use Armor Class (AC) as initiative value for Iteration 3
+- Combatants sorted by AC (highest first)
+- Simpler implementation for initial combat system
+- Will be replaced with proper d20 + DEX initiative rolls in Iteration 5
+
+**Alternatives Considered:**
+1. **Implement full d20 initiative immediately** - Rejected due to complexity, dice rolling system is Function 10
+2. **Random number for initiative** - Rejected, AC provides more meaningful ordering
+3. **Manual initiative input only** - Rejected, wanted some automatic sorting
+
+**Consequences:**
+- ✅ Faster development for Iteration 3
+- ✅ Combat system functional sooner
+- ✅ Clear upgrade path to proper initiative in Iteration 5
+- ⚠️ Not "realistic" D&D initiative, but acceptable for MVP
+- ⚠️ Must document clearly that this is temporary
+
+**Implementation:**
+- `combatant.initiative` field defaults to `character.armorClass` or `monster.armorClass`
+- Sort function: `combatants.sort((a, b) => b.initiative - a.initiative)`
+- UI note: "Initiative (using AC temporarily)"
+
+---
+
+### ADR-007: Combat HP Doesn't Sync to Character Roster (For Now)
+**Date:** 2026-01-20
+**Status:** ✅ ACCEPTED (Temporary)
+**Context:** When combatant HP changes in combat, should it update the source character?
+
+**Decision:** Combat HP changes do NOT sync back to character roster in Iteration 3
+- Combat uses separate `combatant.currentHp` field
+- Character roster `character.currentHp` remains unchanged during combat
+- Sync feature planned for Function 12 (future iteration)
+
+**Alternatives Considered:**
+1. **Sync immediately** - Rejected, adds complexity to Iteration 3 scope
+2. **Sync only on combat end** - Considered for future, not Iteration 3
+3. **Warn user about desync** - Good idea, add UI note
+
+**Consequences:**
+- ✅ Simpler implementation for Iteration 3
+- ✅ Clear separation of concerns (combat state vs. roster state)
+- ⚠️ User must manually update character HP after combat (for now)
+- ⚠️ Potential confusion if user expects auto-sync
+- ✅ Future enhancement opportunity
+
+**Implementation:**
+- Combatant created with copy of HP: `currentHp: character.currentHp`
+- Combat only modifies combatant state
+- Add UI note: "Combat HP changes are temporary - update characters manually after combat"
+
+---
+
+### ADR-008: Hardcoded Monsters for Iteration 3
+**Date:** 2026-01-20
+**Status:** ✅ ACCEPTED (Temporary)
+**Context:** Need monsters available to add to combat, but full library is Function 7 (Iteration 4)
+
+**Decision:** Use small hardcoded monster list for Iteration 3
+- 3-5 example monsters with full stats
+- Defined in `lib/data/monsters.ts` (temporary file)
+- Validates against MonsterSchema
+- Will be replaced with full library + database in Iteration 4
+
+**Alternatives Considered:**
+1. **Wait for full monster library** - Rejected, blocks combat testing
+2. **No monsters, characters only** - Rejected, less realistic testing
+3. **Import from API** - Rejected, adds external dependency
+
+**Consequences:**
+- ✅ Combat system testable with both characters and monsters
+- ✅ No database/persistence complexity for Iteration 3
+- ⚠️ Limited monster variety (acceptable for testing)
+- ✅ Easy to replace in Iteration 4
+
+**Example Monsters:**
+- Goblin (weak melee)
+- Orc (medium melee)
+- Dragon Wyrmling (strong, special abilities)
+
+---
+
+### ADR-009: Combat State in Memory Only (No Persistence)
+**Date:** 2026-01-20
+**Status:** ✅ ACCEPTED (Temporary)
+**Context:** Should combat state persist across page refreshes?
+
+**Decision:** Combat state stored in Zustand (memory) only for Iteration 3
+- Combat data lost on page refresh
+- LocalStorage persistence comes in Iteration 4 (Function 8)
+- Simpler implementation for initial combat system
+
+**Alternatives Considered:**
+1. **Add LocalStorage immediately** - Rejected, Function 8 scope
+2. **Session storage** - Rejected, no benefit over Zustand for now
+3. **No state at all** - Rejected, need working combat
+
+**Consequences:**
+- ✅ Faster Iteration 3 development
+- ✅ Focus on combat mechanics, not persistence
+- ⚠️ Users lose combat state on refresh (acceptable for testing)
+- ✅ LocalStorage will handle all state in Iteration 4
+
+**Implementation:**
+- Combat slice uses Zustand's built-in memory storage
+- No middleware added yet
+- Clear upgrade path to persistence layer
+
+---
+
 ## Future Decisions to Document
 
-- Tailwind CSS version strategy (resolve compatibility issue first)
-- Data persistence strategy (LocalStorage vs. database)
-- Initiative system implementation
-- Dice rolling animation approach
-- Responsive design breakpoints
-- Dark mode implementation
-- Image storage strategy
+- Data persistence strategy details (LocalStorage structure, auto-save timing)
+- Dice rolling animation approach (simple vs. 3D)
+- Responsive design breakpoints (mobile-first vs. desktop-first)
+- Dark mode implementation (manual toggle vs. system preference)
+- Image storage strategy (base64 vs. file uploads vs. CDN)
 
 ---
 
 ## Update History
+
+**2026-01-20 (Iteration 3 Planning)** - Iteration 3 architectural decisions
+- ADR-006: Initiative = AC temporarily (will be d20 in Iteration 5)
+- ADR-007: Combat HP doesn't sync to roster yet (future feature)
+- ADR-008: Hardcoded monsters for Iteration 3 (full library in Iteration 4)
+- ADR-009: Combat state in memory only (LocalStorage in Iteration 4)
 
 **2026-01-20** - Initial ADR document created
 - ADR-001: Zustand for state management

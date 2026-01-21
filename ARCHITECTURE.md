@@ -1,7 +1,7 @@
 # Architecture Overview
 
 **Project:** dnd-game-tracker-loop v2.0
-**Last Updated:** 2026-01-20 (Iteration 2 COMPLETE)
+**Last Updated:** 2026-01-20 (Iteration 3 PLANNING)
 **Purpose:** Living document explaining how the codebase is structured and how pieces connect
 
 ---
@@ -34,27 +34,59 @@
 ```
 dnd-game-tracker-loop/
 ├── app/                          # Next.js App Router directory
-│   ├── layout.tsx               # Root layout (fonts, metadata)
-│   ├── page.tsx                 # Home page
+│   ├── layout.tsx               # Root layout with navigation
+│   ├── page.tsx                 # Home page (iteration status)
+│   ├── characters/              # Character management route
+│   │   └── page.tsx             # /characters page
+│   ├── dashboard/               # Dashboard route (Iteration 3)
+│   │   └── page.tsx             # /dashboard page
+│   ├── combat/                  # Combat tracker route (Iteration 3)
+│   │   └── page.tsx             # /combat page
 │   ├── globals.css              # Tailwind imports and global styles
 │   └── favicon.ico              # Site icon
 │
-├── components/                   # React components (to be created)
-│   ├── characters/              # Character management components
-│   ├── combat/                  # Combat tracker components
-│   ├── monsters/                # Monster library components
-│   ├── dashboard/               # Dashboard/stats components
-│   ├── conditions/              # Condition system components
-│   └── ui/                      # Reusable UI components (buttons, cards, etc.)
+├── components/                   # React components
+│   ├── characters/              # Character management (Iteration 2) ✅
+│   │   ├── CharacterForm.tsx
+│   │   ├── CharacterCard.tsx
+│   │   └── CharacterList.tsx
+│   ├── conditions/              # Condition system (Iteration 2) ✅
+│   │   ├── ConditionBadge.tsx
+│   │   ├── ConditionToggle.tsx
+│   │   └── ConditionsModal.tsx
+│   ├── ui/                      # Reusable UI components ✅
+│   │   └── ConfirmDialog.tsx
+│   ├── dashboard/               # Dashboard components (Iteration 3) 📋
+│   │   ├── StatCard.tsx         # Planned
+│   │   └── Dashboard.tsx        # Planned
+│   ├── combat/                  # Combat tracker (Iteration 3) 📋
+│   │   ├── CombatantCard.tsx    # Planned
+│   │   ├── CombatTracker.tsx    # Planned
+│   │   └── AddToCombatModal.tsx # Planned
+│   └── monsters/                # Monster library (Iteration 4)
+│       └── (future)
 │
 ├── lib/                         # Business logic and utilities
-│   ├── schemas/                 # Zod validation schemas
+│   ├── schemas/                 # Zod validation schemas ✅
+│   │   ├── character.schema.ts
+│   │   ├── monster.schema.ts
+│   │   ├── condition.schema.ts
+│   │   ├── combatant.schema.ts
+│   │   └── index.ts             # Barrel export
 │   ├── store/                   # Zustand state management
-│   │   └── slices/             # Store slices (character, combat, etc.)
-│   ├── validation/              # Validation helper functions
-│   ├── testing/                 # Mock data factories for tests
-│   ├── dice/                    # Dice rolling logic
-│   └── utils/                   # General utility functions
+│   │   ├── gameStore.ts         # Main store ✅
+│   │   └── slices/             # Store slices
+│   │       ├── characterSlice.ts  # Iteration 2 ✅
+│   │       └── combatSlice.ts     # Iteration 3 📋 (planned)
+│   ├── validation/              # Validation helpers ✅
+│   │   └── helpers.ts
+│   ├── testing/                 # Mock data factories ✅
+│   │   └── mockData.ts
+│   ├── utils/                   # General utilities
+│   │   ├── avatar.ts            # Iteration 2 ✅
+│   │   └── stats.ts             # Iteration 3 📋 (planned)
+│   └── dice/                    # Dice rolling (Iteration 5)
+│       └── (future)
 │
 ├── __tests__/                   # Test files (mirrors lib/ and components/)
 │   ├── components/              # Component tests
@@ -278,18 +310,59 @@ npm start            # Start production server
 - 244 schema and unit tests
 
 ### 🔄 In Progress
-- Nothing currently - Iteration 2 complete!
 
-### ⏳ Planned (Next: Iteration 3)
-**Function 5: Combat Tracker - Basic**
-- Combat encounter management
-- Initiative tracking
-- Turn management
-- Combatant HP tracking during combat
+**Iteration 3: Dashboard & Combat Tracker (PLANNING PHASE)**
+- Function 5: Dashboard & Statistics (5 tasks)
+- Function 6: Combat Tracker - Basic (10 tasks)
+- Created TASKS-ITERATION-3.md with detailed task breakdown
+- Planning phase complete, ready to begin execution
+
+### ⏳ Planned Components (Iteration 3)
+
+**New Folders/Files to Create:**
+```
+app/dashboard/page.tsx           # Dashboard page route
+app/combat/page.tsx              # Combat tracker page route
+
+components/dashboard/
+  ├── StatCard.tsx               # Reusable stat display card
+  └── Dashboard.tsx              # Main dashboard component
+
+components/combat/
+  ├── CombatantCard.tsx          # Individual combatant in combat
+  ├── CombatTracker.tsx          # Combat encounter manager
+  └── AddToCombatModal.tsx       # Modal to add characters/monsters
+
+lib/utils/stats.ts               # Team statistics calculations
+lib/store/slices/combatSlice.ts  # Combat state management
+
+__tests__/utils/stats.test.ts    # Stats utilities tests
+__tests__/components/dashboard/  # Dashboard component tests
+__tests__/components/combat/     # Combat component tests
+__tests__/store/slices/combatSlice.test.ts  # Combat store tests
+```
+
+**Planned Data Flow (Iteration 3):**
+- Dashboard reads character data → calculates stats → displays in StatCards
+- Combat page allows adding characters/monsters → creates combatants → manages turn order → tracks HP changes
+- Combat slice manages: combatants list, active turn, round counter
+- Turn advancement: next button → skip defeated → cycle back to first → increment round
+
+### ⏳ Future Iterations
+**Iteration 4:** Monster Library & LocalStorage Persistence
+**Iteration 5:** True Initiative System & Dice Rolling
+**Iteration 6:** UI/UX Enhancements & Combat Features
 
 ---
 
 ## Update History
+
+**2026-01-20 (Iteration 3 Planning)** - Dashboard & Combat Tracker Planning Complete
+- Created TASKS-ITERATION-3.md with 15 detailed tasks
+- Updated PROGRESS.md to reflect Iteration 3 planning phase
+- Updated ARCHITECTURE.md with planned folder structure for Iteration 3
+- Planning: 5 dashboard tasks + 10 combat tracker tasks
+- Ready to begin execution phase
 
 **2026-01-20 (Iteration 2)** - Character Management & Conditions System Complete
 - Created character Zustand store slice with CRUD operations
