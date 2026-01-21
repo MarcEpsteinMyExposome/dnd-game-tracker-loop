@@ -128,6 +128,7 @@ All 15 tasks completed successfully. Functions 3 and 4 are done.
 - 30 new tests (274 total, all passing)
 
 **Next session should:**
+- **PRIORITY:** Fix Tailwind CSS runtime error on homepage (localhost:3001)
 - Plan Iteration 3 tasks (Combat Tracker System)
 
 ---
@@ -147,7 +148,26 @@ All 15 tasks completed successfully. Functions 3 and 4 are done.
 
 ## Questions / Decisions Needed
 
-*No outstanding questions at this time*
+### 🚨 OUTSTANDING ISSUE: Tailwind CSS Runtime Error
+
+**Problem:** Homepage at localhost:3001 displays "undefined Runtime Error" and spins endlessly.
+
+**Root Cause:** Tailwind CSS 4 compatibility issue. The project uses Tailwind 4 (`@import "tailwindcss"` in app/globals.css), but some styling syntax may be incompatible.
+
+**Attempted Fix:** Converted opacity syntax from slash format (e.g., `bg-green-900/30`, `border-green-500/50`) to explicit opacity classes (e.g., `bg-green-900 bg-opacity-30`, `border-green-500 border-opacity-50`) in app/page.tsx and app/characters/page.tsx.
+
+**Status:** NOT RESOLVED - Error persists after fix attempt.
+
+**Files Affected:**
+- app/page.tsx (homepage with status cards and visual styling)
+- app/characters/page.tsx (character management page)
+- app/globals.css (Tailwind 4 config)
+
+**Next Steps:**
+- Need to investigate Tailwind 4 specific syntax requirements
+- May need to check Next.js 16.1.1 + Tailwind 4 compatibility
+- Consider checking browser console for specific error details
+- May need to review Tailwind 4 migration guide
 
 ---
 

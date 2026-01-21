@@ -3,10 +3,9 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Hero Section */}
       <div className="container mx-auto px-6 py-20">
         <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600 mb-4 drop-shadow-lg">
+          <h1 className="text-6xl font-bold text-amber-400 mb-4">
             🎲 D&D Game Tracker
           </h1>
           <p className="text-slate-300 text-2xl mb-2">Loop Iteration v2.0</p>
@@ -18,12 +17,10 @@ export default function Home() {
         {/* Status Cards */}
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
           {/* Iteration 2 Status */}
-          <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 border-2 border-green-500/50 rounded-xl p-8 shadow-2xl backdrop-blur-sm">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-2xl font-bold text-green-400">
-                ✅ Iteration 2 Complete
-              </h2>
-            </div>
+          <div className="bg-green-900 bg-opacity-30 border-2 border-green-500 border-opacity-50 rounded-xl p-8 shadow-2xl">
+            <h2 className="text-2xl font-bold text-green-400 mb-4">
+              ✅ Iteration 2 Complete
+            </h2>
             <p className="text-green-200 mb-4 font-semibold">
               Character Management & Conditions System
             </p>
@@ -43,7 +40,7 @@ export default function Home() {
           </div>
 
           {/* Iteration 1 Status */}
-          <div className="bg-gradient-to-br from-blue-900/30 to-indigo-900/30 border-2 border-blue-500/50 rounded-xl p-8 shadow-2xl backdrop-blur-sm">
+          <div className="bg-blue-900 bg-opacity-30 border-2 border-blue-500 border-opacity-50 rounded-xl p-8 shadow-2xl">
             <h2 className="text-2xl font-bold text-blue-400 mb-4">
               ✅ Iteration 1 Complete
             </h2>
@@ -67,7 +64,7 @@ export default function Home() {
           </h3>
           <div className="grid md:grid-cols-3 gap-6">
             {/* Feature 1 */}
-            <div className="bg-slate-800/50 border border-purple-500/30 rounded-lg p-6 hover:border-purple-500/60 transition-colors backdrop-blur-sm">
+            <div className="bg-slate-800 bg-opacity-50 border border-purple-500 border-opacity-30 rounded-lg p-6 hover:border-opacity-60 transition-colors">
               <div className="text-4xl mb-4">⚔️</div>
               <h4 className="text-xl font-bold text-purple-300 mb-2">Characters</h4>
               <p className="text-slate-400 text-sm">
@@ -76,7 +73,7 @@ export default function Home() {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-slate-800/50 border border-amber-500/30 rounded-lg p-6 hover:border-amber-500/60 transition-colors backdrop-blur-sm">
+            <div className="bg-slate-800 bg-opacity-50 border border-amber-500 border-opacity-30 rounded-lg p-6 hover:border-opacity-60 transition-colors">
               <div className="text-4xl mb-4">🩹</div>
               <h4 className="text-xl font-bold text-amber-300 mb-2">HP Tracking</h4>
               <p className="text-slate-400 text-sm">
@@ -85,7 +82,7 @@ export default function Home() {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-slate-800/50 border border-green-500/30 rounded-lg p-6 hover:border-green-500/60 transition-colors backdrop-blur-sm">
+            <div className="bg-slate-800 bg-opacity-50 border border-green-500 border-opacity-30 rounded-lg p-6 hover:border-opacity-60 transition-colors">
               <div className="text-4xl mb-4">🌟</div>
               <h4 className="text-xl font-bold text-green-300 mb-2">Conditions</h4>
               <p className="text-slate-400 text-sm">
@@ -96,7 +93,7 @@ export default function Home() {
         </div>
 
         {/* Next Iteration Teaser */}
-        <div className="mt-16 max-w-4xl mx-auto bg-gradient-to-br from-orange-900/30 to-red-900/30 border-2 border-orange-500/50 rounded-xl p-8 text-center backdrop-blur-sm">
+        <div className="mt-16 max-w-4xl mx-auto bg-orange-900 bg-opacity-30 border-2 border-orange-500 border-opacity-50 rounded-xl p-8 text-center">
           <h3 className="text-2xl font-bold text-orange-400 mb-4">
             🚀 Coming Next: Iteration 3
           </h3>

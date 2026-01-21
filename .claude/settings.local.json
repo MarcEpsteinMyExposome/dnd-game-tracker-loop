@@ -5,7 +5,11 @@
       "Bash(git commit -m \"$\\(cat <<''EOF''\nComplete Task 2.1: Create Character Schema\n\nCreated lib/schemas/character.schema.ts with comprehensive character data model:\n- CharacterSchema: Full validation for all character properties\n- Character type: TypeScript type inferred from schema\n- CreateCharacterSchema: For character creation forms \\(omits auto-generated fields\\)\n- UpdateCharacterSchema: For character edit operations\n- Helper functions: parseCharacter, validateCharacter\n- Utility function: clampHp \\(ensures HP stays within valid range\\)\n- Default values for form initialization\n\nSchema supports all DEFINE.md requirements:\n- Core stats: name, class, level, HP, maxHp, AC\n- Image support: custom imageUrl + avatarSeed for fallback\n- Conditions: array of active status effects\n- Timestamps: createdAt, updatedAt\n\nAll fields have comprehensive JSDoc documentation.\nTypeScript compilation verified successful.\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(git commit:*)",
       "Bash(npm test:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)"
     ]
   }
 }

@@ -260,8 +260,49 @@ Use **test-aware development** - tests required for task completion, but not str
 
 ---
 
+## Outstanding Issues
+
+### ISSUE-001: Tailwind CSS 4 Compatibility Runtime Error
+**Date Discovered:** 2026-01-20
+**Status:** UNRESOLVED
+
+**Problem:**
+Homepage at localhost:3001 displays "undefined Runtime Error" and spins endlessly. Error message: "Next.js 16.1.1 (stale) Turbopack Runtime Error undefined"
+
+**Technical Context:**
+- Project uses Tailwind CSS 4 (`@import "tailwindcss"` in app/globals.css)
+- Next.js 16.1.1 with Turbopack
+- React 19.2.3
+- Visual styling added to app/page.tsx and app/characters/page.tsx
+
+**Investigation Attempted:**
+1. Identified Tailwind 4 uses different syntax than Tailwind 3
+2. Converted opacity syntax from slash format (e.g., `bg-green-900/30`, `border-green-500/50`) to explicit opacity classes (e.g., `bg-green-900 bg-opacity-30`, `border-green-500 border-opacity-50`)
+3. Simplified gradient text classes
+4. Error persists after changes
+
+**Files Affected:**
+- app/page.tsx (homepage with status cards)
+- app/characters/page.tsx (character management page)
+- app/globals.css (Tailwind 4 configuration)
+
+**Next Steps for Resolution:**
+- Check browser console for detailed error stack trace
+- Review Tailwind CSS 4 documentation for syntax changes
+- Test if /characters page loads (to isolate homepage-specific issue)
+- Consider checking Next.js 16.1.1 + Tailwind 4 compatibility
+- May need to downgrade to Tailwind 3 or update to compatible syntax
+
+**Impact:**
+- Homepage completely non-functional
+- Blocks visual verification of Iteration 2 completion
+- /characters route may or may not be affected
+
+---
+
 ## Future Decisions to Document
 
+- Tailwind CSS version strategy (resolve compatibility issue first)
 - Data persistence strategy (LocalStorage vs. database)
 - Initiative system implementation
 - Dice rolling animation approach
@@ -279,6 +320,7 @@ Use **test-aware development** - tests required for task completion, but not str
 - ADR-003: Jest + React Testing Library
 - ADR-004: Next.js App Router
 - ADR-005: Test-aware development approach
+- ISSUE-001: Tailwind CSS 4 runtime error documented (unresolved)
 
 ---
 

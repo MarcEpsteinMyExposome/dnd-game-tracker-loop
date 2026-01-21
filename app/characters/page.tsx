@@ -14,7 +14,7 @@ export default function CharactersPage() {
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-8 text-center">
-            <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-600 mb-3 drop-shadow-lg">
+            <h1 className="text-5xl font-bold text-amber-400 mb-3">
               ⚔️ Character Management
             </h1>
             <p className="text-purple-200 text-lg">
