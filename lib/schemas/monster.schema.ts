@@ -104,7 +104,7 @@ export const MonsterSchema = z.object({
    * Unique identifier (UUID format)
    * Generated on creation, immutable
    */
-  id: z.string().uuid(),
+  id: z.string().min(1, 'ID is required'),
 
   /**
    * Monster name

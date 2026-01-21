@@ -16,18 +16,19 @@
  */
 
 import { Monster, MonsterType } from '../schemas/monster.schema'
-import { randomUUID } from 'crypto'
 
 /**
  * All pre-defined monsters in the library
  * Organized by challenge rating (low to high)
+ *
+ * Note: UUIDs are hardcoded for consistency - these are static pre-defined monsters
  */
 export const MONSTERS: Monster[] = [
   // ========================================
   // CR 0.25 - 1: Weak enemies
   // ========================================
   {
-    id: randomUUID(),
+    id: 'monster-goblin-scout-001',
     name: 'Goblin Scout',
     type: 'Humanoid',
     armorClass: 13,
@@ -48,7 +49,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-zombie-002',
     name: 'Zombie',
     type: 'Undead',
     armorClass: 8,
@@ -71,7 +72,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-giant-spider-003',
     name: 'Giant Spider',
     type: 'Beast',
     armorClass: 14,
@@ -99,7 +100,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-cultist-004',
     name: 'Cultist',
     type: 'Humanoid',
     armorClass: 12,
@@ -124,7 +125,7 @@ export const MONSTERS: Monster[] = [
   // CR 2 - 4: Moderate enemies
   // ========================================
   {
-    id: randomUUID(),
+    id: 'monster-orc-warrior-005',
     name: 'Orc Warrior',
     type: 'Humanoid',
     armorClass: 13,
@@ -145,7 +146,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-skeleton-warrior-006',
     name: 'Skeleton Warrior',
     type: 'Undead',
     armorClass: 13,
@@ -166,7 +167,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-dire-wolf-007',
     name: 'Dire Wolf',
     type: 'Beast',
     armorClass: 14,
@@ -191,7 +192,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-chaos-marauder-008',
     name: 'Chaos Marauder',
     type: 'Chaos',
     armorClass: 15,
@@ -217,7 +218,7 @@ export const MONSTERS: Monster[] = [
   // CR 5 - 8: Challenging enemies
   // ========================================
   {
-    id: randomUUID(),
+    id: 'monster-tyranid-warrior-009',
     name: 'Tyranid Warrior',
     type: 'Xenos',
     armorClass: 16,
@@ -242,7 +243,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-vampire-spawn-010',
     name: 'Vampire Spawn',
     type: 'Undead',
     armorClass: 15,
@@ -272,7 +273,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-ogre-brute-011',
     name: 'Ogre Brute',
     type: 'Giant',
     armorClass: 11,
@@ -297,7 +298,7 @@ export const MONSTERS: Monster[] = [
   // CR 9+: Boss-tier enemies
   // ========================================
   {
-    id: randomUUID(),
+    id: 'monster-daemon-prince-012',
     name: 'Daemon Prince',
     type: 'Daemon',
     armorClass: 18,
@@ -328,7 +329,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-ancient-wyrm-013',
     name: 'Ancient Wyrm',
     type: 'Dragon',
     armorClass: 19,
@@ -360,7 +361,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-chaos-warlord-014',
     name: 'Chaos Warlord',
     type: 'Chaos',
     armorClass: 17,
@@ -390,7 +391,7 @@ export const MONSTERS: Monster[] = [
     updatedAt: new Date().toISOString(),
   },
   {
-    id: randomUUID(),
+    id: 'monster-lich-015',
     name: 'Lich',
     type: 'Undead',
     armorClass: 17,

@@ -50,11 +50,12 @@ describe('Monster Library Data', () => {
       })
     })
 
-    it('should have valid UUIDs for all monsters', () => {
-      const uuidRegex =
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    it('should have valid IDs for all monsters', () => {
+      // Accepts both UUID format and our monster-name-### format for pre-defined monsters
+      const idRegex =
+        /^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|monster-[\w-]+-\d{3})$/i
       MONSTERS.forEach((monster) => {
-        expect(monster.id).toMatch(uuidRegex)
+        expect(monster.id).toMatch(idRegex)
       })
     })
 
