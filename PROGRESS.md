@@ -35,7 +35,7 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (8/15)
+### ✅ Completed Tasks (9/15)
 
 **Function 5: Dashboard & Statistics** ✅ COMPLETE
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
@@ -55,10 +55,11 @@ All 15 tasks completed successfully. See Session History for details.
 
 - [x] **Task 6.3: Integrate Combat Slice into Main Store** - Updated lib/store/gameStore.ts to include CombatSlice. Extended GameStore interface with CombatSlice. Combined combatSlice with existing characterSlice using spread operator. All combat actions now available via useGameStore hook. DevTools configured to display combat state. TypeScript types properly integrated. Store version remains 1.
 
-### ⏳ Pending Tasks (7)
+- [x] **Task 6.4: Create CombatantCard Component** - Created components/combat/CombatantCard.tsx with combat-optimized display. Features: active turn indicator with gold border and glow effect, initiative badge display, HP bar with color coding (green/yellow/red), quick HP adjustment buttons (-5, -1, +1, +5), player vs enemy visual distinction (blue/red backgrounds), defeated state indicator, condition badges, avatar display with fallback, optional remove button, notes section. Uses Zustand updateCombatantHp action. Streamlined for quick combat reference. Comprehensive JSDoc documentation with usage examples. ARIA labels for accessibility.
+
+### ⏳ Pending Tasks (6)
 
 **Function 6: Combat Tracker - Basic**
-- [ ] Task 6.4: Create CombatantCard Component
 - [ ] Task 6.5: Create CombatTracker Component
 - [ ] Task 6.6: Create Add to Combat Modal
 - [ ] Task 6.7: Create Combat Page
