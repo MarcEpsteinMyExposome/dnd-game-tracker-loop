@@ -17,12 +17,21 @@ import userEvent from '@testing-library/user-event'
 import MonsterLibrary from '@/components/monsters/MonsterLibrary'
 import { Monster } from '@/lib/schemas/monster.schema'
 import * as monstersData from '@/lib/data/monsters'
+import * as encountersData from '@/lib/data/encounters'
 
 // Mock the monsters data module
 jest.mock('@/lib/data/monsters', () => ({
   getAllMonsters: jest.fn(),
   getMonsterCategories: jest.fn(),
   searchMonsters: jest.fn(),
+  getMonsterById: jest.fn(),
+}))
+
+// Mock the encounters data module
+jest.mock('@/lib/data/encounters', () => ({
+  getAllEncounters: jest.fn(),
+  resolveEncounterMonsters: jest.fn(),
+  getEncounterMonsterCount: jest.fn(),
 }))
 
 // Mock MonsterCard component
@@ -106,6 +115,26 @@ describe('MonsterLibrary', () => {
     },
   ]
 
+  // Mock encounters for Quick Encounter tests
+  const mockEncounters = [
+    {
+      id: 'encounter-goblin-ambush',
+      name: 'Goblin Ambush',
+      description: 'A band of goblin scouts attacks from the bushes.',
+      difficulty: 'Easy' as const,
+      monsters: [{ monsterId: '1', count: 4 }],
+      tags: ['ambush', 'forest'],
+    },
+    {
+      id: 'encounter-undead-horde',
+      name: 'Undead Horde',
+      description: 'Zombies rise from the ground.',
+      difficulty: 'Medium' as const,
+      monsters: [{ monsterId: '2', count: 3 }],
+      tags: ['undead', 'graveyard'],
+    },
+  ]
+
   beforeEach(() => {
     // Reset mocks before each test
     jest.clearAllMocks()
@@ -116,6 +145,21 @@ describe('MonsterLibrary', () => {
       'Dragon',
       'Beast',
     ])
+    // Set up encounter mocks
+    ;(encountersData.getAllEncounters as jest.Mock).mockReturnValue(mockEncounters)
+    ;(encountersData.getEncounterMonsterCount as jest.Mock).mockImplementation((id: string) => {
+      const encounter = mockEncounters.find((e) => e.id === id)
+      if (!encounter) return 0
+      return encounter.monsters.reduce((sum, m) => sum + m.count, 0)
+    })
+    ;(encountersData.resolveEncounterMonsters as jest.Mock).mockImplementation((id: string) => {
+      const encounter = mockEncounters.find((e) => e.id === id)
+      if (!encounter) return []
+      return encounter.monsters.map((entry) => ({
+        monster: mockMonsters.find((m) => m.id === entry.monsterId),
+        count: entry.count,
+      })).filter((r) => r.monster)
+    })
   })
 
   describe('Basic Rendering', () => {
@@ -571,6 +615,159 @@ describe('MonsterLibrary', () => {
 
       // Should still be sorted by HP (even though only 1 monster)
       expect(screen.getByText('Goblin Scout')).toBeInTheDocument()
+    })
+  })
+
+  describe('Quick Encounter Feature', () => {
+    it('does not show Quick Encounter section when callback not provided', () => {
+      render(<MonsterLibrary />)
+      expect(screen.queryByLabelText(/select a quick encounter/i)).not.toBeInTheDocument()
+    })
+
+    it('shows Quick Encounter section when onLoadEncounter is provided', () => {
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      expect(screen.getByText('Quick Encounter')).toBeInTheDocument()
+      expect(screen.getByLabelText(/select a quick encounter/i)).toBeInTheDocument()
+    })
+
+    it('displays all available encounters in dropdown', () => {
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      const dropdown = screen.getByLabelText(/select a quick encounter/i)
+      expect(dropdown).toBeInTheDocument()
+
+      // Check options
+      expect(screen.getByRole('option', { name: /select an encounter/i })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: /goblin ambush/i })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: /undead horde/i })).toBeInTheDocument()
+    })
+
+    it('shows monster count in dropdown options', () => {
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      expect(screen.getByRole('option', { name: /goblin ambush.*4 monsters/i })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: /undead horde.*3 monsters/i })).toBeInTheDocument()
+    })
+
+    it('shows difficulty in dropdown options', () => {
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      expect(screen.getByRole('option', { name: /goblin ambush \(easy\)/i })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: /undead horde \(medium\)/i })).toBeInTheDocument()
+    })
+
+    it('Load Encounter button is disabled when no encounter selected', () => {
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      const loadButton = screen.getByRole('button', { name: /load selected encounter/i })
+      expect(loadButton).toBeDisabled()
+    })
+
+    it('Load Encounter button is enabled when encounter is selected', async () => {
+      const user = userEvent.setup()
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      const dropdown = screen.getByLabelText(/select a quick encounter/i)
+      await user.selectOptions(dropdown, 'encounter-goblin-ambush')
+
+      const loadButton = screen.getByRole('button', { name: /load selected encounter/i })
+      expect(loadButton).not.toBeDisabled()
+    })
+
+    it('shows encounter preview when encounter is selected', async () => {
+      const user = userEvent.setup()
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      const dropdown = screen.getByLabelText(/select a quick encounter/i)
+      await user.selectOptions(dropdown, 'encounter-goblin-ambush')
+
+      // Check preview content
+      expect(screen.getByText('Easy')).toBeInTheDocument() // Difficulty badge
+      expect(screen.getByText(/4 total monsters/i)).toBeInTheDocument()
+      expect(screen.getByText(/a band of goblin scouts/i)).toBeInTheDocument() // Description
+      expect(screen.getByText(/4x goblin scout/i)).toBeInTheDocument() // Monster list
+    })
+
+    it('calls onLoadEncounter with resolved monsters when Load button clicked', async () => {
+      const user = userEvent.setup()
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      const dropdown = screen.getByLabelText(/select a quick encounter/i)
+      await user.selectOptions(dropdown, 'encounter-goblin-ambush')
+
+      const loadButton = screen.getByRole('button', { name: /load selected encounter/i })
+      await user.click(loadButton)
+
+      expect(mockLoadEncounter).toHaveBeenCalledTimes(1)
+      expect(mockLoadEncounter).toHaveBeenCalledWith([
+        expect.objectContaining({
+          monster: expect.objectContaining({ id: '1', name: 'Goblin Scout' }),
+          count: 4,
+        }),
+      ])
+    })
+
+    it('resets encounter selection after loading', async () => {
+      const user = userEvent.setup()
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      const dropdown = screen.getByLabelText(/select a quick encounter/i) as HTMLSelectElement
+      await user.selectOptions(dropdown, 'encounter-goblin-ambush')
+
+      expect(dropdown.value).toBe('encounter-goblin-ambush')
+
+      const loadButton = screen.getByRole('button', { name: /load selected encounter/i })
+      await user.click(loadButton)
+
+      // Selection should be reset
+      expect(dropdown.value).toBe('')
+    })
+
+    it('hides encounter preview after loading', async () => {
+      const user = userEvent.setup()
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      const dropdown = screen.getByLabelText(/select a quick encounter/i)
+      await user.selectOptions(dropdown, 'encounter-goblin-ambush')
+
+      // Preview should be visible
+      expect(screen.getByText(/4x goblin scout/i)).toBeInTheDocument()
+
+      const loadButton = screen.getByRole('button', { name: /load selected encounter/i })
+      await user.click(loadButton)
+
+      // Preview should be hidden
+      expect(screen.queryByText(/4x goblin scout/i)).not.toBeInTheDocument()
+    })
+
+    it('shows different difficulty badge colors', async () => {
+      const user = userEvent.setup()
+      const mockLoadEncounter = jest.fn()
+      render(<MonsterLibrary onLoadEncounter={mockLoadEncounter} />)
+
+      // Select Easy encounter
+      const dropdown = screen.getByLabelText(/select a quick encounter/i)
+      await user.selectOptions(dropdown, 'encounter-goblin-ambush')
+
+      let difficultyBadge = screen.getByText('Easy')
+      expect(difficultyBadge).toHaveClass('bg-green-600')
+
+      // Select Medium encounter
+      await user.selectOptions(dropdown, 'encounter-undead-horde')
+
+      difficultyBadge = screen.getByText('Medium')
+      expect(difficultyBadge).toHaveClass('bg-yellow-600')
     })
   })
 })

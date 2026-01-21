@@ -12,17 +12,34 @@
  * - Sort by name, AC, HP, or CR
  * - Responsive grid layout (1-3 columns)
  * - "Add All to Combat" batch functionality
+ * - Quick Encounter presets for one-click combat setup
  * - Empty state when no monsters match filters
  * - Monster count display
  *
  * @see components/monsters/MonsterCard.tsx - Individual monster cards
  * @see lib/data/monsters.ts - Monster data and helper functions
+ * @see lib/data/encounters.ts - Pre-built encounter data
  */
 
 import { useState, useMemo } from 'react'
 import { Monster, MonsterType } from '@/lib/schemas/monster.schema'
-import { getAllMonsters, getMonsterCategories, searchMonsters } from '@/lib/data/monsters'
+import { getAllMonsters, getMonsterCategories } from '@/lib/data/monsters'
+import {
+  getAllEncounters,
+  resolveEncounterMonsters,
+  getEncounterMonsterCount,
+  Encounter,
+} from '@/lib/data/encounters'
 import { MonsterCard } from './MonsterCard'
+
+/**
+ * Monster entry with count for adding to combat
+ * Used by Quick Encounter feature to add multiple copies of same monster
+ */
+export interface MonsterWithCount {
+  monster: Monster
+  count: number
+}
 
 interface MonsterLibraryProps {
   /**
@@ -36,6 +53,12 @@ interface MonsterLibraryProps {
    * @param monsters - Array of all currently filtered/visible monsters
    */
   onAddAllToCombat?: (monsters: Monster[]) => void
+
+  /**
+   * Callback when a Quick Encounter is loaded
+   * @param monsters - Array of monsters with counts to add
+   */
+  onLoadEncounter?: (monsters: MonsterWithCount[]) => void
 
   /**
    * Optional CSS classes for custom styling
@@ -52,6 +75,7 @@ type SortOption = 'name' | 'ac' | 'hp' | 'cr'
  * - Active category filter (All, Humanoid, Beast, etc.)
  * - Search query (filters by name)
  * - Sort order (name, AC, HP, CR)
+ * - Quick Encounter selection
  *
  * Filtering logic:
  * 1. Filter by category (if not "All")
@@ -63,23 +87,29 @@ type SortOption = 'name' | 'ac' | 'hp' | 'cr'
  * <MonsterLibrary
  *   onAddToCombat={(monster) => addMonsterToCombat(monster)}
  *   onAddAllToCombat={(monsters) => addAllMonsters(monsters)}
+ *   onLoadEncounter={(monsters) => loadEncounterToCombat(monsters)}
  * />
  * ```
  */
 export default function MonsterLibrary({
   onAddToCombat,
   onAddAllToCombat,
+  onLoadEncounter,
   className = '',
 }: MonsterLibraryProps) {
   const [activeCategory, setActiveCategory] = useState<MonsterType | 'All'>('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('name')
+  const [selectedEncounter, setSelectedEncounter] = useState<string>('')
 
   // Get all monsters from library
   const allMonsters = getAllMonsters()
 
   // Get unique categories for filter tabs
   const categories = getMonsterCategories()
+
+  // Get all pre-built encounters
+  const encounters = getAllEncounters()
 
   // Filter and sort monsters based on current state
   const filteredMonsters = useMemo(() => {
@@ -122,6 +152,33 @@ export default function MonsterLibrary({
     }
   }
 
+  // Handle Quick Encounter load
+  const handleLoadEncounter = () => {
+    if (!selectedEncounter || !onLoadEncounter) return
+
+    const resolvedMonsters = resolveEncounterMonsters(selectedEncounter)
+    if (resolvedMonsters.length > 0) {
+      onLoadEncounter(resolvedMonsters)
+      setSelectedEncounter('') // Reset selection after loading
+    }
+  }
+
+  // Get difficulty badge color
+  const getDifficultyColor = (difficulty: Encounter['difficulty']): string => {
+    switch (difficulty) {
+      case 'Easy':
+        return 'bg-green-600 text-green-100'
+      case 'Medium':
+        return 'bg-yellow-600 text-yellow-100'
+      case 'Hard':
+        return 'bg-orange-600 text-orange-100'
+      case 'Deadly':
+        return 'bg-red-600 text-red-100'
+      default:
+        return 'bg-slate-600 text-slate-100'
+    }
+  }
+
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Header with count and actions */}
@@ -145,6 +202,77 @@ export default function MonsterLibrary({
           </button>
         )}
       </div>
+
+      {/* Quick Encounter Section */}
+      {onLoadEncounter && (
+        <div className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex-1">
+              <label htmlFor="quick-encounter" className="block text-sm font-medium text-slate-300 mb-2">
+                Quick Encounter
+              </label>
+              <select
+                id="quick-encounter"
+                value={selectedEncounter}
+                onChange={(e) => setSelectedEncounter(e.target.value)}
+                className="w-full px-4 py-2 bg-slate-700 text-slate-100 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                aria-label="Select a quick encounter"
+              >
+                <option value="">Select an encounter...</option>
+                {encounters.map((encounter) => (
+                  <option key={encounter.id} value={encounter.id}>
+                    {encounter.name} ({encounter.difficulty}) - {getEncounterMonsterCount(encounter.id)} monsters
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button
+              onClick={handleLoadEncounter}
+              disabled={!selectedEncounter}
+              className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                selectedEncounter
+                  ? 'bg-orange-600 hover:bg-orange-700 text-white'
+                  : 'bg-slate-600 text-slate-400 cursor-not-allowed'
+              }`}
+              aria-label="Load selected encounter"
+            >
+              Load Encounter
+            </button>
+          </div>
+
+          {/* Encounter preview */}
+          {selectedEncounter && (
+            <div className="mt-4 pt-4 border-t border-slate-700">
+              {encounters
+                .filter((e) => e.id === selectedEncounter)
+                .map((encounter) => (
+                  <div key={encounter.id}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`px-2 py-1 text-xs font-medium rounded ${getDifficultyColor(encounter.difficulty)}`}>
+                        {encounter.difficulty}
+                      </span>
+                      <span className="text-slate-400 text-sm">
+                        {getEncounterMonsterCount(encounter.id)} total monsters
+                      </span>
+                    </div>
+                    <p className="text-slate-300 text-sm mb-3">{encounter.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {resolveEncounterMonsters(encounter.id).map(({ monster, count }) => (
+                        <span
+                          key={monster.id}
+                          className="px-3 py-1 bg-slate-700 text-slate-200 text-sm rounded-full"
+                        >
+                          {count}x {monster.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Category filter tabs */}
       <div className="flex flex-wrap gap-2">

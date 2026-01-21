@@ -21,7 +21,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import MonsterLibrary from '@/components/monsters/MonsterLibrary'
+import MonsterLibrary, { MonsterWithCount } from '@/components/monsters/MonsterLibrary'
 import { Monster } from '@/lib/schemas/monster.schema'
 import { createCombatantFromMonster } from '@/lib/schemas/combatant.schema'
 import { useGameStore } from '@/lib/store/gameStore'
@@ -126,6 +126,57 @@ export default function MonstersPage() {
     }
   }
 
+  /**
+   * Handle loading a Quick Encounter
+   *
+   * Adds all monsters from the encounter with their specified counts.
+   * Names are disambiguated with instance numbers (e.g., "Goblin 1", "Goblin 2").
+   *
+   * @param monstersWithCounts - Array of monsters with counts to add
+   */
+  const handleLoadEncounter = (monstersWithCounts: MonsterWithCount[]) => {
+    try {
+      // Track name counts across all monsters for disambiguation
+      const nameCounts = new Map<string, number>()
+      let totalAdded = 0
+
+      monstersWithCounts.forEach(({ monster, count }) => {
+        for (let i = 0; i < count; i++) {
+          // Get current count for this name
+          const currentCount = nameCounts.get(monster.name) || 0
+          // Always add number suffix for encounters (even first instance) to distinguish copies
+          const instanceName = `${monster.name} ${currentCount + 1}`
+
+          // Create combatant with instance name
+          const combatant = createCombatantFromMonster(
+            monster,
+            undefined, // initiative defaults to AC
+            instanceName
+          )
+
+          // Add to combat
+          addCombatant(combatant)
+
+          // Increment count for next instance
+          nameCounts.set(monster.name, currentCount + 1)
+          totalAdded++
+        }
+      })
+
+      // Show success toast
+      setToast({
+        type: 'success',
+        message: `Encounter loaded! ${totalAdded} ${totalAdded === 1 ? 'monster' : 'monsters'} added to combat!`,
+      })
+    } catch (error) {
+      console.error('Failed to load encounter:', error)
+      setToast({
+        type: 'error',
+        message: 'Failed to load encounter',
+      })
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-red-900 to-slate-900">
       <div className="container mx-auto px-4 py-8">
@@ -144,6 +195,7 @@ export default function MonstersPage() {
           <MonsterLibrary
             onAddToCombat={handleAddToCombat}
             onAddAllToCombat={handleAddAllToCombat}
+            onLoadEncounter={handleLoadEncounter}
           />
 
           {/* Quick Action Links */}
