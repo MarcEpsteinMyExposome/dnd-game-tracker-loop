@@ -35,7 +35,7 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (12/15)
+### ✅ Completed Tasks (13/15)
 
 **Function 5: Dashboard & Statistics** ✅ COMPLETE
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
@@ -63,10 +63,11 @@ All 15 tasks completed successfully. See Session History for details.
 
 - [x] **Task 6.7: Create Combat Page** - Created app/combat/page.tsx at /combat route. Page header with ⚔️ icon, title "Combat Tracker", and description. Integrates CombatTracker component for combat management. Modal state management for AddToCombatModal. Quick action buttons to navigate to Dashboard and Characters pages. Red-slate gradient background matching combat theme. Updated app/layout.tsx navigation to include Combat link in header. Comprehensive JSDoc documentation with route information.
 
-### ⏳ Pending Tasks (3)
+- [x] **Task 6.8: Implement Turn Management Logic** - Turn management already fully implemented in lib/store/slices/combatSlice.ts (Task 6.2). Logic includes: nextTurn() action that automatically skips defeated combatants (HP=0), cycles through initiative order, increments round counter when returning to first combatant, prevents infinite loops if all defeated. setActiveCombatant() for manual turn setting. getActiveCombatant() selector. CombatTracker component integrates with "Next Turn" button. All turn management requirements satisfied.
+
+### ⏳ Pending Tasks (2)
 
 **Function 6: Combat Tracker - Basic**
-- [ ] Task 6.8: Implement Turn Management Logic
 - [ ] Task 6.9: Write Combat Store Tests
 - [ ] Task 6.10: Write Combat Component Tests
 
