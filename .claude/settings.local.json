@@ -12,7 +12,8 @@
       "Bash(findstr:*)",
       "Bash(taskkill /F /PID 68256)",
       "Bash(taskkill //F //PID 68256)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

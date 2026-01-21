@@ -92,7 +92,7 @@ export function ConditionToggle({ characterId }: ConditionToggleProps) {
           </div>
           <div className="flex flex-wrap gap-2">
             {activeConditions.map((condition) => {
-              const details = getConditionDetails(condition)
+              const details = getConditionDetails(condition as Condition)
               return (
                 <span
                   key={condition}

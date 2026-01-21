@@ -8,7 +8,7 @@
  */
 
 import { useState } from 'react'
-import { Character } from '@/lib/schemas'
+import { Character, Condition } from '@/lib/schemas'
 import { getAvatarSource } from '@/lib/utils/avatar'
 import { useGameStore } from '@/lib/store/gameStore'
 import { ConditionBadge } from '../conditions/ConditionBadge'
@@ -190,7 +190,7 @@ export function CharacterCard({
         {character.conditions.length > 0 ? (
           <div className="flex flex-wrap gap-1 justify-center mb-2">
             {character.conditions.map((condition) => (
-              <ConditionBadge key={condition} condition={condition} size="sm" />
+              <ConditionBadge key={condition} condition={condition as Condition} size="sm" />
             ))}
           </div>
         ) : (

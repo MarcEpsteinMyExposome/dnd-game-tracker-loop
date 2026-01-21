@@ -52,6 +52,12 @@ export default function RootLayout({
                 >
                   Combat
                 </Link>
+                <Link
+                  href="/settings"
+                  className="hover:text-gray-300 transition-colors font-medium"
+                >
+                  Settings
+                </Link>
                 {/* Future navigation links will go here (Monsters, etc.) */}
               </div>
             </div>

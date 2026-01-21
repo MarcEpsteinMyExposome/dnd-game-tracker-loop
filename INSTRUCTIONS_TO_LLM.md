@@ -238,10 +238,14 @@ Before marking a task complete:
 4. Don't spin indefinitely - interact!
 
 ### Scenario 4: Task completed
-1. Mark task complete in PROGRESS.md
-2. Commit the changes
-3. State what was accomplished
-4. Ask about next task (don't assume - interact frequently)
+1. **IMMEDIATELY** mark task complete in PROGRESS.md (don't wait, don't batch)
+2. Update test count in PROGRESS.md if tests were added
+3. Update "Next Action" section in PROGRESS.md to reflect new status
+4. Commit the changes (code + PROGRESS.md update together)
+5. State what was accomplished
+6. Ask about next task (don't assume - interact frequently)
+
+**CRITICAL:** Never complete a task without updating PROGRESS.md in the same session. This is the #1 cause of tracking drift.
 
 ---
 
@@ -258,14 +262,28 @@ Before marking a task complete:
 
 ## Anti-Patterns to Avoid
 
-❌ **Don't:** Work on multiple tasks without updating PROGRESS.md
+### Session Management Anti-Patterns
+
+❌ **Don't:** Trust PROGRESS.md blindly when resuming a session
+❌ **Don't:** Start working without checking git log and actual files
+❌ **Don't:** Assume PROGRESS.md is up-to-date
+❌ **Don't:** Skip verification steps to "save time" - it wastes more time later
+
+✅ **Do:** Always verify state with git log before continuing
+✅ **Do:** Check actual files exist before assuming tasks are incomplete
+✅ **Do:** Update PROGRESS.md when discrepancies found
+✅ **Do:** Run tests to verify current state
+
+### General Anti-Patterns
+
+❌ **Don't:** Work on multiple tasks without updating PROGRESS.md after each
 ❌ **Don't:** Get stuck "thinking" for long periods without interaction
 ❌ **Don't:** Skip tests or treat them as optional
 ❌ **Don't:** Make assumptions about what to do next - ask the user
 ❌ **Don't:** Work on the old `dnd-game-tracker` directory
 ❌ **Don't:** Batch up many changes before committing
 
-✅ **Do:** Update PROGRESS.md frequently
+✅ **Do:** Update PROGRESS.md immediately after completing each task
 ✅ **Do:** Interact and confirm direction often
 ✅ **Do:** Write tests as you build features
 ✅ **Do:** Ask when uncertain
@@ -276,23 +294,84 @@ Before marking a task complete:
 
 ## Quick Start for New Sessions
 
+### CRITICAL: Always Verify Actual State Before Continuing
+
+**PROBLEM:** PROGRESS.md may be outdated. Git commits and actual files are the source of truth.
+
+**SOLUTION:** When resuming a session, ALWAYS follow this protocol:
+
 ```
 User: "Hey, please read INSTRUCTIONS_TO_LLM.md and continue where we left off"
 
-Assistant should:
-1. Read INSTRUCTIONS_TO_LLM.md, PROGRESS.md, TASKS.md
-2. Respond: "I understand! We're working on [project name] using loop methodology.
+Assistant MUST:
+1. Read INSTRUCTIONS_TO_LLM.md, PROGRESS.md, TASKS-ITERATION-X.md
+2. Check git log for recent commits (git log --oneline -20)
+3. Check what files actually exist (Glob for relevant directories)
+4. Run tests to see current test count (npm test)
+5. COMPARE git commits vs PROGRESS.md to find discrepancies
+6. If PROGRESS.md is outdated, UPDATE IT FIRST before doing anything else
+7. Respond with corrected status:
+   "I found PROGRESS.md was outdated. Updated it.
+   Actually completed: [tasks from git log]
    Currently on Iteration X, focusing on [functions].
    Last completed: [task]
    Next up: [task]
    Should I continue with [next task]?"
-3. Wait for user confirmation
-4. Proceed with task
-5. Update PROGRESS.md
-6. Commit
-7. Report completion and ask about next step
+8. Wait for user confirmation
+9. Proceed with task
+10. Update PROGRESS.md IMMEDIATELY after completing task
+11. Commit with descriptive message
+12. Report completion and ask about next step
+```
+
+### Session Resumption Checklist
+
+**Before starting ANY work:**
+- [ ] Read INSTRUCTIONS_TO_LLM.md
+- [ ] Read PROGRESS.md (but don't trust it yet)
+- [ ] Read TASKS-ITERATION-X.md
+- [ ] Run `git log --oneline -20` to see recent commits
+- [ ] Check for existence of files mentioned in tasks (use Glob)
+- [ ] Run `npm test` to see current test count
+- [ ] **VERIFY:** Does PROGRESS.md match git commits?
+- [ ] **IF NO:** Update PROGRESS.md FIRST
+- [ ] **ONLY THEN:** Ask user what to do next
+
+### Why This Matters
+
+**Without verification:**
+- You might redo completed work
+- PROGRESS.md becomes increasingly inaccurate
+- User loses trust in the tracking system
+- The learning value of the loop methodology is lost
+
+**With verification:**
+- Accurate tracking of progress
+- No duplicate work
+- User can always trust PROGRESS.md as source of truth
+- Demonstrates proper software project management
+
+### Example of Proper Resumption
+
+**WRONG:**
+```
+User: Continue where we left off
+Assistant: According to PROGRESS.md, we're on Task 8.1. Let me start creating localStorage.ts...
+[Creates file that already exists, wasting time]
+```
+
+**RIGHT:**
+```
+User: Continue where we left off
+Assistant: Let me check the actual state...
+[Reads PROGRESS.md, git log, globs for files, runs tests]
+Assistant: I found PROGRESS.md was outdated. According to git commits, Tasks 8.1-8.4 are complete.
+Let me update PROGRESS.md first...
+[Updates PROGRESS.md]
+Assistant: ✅ Updated. Actually on Task 8.5 (Settings Page). Test count: 548 (was 435).
+Should I continue with Task 8.5?
 ```
 
 ---
 
-**Remember:** This is a learning journey about understanding iterative development methodology. The process matters as much as the product.
+**Remember:** This is a learning journey about understanding iterative development methodology. The process matters as much as the product. **Accurate progress tracking is essential to the learning experience.**
