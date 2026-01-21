@@ -52,6 +52,7 @@ The loop consists of these phases:
    - `FUNCTIONS.md` - Understand feature breakdown
    - `TASKS.md` - See the current iteration's task list
    - `PROGRESS.md` - **MOST IMPORTANT** - See current state and next steps
+   - `BUGS.md` - **CRITICAL** - Check for active bugs that need attention
 
 2. **Confirm understanding:**
    - State which iteration we're on
@@ -94,6 +95,7 @@ The loop consists of these phases:
 - `FUNCTIONS.md` - Feature breakdown into 12 major functions (stable)
 - `TASKS.md` - Current iteration's atomic task list (changes per iteration)
 - `PROGRESS.md` - **LIVING DOCUMENT** - Current state, what's done, what's next, blockers
+- `BUGS.md` - **LIVING DOCUMENT** - Active and resolved bugs with root cause analysis
 - `COMPLETED.md` - Historical record of finished iterations
 - `RETROSPECTIVE.md` - Lessons learned after each iteration
 - `INSTRUCTIONS_TO_LLM.md` - This file - context for AI assistants
@@ -329,12 +331,15 @@ Assistant MUST:
 **Before starting ANY work:**
 - [ ] Read INSTRUCTIONS_TO_LLM.md
 - [ ] Read PROGRESS.md (but don't trust it yet)
+- [ ] Read BUGS.md to check for active bugs
 - [ ] Read TASKS-ITERATION-X.md
 - [ ] Run `git log --oneline -20` to see recent commits
 - [ ] Check for existence of files mentioned in tasks (use Glob)
 - [ ] Run `npm test` to see current test count
 - [ ] **VERIFY:** Does PROGRESS.md match git commits?
 - [ ] **IF NO:** Update PROGRESS.md FIRST
+- [ ] **VERIFY:** Are there active bugs in BUGS.md?
+- [ ] **IF YES:** Address bugs before continuing with new tasks
 - [ ] **ONLY THEN:** Ask user what to do next
 
 ### Why This Matters

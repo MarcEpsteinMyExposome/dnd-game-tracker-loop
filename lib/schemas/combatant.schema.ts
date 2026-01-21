@@ -56,8 +56,9 @@ export const CombatantSchema = z.object({
   /**
    * Reference to original Character or Monster ID
    * Links back to the roster entity
+   * Accepts UUID format (for characters) or string format (for monsters)
    */
-  entityId: z.string().uuid(),
+  entityId: z.string().min(1),
 
   /**
    * Entity type - character or monster
@@ -208,7 +209,7 @@ export function validateCombatant(data: unknown) {
  * Omits combat-generated fields, provides defaults
  */
 export const CreateCombatantFromCharacterSchema = z.object({
-  entityId: z.string().uuid(),
+  entityId: z.string().min(1),
   name: z.string().min(1).max(60),
   armorClass: z.number().int().min(1).max(30),
   maxHp: z.number().int().min(1).max(999),
