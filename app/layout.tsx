@@ -46,7 +46,13 @@ export default function RootLayout({
                 >
                   Characters
                 </Link>
-                {/* Future navigation links will go here (Combat, Monsters, etc.) */}
+                <Link
+                  href="/combat"
+                  className="hover:text-gray-300 transition-colors font-medium"
+                >
+                  Combat
+                </Link>
+                {/* Future navigation links will go here (Monsters, etc.) */}
               </div>
             </div>
           </div>

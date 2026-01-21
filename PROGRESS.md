@@ -35,7 +35,7 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (11/15)
+### ✅ Completed Tasks (12/15)
 
 **Function 5: Dashboard & Statistics** ✅ COMPLETE
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
@@ -61,10 +61,11 @@ All 15 tasks completed successfully. See Session History for details.
 
 - [x] **Task 6.6: Create Add to Combat Modal** - Created components/combat/AddToCombatModal.tsx for adding characters to combat. Features: character list with avatars and stats, multi-select checkboxes, initiative input field per character (defaults to AC), Select All / Clear All buttons, filters out characters already in combat, empty state when no characters available, selected count display, modal overlay with ESC key and backdrop click support. Uses createCombatantFromCharacter helper and addCombatant Zustand action. Comprehensive JSDoc documentation with usage examples.
 
-### ⏳ Pending Tasks (4)
+- [x] **Task 6.7: Create Combat Page** - Created app/combat/page.tsx at /combat route. Page header with ⚔️ icon, title "Combat Tracker", and description. Integrates CombatTracker component for combat management. Modal state management for AddToCombatModal. Quick action buttons to navigate to Dashboard and Characters pages. Red-slate gradient background matching combat theme. Updated app/layout.tsx navigation to include Combat link in header. Comprehensive JSDoc documentation with route information.
+
+### ⏳ Pending Tasks (3)
 
 **Function 6: Combat Tracker - Basic**
-- [ ] Task 6.7: Create Combat Page
 - [ ] Task 6.8: Implement Turn Management Logic
 - [ ] Task 6.9: Write Combat Store Tests
 - [ ] Task 6.10: Write Combat Component Tests
