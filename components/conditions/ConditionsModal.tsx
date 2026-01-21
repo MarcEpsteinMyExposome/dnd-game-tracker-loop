@@ -65,7 +65,7 @@ export function ConditionsModal({ character, onClose }: ConditionsModalProps) {
 
         {/* Condition Toggle */}
         <div className="mb-6">
-          <ConditionToggle characterId={character.id} activeConditions={character.conditions} />
+          <ConditionToggle characterId={character.id} />
         </div>
 
         {/* Condition Reference */}

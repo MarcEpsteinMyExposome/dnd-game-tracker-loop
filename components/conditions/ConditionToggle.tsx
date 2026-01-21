@@ -18,12 +18,19 @@ interface ConditionToggleProps {
 
   /**
    * Current active conditions for the character
+   * @deprecated Not used anymore - component reads from store directly for reactivity
    */
-  activeConditions: Condition[]
+  activeConditions?: Condition[]
 }
 
-export function ConditionToggle({ characterId, activeConditions }: ConditionToggleProps) {
+export function ConditionToggle({ characterId }: ConditionToggleProps) {
   const toggleCharacterCondition = useGameStore((state) => state.toggleCharacterCondition)
+
+  // Read character directly from store to get reactive updates
+  const character = useGameStore((state) => state.getCharacterById(characterId))
+
+  // Use conditions from store (reactive) instead of prop (stale)
+  const activeConditions = character?.conditions || []
 
   const handleToggle = (condition: Condition) => {
     toggleCharacterCondition(characterId, condition)

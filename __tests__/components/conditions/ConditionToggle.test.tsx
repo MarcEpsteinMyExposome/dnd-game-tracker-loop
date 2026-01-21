@@ -15,18 +15,34 @@ jest.mock('@/lib/store/gameStore')
 
 describe('ConditionToggle', () => {
   const mockToggleCharacterCondition = jest.fn()
+  const mockGetCharacterById = jest.fn()
   const testCharacterId = 'test-character-id'
   const activeConditions: Condition[] = ['Poisoned', 'Stunned']
 
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(useGameStore as unknown as jest.Mock).mockReturnValue(mockToggleCharacterCondition)
+
+    // Mock the store to return character with conditions
+    mockGetCharacterById.mockReturnValue({
+      id: testCharacterId,
+      name: 'Test Character',
+      conditions: activeConditions,
+    })
+
+    // Mock useGameStore to return different values based on selector
+    ;(useGameStore as unknown as jest.Mock).mockImplementation((selector) => {
+      const state = {
+        toggleCharacterCondition: mockToggleCharacterCondition,
+        getCharacterById: mockGetCharacterById,
+      }
+      return selector(state)
+    })
   })
 
   describe('Rendering', () => {
     it('renders all 7 conditions as checkboxes', () => {
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       // Verify all conditions are present as checkboxes
@@ -41,7 +57,7 @@ describe('ConditionToggle', () => {
 
     it('marks active conditions as checked', () => {
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       const poisonedButton = screen.getByRole('checkbox', { name: /poisoned/i })
@@ -53,7 +69,7 @@ describe('ConditionToggle', () => {
 
     it('marks inactive conditions as unchecked', () => {
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       const proneButton = screen.getByRole('checkbox', { name: /prone/i })
@@ -65,14 +81,21 @@ describe('ConditionToggle', () => {
 
     it('shows active conditions summary', () => {
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       expect(screen.getByText(/Active Conditions \(2\):/)).toBeInTheDocument()
     })
 
     it('does not show summary when no active conditions', () => {
-      render(<ConditionToggle characterId={testCharacterId} activeConditions={[]} />)
+      // Override mock for this test to return character with no conditions
+      mockGetCharacterById.mockReturnValue({
+        id: testCharacterId,
+        name: 'Test Character',
+        conditions: [],
+      })
+
+      render(<ConditionToggle characterId={testCharacterId} />)
 
       expect(screen.queryByText(/Active Conditions/)).not.toBeInTheDocument()
     })
@@ -83,7 +106,7 @@ describe('ConditionToggle', () => {
       const user = userEvent.setup()
 
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       const proneButton = screen.getByRole('checkbox', { name: /prone/i })
@@ -97,7 +120,7 @@ describe('ConditionToggle', () => {
       const user = userEvent.setup()
 
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       const poisonedButton = screen.getByRole('checkbox', { name: /poisoned/i })
@@ -110,7 +133,7 @@ describe('ConditionToggle', () => {
       const user = userEvent.setup()
 
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       const proneButton = screen.getByRole('checkbox', { name: /prone/i })
@@ -128,7 +151,7 @@ describe('ConditionToggle', () => {
   describe('Accessibility', () => {
     it('uses checkbox role for conditions', () => {
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       const checkboxes = screen.getAllByRole('checkbox')
@@ -137,7 +160,7 @@ describe('ConditionToggle', () => {
 
     it('has proper aria-labels', () => {
       render(
-        <ConditionToggle characterId={testCharacterId} activeConditions={activeConditions} />
+        <ConditionToggle characterId={testCharacterId} />
       )
 
       expect(screen.getByRole('checkbox', { name: /toggle poisoned/i })).toBeInTheDocument()
