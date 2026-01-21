@@ -44,7 +44,7 @@ const config = {
 
   // Transform ignore patterns
   transformIgnorePatterns: [
-    '/node_modules/',
+    '/node_modules/(?!uuid)', // Transform uuid package
     '^.+\\.module\\.(css|sass|scss)$',
   ],
 

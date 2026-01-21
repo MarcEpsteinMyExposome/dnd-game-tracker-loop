@@ -15,7 +15,8 @@
       "Bash(npm run:*)",
       "Bash(ls:*)",
       "Bash(pwd:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [
       "Bash(rm:*)",
