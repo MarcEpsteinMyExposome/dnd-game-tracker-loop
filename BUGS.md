@@ -83,7 +83,7 @@ This allows `entityId` to reference both:
 
 #### Resolution
 
-**Fixed in commit:** [Pending - changes ready for commit]
+**Fixed in commit:** `1b14b82` (2026-01-21)
 
 **Changes Applied:**
 - ✅ Updated `CombatantSchema.entityId` from `.uuid()` to `.min(1)` (line 60)

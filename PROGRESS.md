@@ -202,7 +202,34 @@ All 15 tasks completed successfully. Post-iteration bug fix applied. See Session
 
 ---
 
-## Post-Iteration 3 Bug Fixes
+## Post-Iteration Bug Fixes
+
+### ✅ RESOLVED: Bug #001 - Invalid UUID Error Adding Monsters to Combat (2026-01-21)
+
+**Problem:** Monster "Add to Combat" button threw ZodError validation error: "Invalid uuid" on entityId field.
+
+**Root Cause:** Monster IDs changed to string format (`monster-goblin-scout-001`) in commit 57ba127, but Combatant schema still required UUID format for entityId.
+
+**Solution:**
+- Updated `CombatantSchema.entityId` from `.uuid()` to `.min(1)`
+- Updated `CreateCombatantFromCharacterSchema.entityId` similarly
+- Created [BUGS.md](BUGS.md) file for bug tracking
+- Updated [INSTRUCTIONS_TO_LLM.md](INSTRUCTIONS_TO_LLM.md) to include BUGS.md in session checklist
+
+**Files Fixed:**
+- [lib/schemas/combatant.schema.ts](lib/schemas/combatant.schema.ts) (lines 60, 211)
+- [BUGS.md](BUGS.md) (new file)
+- [INSTRUCTIONS_TO_LLM.md](INSTRUCTIONS_TO_LLM.md) (session checklist)
+
+**Test Results:**
+- ✅ All 760 tests passing
+- ✅ No test failures
+- ✅ Commit: `1b14b82`
+- ⏳ Awaiting manual verification in browser
+
+**See [BUGS.md](BUGS.md) for complete bug report with technical details.**
+
+---
 
 ### ✅ RESOLVED: CombatTracker Infinite Loop (2026-01-21)
 
