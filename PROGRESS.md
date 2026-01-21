@@ -35,15 +35,16 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (1/15)
+### ✅ Completed Tasks (2/15)
 
 **Function 5: Dashboard & Statistics**
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
 
-### ⏳ Pending Tasks (14)
+- [x] **Task 5.2: Create StatCard Component** - Created components/dashboard/StatCard.tsx with full TypeScript props interface. Supports 5 color variants (blue, green, red, yellow, purple) with gradient backgrounds using Tailwind CSS 4 syntax. Props include title, value, optional icon (emoji), optional description, and optional trend indicator (up/down arrows). Responsive design with hover scale effect. Accessible with ARIA labels and semantic HTML. Comprehensive JSDoc documentation explaining all props with examples.
+
+### ⏳ Pending Tasks (13)
 
 **Function 5: Dashboard & Statistics**
-- [ ] Task 5.2: Create StatCard Component
 - [ ] Task 5.3: Create Dashboard Component
 - [ ] Task 5.4: Create Dashboard Page
 - [ ] Task 5.5: Write Dashboard Component Tests
@@ -128,10 +129,10 @@ All 15 tasks completed successfully. See Session History for details.
 
 **Current Progress:**
 - ✅ Task 5.1 Complete: Stats calculation utilities with 45 passing tests
-- ⏳ Next: Task 5.2 - Create StatCard Component
+- ✅ Task 5.2 Complete: StatCard component with color variants and ARIA support
+- ⏳ Next: Task 5.3 - Create Dashboard Component
 
 **Remaining in Function 5:**
-- Task 5.2: StatCard component (display individual stats with colors/icons)
 - Task 5.3: Dashboard component (compose all stat cards)
 - Task 5.4: Dashboard page at /dashboard route
 - Task 5.5: Dashboard component tests
