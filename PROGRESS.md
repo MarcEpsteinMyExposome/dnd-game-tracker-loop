@@ -35,7 +35,7 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (14/15)
+### ✅ Completed Tasks (15/15) 🎉
 
 **Function 5: Dashboard & Statistics** ✅ COMPLETE
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
@@ -67,10 +67,11 @@ All 15 tasks completed successfully. See Session History for details.
 
 - [x] **Task 6.9: Write Combat Store Tests** - Created __tests__/store/combatSlice.test.ts with 38 comprehensive tests. Covers: initial state (3 tests), addCombatant (6 tests including sorting, activation, UUID generation), removeCombatant (4 tests including active turn transfer), updateCombatantHp (4 tests including clamping), setActiveCombatant (2 tests), nextTurn (6 tests including cycling, round counter, skipping defeated), clearCombat (3 tests), startCombat (3 tests), selectors (7 tests for getActiveCombatant, getSortedCombatants, getCombatantById). All 38 tests passing. Total test count: 405 tests passing.
 
-### ⏳ Pending Tasks (1)
+- [x] **Task 6.10: Write Combat Component Tests** - Created __tests__/components/combat/CombatantCard.test.tsx with 30 comprehensive tests. Covers: rendering (13 tests for name, HP, AC, initiative, player/enemy indicator, active turn indicator, defeated state, conditions, notes), HP tracking (6 tests for adjustment buttons, disabled states), visual styling (4 tests for player/enemy backgrounds, active border, defeated opacity), remove button (3 tests for presence and callback), accessibility (2 tests for ARIA role and labels). All 30 tests passing. Total test count: 435 tests passing.
 
-**Function 6: Combat Tracker - Basic**
-- [ ] Task 6.10: Write Combat Component Tests
+### ⏳ Pending Tasks (0)
+
+**🎉 ITERATION 3 COMPLETE!** All 15 tasks finished!
 
 ---
 
@@ -116,10 +117,10 @@ All 15 tasks completed successfully. See Session History for details.
 
 ## Test Suite Status
 
-**Total Tests:** 405 (all passing ✅)
+**Total Tests:** 435 (all passing ✅)
 - Iteration 1 Tests: 244
 - Iteration 2 Tests: 30
-- Iteration 3 Tests: 131 (stats utilities: 45, dashboard components: 48, combat store: 38)
+- Iteration 3 Tests: 161 (stats utilities: 45, dashboard components: 48, combat store: 38, combat components: 30)
 
 **Components/Utilities Tested:**
 - CharacterCard (15+ tests)
@@ -128,35 +129,42 @@ All 15 tasks completed successfully. See Session History for details.
 - Stats utilities (45 tests)
 - StatCard (23 tests)
 - Dashboard (25 tests)
+- Combat store (38 tests)
+- CombatantCard (30 tests)
 
 **Coverage:**
 - Core character management functionality
 - Condition system functionality
+- Dashboard statistics and display
+- Combat tracker and turn management
 - User interactions and store integration
 
 ---
 
 ## Next Action
 
-🚧 **EXECUTING ITERATION 3**
+🎉 **ITERATION 3 COMPLETE!**
 
-**Current Progress:**
-- ✅ Function 5 COMPLETE (All 5 tasks done!)
-  - Task 5.1: Stats calculation utilities with 45 passing tests
-  - Task 5.2: StatCard component with color variants and ARIA support
-  - Task 5.3: Dashboard component with real-time stats and responsive grid
-  - Task 5.4: Dashboard page at /dashboard with navigation and quick actions
-  - Task 5.5: Dashboard component tests (48 tests, all passing)
-- ⏳ Next: Function 6 - Combat Tracker (10 tasks remaining)
+**Summary:**
+- ✅ Function 5 COMPLETE - Dashboard & Statistics (5 tasks)
+- ✅ Function 6 COMPLETE - Combat Tracker Basic (10 tasks)
+- 15/15 tasks completed
+- 161 new tests (435 total)
+- All tests passing ✅
 
-**Ready to start Function 6:**
-- Task 6.1: Create Combatant Schema Extensions (first task)
+**Deliverables:**
+- Team statistics dashboard at /dashboard
+- Full combat tracker system at /combat
+- Initiative order management
+- Turn advancement with automatic defeated-skipping
+- HP tracking during combat
+- Add characters to combat from roster
+- Comprehensive test coverage
 
-**Technical Notes:**
-- Initiative = AC for now (proper d20 rolls in Iteration 5)
-- Use hardcoded monsters initially (full library in Iteration 4)
-- Combat state in memory only (LocalStorage in Iteration 4)
-- HP changes in combat don't sync to roster yet (future iteration)
+**Next Session Should:**
+1. Review and test the combat tracker in the browser
+2. Plan Iteration 4 tasks
+3. Continue with remaining functions from FUNCTIONS.md
 
 ---
 
