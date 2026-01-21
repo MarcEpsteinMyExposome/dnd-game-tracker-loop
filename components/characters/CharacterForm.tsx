@@ -8,8 +8,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { Character, CreateCharacter } from '@/lib/schemas'
-import { validateWithSchema, CreateCharacterSchema } from '@/lib/schemas'
+import { Character, CreateCharacter, CreateCharacterSchema } from '@/lib/schemas'
 import { useGameStore } from '@/lib/store/gameStore'
 import { fileToBase64, validateImageFile, getAvatarUrl } from '@/lib/utils/avatar'
 
@@ -50,13 +49,14 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
     e.preventDefault()
 
     // Validate form data
-    const result = validateWithSchema(CreateCharacterSchema, formData)
+    const result = CreateCharacterSchema.safeParse(formData)
 
     if (!result.success) {
       // Convert errors to object
       const errorObj: Record<string, string> = {}
       result.error.issues.forEach((issue) => {
-        errorObj[issue.path] = issue.message
+        const key = issue.path.join('.')
+        errorObj[key] = issue.message
       })
       setErrors(errorObj)
       return
