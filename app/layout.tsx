@@ -35,12 +35,18 @@ export default function RootLayout({
               </Link>
               <div className="flex gap-6">
                 <Link
+                  href="/dashboard"
+                  className="hover:text-gray-300 transition-colors font-medium"
+                >
+                  Dashboard
+                </Link>
+                <Link
                   href="/characters"
                   className="hover:text-gray-300 transition-colors font-medium"
                 >
                   Characters
                 </Link>
-                {/* Future navigation links will go here */}
+                {/* Future navigation links will go here (Combat, Monsters, etc.) */}
               </div>
             </div>
           </div>

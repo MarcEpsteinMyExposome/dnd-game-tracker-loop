@@ -35,7 +35,7 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (3/15)
+### ✅ Completed Tasks (4/15)
 
 **Function 5: Dashboard & Statistics**
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
@@ -44,10 +44,11 @@ All 15 tasks completed successfully. See Session History for details.
 
 - [x] **Task 5.3: Create Dashboard Component** - Created components/dashboard/Dashboard.tsx integrating all stat cards. Uses Zustand store to access characters and auto-updates when character data changes. Displays: Team Size (blue card), Average HP (color-coded green/yellow/red based on %), Healthy count (green), Injured count (yellow), Unconscious count (red). Responsive grid layout (1-3 columns). Empty state message when no characters exist. Dynamic HP color logic (>75% green, >25% yellow, ≤25% red). Comprehensive JSDoc documentation with usage examples.
 
-### ⏳ Pending Tasks (12)
+- [x] **Task 5.4: Create Dashboard Page** - Created app/dashboard/page.tsx at /dashboard route. Page header with 📊 icon, title "Team Dashboard", and description. Integrates Dashboard component for stats display. Quick action buttons to navigate to "Manage Characters" (/characters) and "Start Combat" (/combat). Updated app/layout.tsx navigation to include Dashboard link in header. Consistent styling with purple-slate gradient background matching app theme. Comprehensive JSDoc documentation.
+
+### ⏳ Pending Tasks (11)
 
 **Function 5: Dashboard & Statistics**
-- [ ] Task 5.4: Create Dashboard Page
 - [ ] Task 5.5: Write Dashboard Component Tests
 
 **Function 6: Combat Tracker - Basic**
@@ -132,11 +133,11 @@ All 15 tasks completed successfully. See Session History for details.
 - ✅ Task 5.1 Complete: Stats calculation utilities with 45 passing tests
 - ✅ Task 5.2 Complete: StatCard component with color variants and ARIA support
 - ✅ Task 5.3 Complete: Dashboard component with real-time stats and responsive grid
-- ⏳ Next: Task 5.4 - Create Dashboard Page
+- ✅ Task 5.4 Complete: Dashboard page at /dashboard with navigation and quick actions
+- ⏳ Next: Task 5.5 - Write Dashboard Component Tests
 
 **Remaining in Function 5:**
-- Task 5.4: Dashboard page at /dashboard route
-- Task 5.5: Dashboard component tests
+- Task 5.5: Dashboard component tests (StatCard + Dashboard)
 
 **Then Function 6:**
 - 10 tasks for Combat Tracker implementation
