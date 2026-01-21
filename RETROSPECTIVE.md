@@ -18,6 +18,85 @@ After completing each loop iteration:
 
 ## Iteration Retrospectives
 
+### Loop Iteration 4: Data Persistence & Monster Library
+
+**Completed:** 2026-01-21
+**Duration:** 1 day
+**Tasks Completed:** 16 of 16
+
+#### What Went Well ✅
+- Zustand persist middleware integrated seamlessly with existing store architecture
+- Migration system designed upfront provides clear path for future schema changes
+- Monster library feels complete with filtering, sorting, and search capabilities
+- Quick Encounter feature adds genuine gameplay value for real D&D sessions
+- Two pathways to add monsters (from /monsters or /combat) improves UX flexibility
+- Toast notifications provide clear feedback without interrupting user flow
+- ErrorBoundary catches persistence failures gracefully
+- Comprehensive test coverage maintained (370 new tests, 805 total)
+- AddMonstersModal instance count feature (add 3x Goblins) is very practical
+
+#### What Could Be Improved 🔄
+- Only 5 pre-built encounters - could add more variety
+- No custom monster creation - only pre-defined stat blocks
+- Initiative still uses AC as placeholder - real dice rolling would improve experience
+- Could add monster stat block export/print functionality
+- Settings page is functional but minimal - could be more polished
+
+#### Specific Lessons Learned 💡
+
+1. **Zustand Persist Middleware Timing**
+   - Situation: Initial page load showed loading state while Zustand hydrated from localStorage.
+   - Learning: Zustand persist middleware handles hydration timing automatically, but apps need to handle the "loading" state before hydration completes.
+   - Action: Created PersistenceProvider component that wraps app and shows loading spinner until hasHydrated is true.
+
+2. **Migration System Design**
+   - Situation: Needed a way to upgrade persisted state when schema changes in future versions.
+   - Learning: Designing migration system upfront (even with only v0 → v1) makes future upgrades straightforward. Sequential migrations are easier to reason about than complex version jumping.
+   - Action: Always include version number in persisted state. Add migrations before schema changes.
+
+3. **Quick Encounters Add Real Value**
+   - Situation: Added pre-built encounters as "nice to have" feature, but it proved very useful.
+   - Learning: Pre-configured combat setups significantly reduce friction for actual gameplay. DMs can start sessions faster.
+   - Action: Consider more "quick action" features that bundle common operations together.
+
+4. **Multiple Pathways to Same Action**
+   - Situation: Can add monsters from both /monsters page and /combat page (via AddMonstersModal).
+   - Learning: Providing multiple entry points for same functionality improves UX - users can work in whatever flow feels natural.
+   - Action: Consider dual-pathway approach for other features (e.g., adding characters to combat).
+
+5. **Instance Count Selector**
+   - Situation: Users often want to add multiple copies of same monster (e.g., 4 Goblins).
+   - Learning: Single "Add to Combat" button per monster is inefficient. Instance count selector saves many clicks.
+   - Action: Look for other places where "add multiple of same thing" would be useful.
+
+#### Process Observations 📊
+- **Task breakdown:** 16 tasks was appropriate for combined persistence + monster library scope.
+- **Blockers:** No significant blockers. Hydration timing was expected challenge.
+- **Testing approach:** Integration tests (16) proved valuable for end-to-end persistence flows.
+- **Commit frequency:** Good cadence with logical groupings.
+
+#### Adjustments for Next Iteration ⚙️
+- [ ] Plan more comprehensive encounter presets (different themes, party sizes)
+- [ ] Consider adding custom monster creation in future iteration
+- [ ] Implement real dice rolling for initiative (Iteration 5 priority)
+- [ ] Add keyboard shortcuts for common combat actions
+
+#### Metrics 📈
+- Tasks planned: 16
+- Tasks completed: 16
+- Tests written: 370
+- Total test count: 805
+- Commits made: Multiple (including post-fix commits)
+- Blockers encountered: 0 significant
+
+#### Notes
+- App now persists state - actually usable for real game sessions
+- Monster library with Quick Encounters significantly improves combat setup experience
+- Settings page provides data management (export, import, clear) for backup/restore
+- Ready for enhanced combat features (dice rolling, true initiative) in Iteration 5
+
+---
+
 ### Loop Iteration 3: Dashboard & Combat Tracker
 
 **Completed:** 2026-01-21
