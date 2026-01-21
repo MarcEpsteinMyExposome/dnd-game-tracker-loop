@@ -35,9 +35,9 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (5/15) - Function 5 COMPLETE! ✅
+### ✅ Completed Tasks (8/15)
 
-**Function 5: Dashboard & Statistics**
+**Function 5: Dashboard & Statistics** ✅ COMPLETE
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
 
 - [x] **Task 5.2: Create StatCard Component** - Created components/dashboard/StatCard.tsx with full TypeScript props interface. Supports 5 color variants (blue, green, red, yellow, purple) with gradient backgrounds using Tailwind CSS 4 syntax. Props include title, value, optional icon (emoji), optional description, and optional trend indicator (up/down arrows). Responsive design with hover scale effect. Accessible with ARIA labels and semantic HTML. Comprehensive JSDoc documentation explaining all props with examples.
@@ -48,12 +48,16 @@ All 15 tasks completed successfully. See Session History for details.
 
 - [x] **Task 5.5: Write Dashboard Component Tests** - Created __tests__/components/dashboard/StatCard.test.tsx with 23 comprehensive tests covering basic rendering, optional props (icon, description, trend), all 5 color variants, accessibility (ARIA labels, roles), and styling. Created __tests__/components/dashboard/Dashboard.test.tsx with 25 tests covering empty state, team size display, average HP with color-coding thresholds (green >75%, yellow 26-75%, red ≤25%), health status breakdown (healthy/injured/unconscious counts), real-time updates when characters change, and layout structure. All 48 new tests passing. Total test count: 367 tests passing.
 
-### ⏳ Pending Tasks (10)
+**Function 6: Combat Tracker - Basic**
+- [x] **Task 6.1: Create Combatant Schema Extensions** - Schema already exists from Iteration 1 with all required functionality. Helper functions createCombatantFromCharacter and createCombatantFromMonster work correctly. Initiative defaults to AC (temporary until Iteration 5). Schema validates initiative values (min -10, max 50). All helper functions fully documented with JSDoc. Comprehensive tests exist in __tests__/schemas/combatant.test.ts with 43 passing tests covering schema validation, helper functions, HP calculations, initiative sorting, turn advancement, and edge cases.
+
+- [x] **Task 6.2: Create Combat Zustand Store Slice** - Created lib/store/slices/combatSlice.ts with complete combat management. Actions: addCombatant (validates and auto-sorts by initiative, activates first combatant), removeCombatant (handles active turn transfer), updateCombatantHp (with clamping), setActiveCombatant, nextTurn (skips defeated, increments round counter on cycle), clearCombat, startCombat. Selectors: getActiveCombatant, getSortedCombatants, getCombatantById. State: combatants array, round counter, isInCombat flag. Comprehensive JSDoc documentation with usage examples. Follows established Zustand slice pattern from characterSlice.
+
+- [x] **Task 6.3: Integrate Combat Slice into Main Store** - Updated lib/store/gameStore.ts to include CombatSlice. Extended GameStore interface with CombatSlice. Combined combatSlice with existing characterSlice using spread operator. All combat actions now available via useGameStore hook. DevTools configured to display combat state. TypeScript types properly integrated. Store version remains 1.
+
+### ⏳ Pending Tasks (7)
 
 **Function 6: Combat Tracker - Basic**
-- [ ] Task 6.1: Create Combatant Schema Extensions
-- [ ] Task 6.2: Create Combat Zustand Store Slice
-- [ ] Task 6.3: Integrate Combat Slice into Main Store
 - [ ] Task 6.4: Create CombatantCard Component
 - [ ] Task 6.5: Create CombatTracker Component
 - [ ] Task 6.6: Create Add to Combat Modal

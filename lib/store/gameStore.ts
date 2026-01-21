@@ -16,6 +16,7 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { CharacterSlice, createCharacterSlice } from './slices/characterSlice'
+import { CombatSlice, createCombatSlice } from './slices/combatSlice'
 
 /**
  * Game Store State Interface
@@ -24,13 +25,13 @@ import { CharacterSlice, createCharacterSlice } from './slices/characterSlice'
  *
  * Current slices:
  * - CharacterSlice (Iteration 2) ✅
+ * - CombatSlice (Iteration 3) ✅
  *
  * Future slices:
- * - CombatSlice (Iteration 3)
  * - MonsterSlice (Iteration 4)
  * - SettingsSlice (Iteration 6)
  */
-export interface GameStore extends CharacterSlice {
+export interface GameStore extends CharacterSlice, CombatSlice {
   /**
    * Version of the store schema
    * Useful for data migrations if store structure changes
@@ -64,6 +65,9 @@ export const useGameStore = create<GameStore>()(
 
       // Character slice
       ...createCharacterSlice(...a),
+
+      // Combat slice
+      ...createCombatSlice(...a),
     }),
     {
       // DevTools configuration
