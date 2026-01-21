@@ -2,8 +2,8 @@
 
 **Project:** dnd-game-tracker-loop v2.0
 **Current Iteration:** 3 (Dashboard & Combat Tracker)
-**Last Updated:** 2026-01-20
-**Status:** 📋 PLANNING
+**Last Updated:** 2026-01-21
+**Status:** 🚧 IN PROGRESS
 
 ---
 
@@ -13,9 +13,9 @@
 - Function 5: Dashboard & Statistics (team stats, health overview)
 - Function 6: Combat Tracker - Basic (initiative order, turn management, HP tracking)
 
-**Started:** 2026-01-20
-**Completed:** Not yet started
-**Planning Phase:** In progress
+**Started:** 2026-01-21
+**Completed:** In progress
+**Planning Phase:** Complete ✅
 
 ---
 
@@ -35,10 +35,14 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ⏳ Pending Tasks (15 - NOT YET STARTED)
+### ✅ Completed Tasks (1/15)
 
 **Function 5: Dashboard & Statistics**
-- [ ] Task 5.1: Create Stats Calculation Utilities
+- [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
+
+### ⏳ Pending Tasks (14)
+
+**Function 5: Dashboard & Statistics**
 - [ ] Task 5.2: Create StatCard Component
 - [ ] Task 5.3: Create Dashboard Component
 - [ ] Task 5.4: Create Dashboard Page
@@ -100,14 +104,16 @@ All 15 tasks completed successfully. See Session History for details.
 
 ## Test Suite Status
 
-**Total Tests:** 274 (all passing ✅)
+**Total Tests:** 319 (all passing ✅)
 - Iteration 1 Tests: 244
 - Iteration 2 Tests: 30
+- Iteration 3 Tests: 45 (stats utilities)
 
-**Components Tested:**
+**Components/Utilities Tested:**
 - CharacterCard (15+ tests)
 - ConditionBadge (10+ tests)
 - ConditionToggle (12+ tests)
+- Stats utilities (45 tests)
 
 **Coverage:**
 - Core character management functionality
@@ -118,42 +124,26 @@ All 15 tasks completed successfully. See Session History for details.
 
 ## Next Action
 
-📋 **PLANNING ITERATION 3**
+🚧 **EXECUTING ITERATION 3**
 
-Created comprehensive task breakdown for Iteration 3 (15 tasks total).
+**Current Progress:**
+- ✅ Task 5.1 Complete: Stats calculation utilities with 45 passing tests
+- ⏳ Next: Task 5.2 - Create StatCard Component
 
-**Planning Complete:**
-- ✅ Created TASKS-ITERATION-3.md with all task details
-- ✅ Updated PROGRESS.md to reflect Iteration 3 planning
-- ⏳ Next: Update ARCHITECTURE.md with planned structure
-- ⏳ Next: Update DECISIONS.md if architectural choices needed
-- ⏳ Next: Begin Task 5.1 when ready to start execution
+**Remaining in Function 5:**
+- Task 5.2: StatCard component (display individual stats with colors/icons)
+- Task 5.3: Dashboard component (compose all stat cards)
+- Task 5.4: Dashboard page at /dashboard route
+- Task 5.5: Dashboard component tests
 
-**Iteration 3 Scope:**
-- Function 5: Dashboard & Statistics (5 tasks)
-  - Stats calculation utilities
-  - StatCard component
-  - Dashboard component with team overview
-  - Dashboard page at /dashboard
-  - Component tests
-
-- Function 6: Combat Tracker - Basic (10 tasks)
-  - Combatant schema helpers
-  - Combat store slice (add, remove, HP updates, turn management)
-  - CombatantCard and CombatTracker components
-  - Add to Combat modal
-  - Combat page at /combat
-  - Turn advancement and round tracking
-  - Comprehensive testing
+**Then Function 6:**
+- 10 tasks for Combat Tracker implementation
 
 **Technical Notes:**
 - Initiative = AC for now (proper d20 rolls in Iteration 5)
 - Use hardcoded monsters initially (full library in Iteration 4)
 - Combat state in memory only (LocalStorage in Iteration 4)
 - HP changes in combat don't sync to roster yet (future iteration)
-
-**Ready to Start?**
-When you're ready to begin execution, we'll start with Task 5.1: Create Stats Calculation Utilities
 
 ---
 
