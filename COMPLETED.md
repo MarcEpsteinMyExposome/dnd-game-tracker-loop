@@ -105,12 +105,96 @@
 
 ---
 
+### Loop Iteration 3: Dashboard & Combat Tracker
+
+**Dates:** 2026-01-21 to 2026-01-21
+**Duration:** 1 day (single session)
+
+#### Goals
+- Function 5: Dashboard & Statistics (team stats, health overview)
+- Function 6: Combat Tracker - Basic (initiative order, turn management, HP tracking)
+
+#### Completed Tasks (15/15)
+1. Task 5.1: Create Stats Calculation Utilities
+2. Task 5.2: Create StatCard Component
+3. Task 5.3: Create Dashboard Component
+4. Task 5.4: Create Dashboard Page
+5. Task 5.5: Write Dashboard Component Tests
+6. Task 6.1: Create Combatant Schema Extensions (verified existing)
+7. Task 6.2: Create Combat Zustand Store Slice
+8. Task 6.3: Integrate Combat Slice into Main Store
+9. Task 6.4: Create CombatantCard Component
+10. Task 6.5: Create CombatTracker Component
+11. Task 6.6: Create Add to Combat Modal
+12. Task 6.7: Create Combat Page
+13. Task 6.8: Implement Turn Management Logic
+14. Task 6.9: Write Combat Store Tests
+15. Task 6.10: Write Combat Component Tests
+
+#### Key Accomplishments
+- Team statistics dashboard at /dashboard with real-time updates
+- Stats utilities: calculateTeamSize, calculateAverageHp, health status breakdown
+- StatCard component with 5 color variants and optional trend indicators
+- Full combat tracker system at /combat with initiative-based ordering
+- Combat Zustand store slice with turn management, HP tracking, round counter
+- CombatantCard with active turn indicator, HP adjustment buttons, condition display
+- AddToCombatModal for selecting characters and setting initiative
+- Turn advancement with automatic defeated-combatant skipping
+- Round counter with automatic increment on turn cycle
+- Combat page with end combat confirmation dialog
+
+#### Tests Added
+- 161 new tests across 3 categories:
+  - Stats utilities: 45 tests
+  - Dashboard components: 48 tests (StatCard, Dashboard)
+  - Combat store: 38 tests
+  - Combat components: 30 tests (CombatantCard)
+- Total: 435 tests passing
+- Coverage: Dashboard statistics, combat tracker, turn management
+
+#### Bug Fixes
+- Post-iteration fix: CombatTracker infinite loop resolved (selector functions were being called during Zustand subscription, creating new arrays on every render)
+
+#### Commits
+- Multiple commits during iteration
+- All commits include Co-Authored-By: Claude Sonnet 4.5
+
+#### What Went Well
+- Stats calculation utilities are pure functions with excellent testability
+- Dashboard auto-updates when character data changes (Zustand reactivity)
+- Combat store turn management handles edge cases (all defeated, empty list)
+- Initiative-based ordering works smoothly
+- HP adjustment buttons provide quick combat updates
+- Round counter automatically increments on turn cycle
+- Color-coded HP bars provide instant visual feedback
+- Modal patterns continue to work well for complex interactions
+
+#### What Could Improve
+- Initiative system still uses AC as temporary placeholder (real dice rolling in Iteration 5)
+- Could add animation for turn transitions
+- Could add sound effects for combat actions
+- Monster library needed for complete combat experience (coming in Iteration 4)
+- No persistence yet - combat state lost on refresh (coming in Iteration 4)
+
+#### Lessons Learned
+- Zustand selector functions must be called outside subscription to avoid infinite loops
+- Pure calculation utilities are easier to test than component-integrated logic
+- Auto-skipping defeated combatants prevents manual turn management errors
+- Round counter is essential for tracking combat progression
+- Quick HP adjustment buttons (-5, -1, +1, +5) are more practical than just direct input
+
+#### Next Iteration Plan
+- Focus on: LocalStorage Persistence & Monster Library (Functions 8 & 7)
+
+---
+
 ## Future Iterations Planned
 
-**Loop Iteration 3:** Combat Tracker (NEXT)
-- Function 5: Combat Tracker - Basic
+**Loop Iteration 4:** Data Persistence & Monster Library (NEXT)
+- Function 8: LocalStorage Persistence
+- Function 7: Monster Library
 
-**Loop Iteration 4+:** See FUNCTIONS.md for complete roadmap
+**Loop Iteration 5+:** See FUNCTIONS.md for complete roadmap
 
 ---
 
