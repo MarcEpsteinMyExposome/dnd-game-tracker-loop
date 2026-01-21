@@ -17,6 +17,7 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { CharacterSlice, createCharacterSlice } from './slices/characterSlice'
 import { CombatSlice, createCombatSlice } from './slices/combatSlice'
+import { migrateState, CURRENT_VERSION } from '@/lib/storage/migrations'
 
 /**
  * Game Store State Interface
@@ -73,8 +74,8 @@ export const useGameStore = create<GameStore>()(
   devtools(
     persist(
       (...a) => ({
-        // Store version
-        version: 1,
+        // Store version (use CURRENT_VERSION from migrations)
+        version: CURRENT_VERSION,
 
         // Character slice
         ...createCharacterSlice(...a),
@@ -95,6 +96,19 @@ export const useGameStore = create<GameStore>()(
           round: state.round,
           isInCombat: state.isInCombat,
         }),
+
+        // Migration function
+        // Called when loading state from localStorage
+        // Transforms old versions to current schema
+        migrate: (persistedState: any, version: number) => {
+          // Use our migration system to handle version upgrades
+          const migrated = migrateState(persistedState)
+          return migrated.state
+        },
+
+        // Version number for Zustand persist
+        // This triggers migrate() when version changes
+        version: CURRENT_VERSION,
       }
     ),
     {

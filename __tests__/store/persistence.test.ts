@@ -58,7 +58,7 @@ describe('Store Persistence', () => {
           round: 1,
           isInCombat: false,
         },
-        version: 0,
+        version: 1, // Use current version
       }
       localStorage.setItem('dnd-game-tracker-v2', JSON.stringify(persistedState))
 
@@ -187,7 +187,7 @@ describe('Store Persistence', () => {
           round: 3,
           isInCombat: true,
         },
-        version: 0,
+        version: 1, // Use current version
       }
       localStorage.setItem('dnd-game-tracker-v2', JSON.stringify(persistedState))
 
