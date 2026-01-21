@@ -209,7 +209,7 @@ export function getAllErrors<T>(schema: ZodSchema<T>, data: unknown): string[] {
  * }
  * ```
  */
-export function validatePartial<T extends z.ZodTypeAny>(
+export function validatePartial<T extends z.ZodObject<z.ZodRawShape>>(
   schema: T,
   data: unknown
 ): ValidationResult<Partial<z.infer<T>>> {
