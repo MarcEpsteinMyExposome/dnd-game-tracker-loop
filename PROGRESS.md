@@ -35,7 +35,7 @@ All 15 tasks completed successfully. See Session History for details.
 - Function 5: Dashboard & Statistics (5 tasks)
 - Function 6: Combat Tracker - Basic (10 tasks)
 
-### ✅ Completed Tasks (13/15)
+### ✅ Completed Tasks (14/15)
 
 **Function 5: Dashboard & Statistics** ✅ COMPLETE
 - [x] **Task 5.1: Create Stats Calculation Utilities** - Created lib/utils/stats.ts with 5 pure functions: calculateTeamSize, calculateAverageHp (rounds to integer), getHealthyCount (>75% HP), getInjuredCount (1-75% HP), getUnconsciousCount (0 HP). All functions handle edge cases (empty arrays, 0 maxHp). Comprehensive JSDoc documentation. Created __tests__/utils/stats.test.ts with 45 tests covering all functions, edge cases, boundary conditions, and integration scenarios. All tests passing. Functions are pure with no side effects.
@@ -65,10 +65,11 @@ All 15 tasks completed successfully. See Session History for details.
 
 - [x] **Task 6.8: Implement Turn Management Logic** - Turn management already fully implemented in lib/store/slices/combatSlice.ts (Task 6.2). Logic includes: nextTurn() action that automatically skips defeated combatants (HP=0), cycles through initiative order, increments round counter when returning to first combatant, prevents infinite loops if all defeated. setActiveCombatant() for manual turn setting. getActiveCombatant() selector. CombatTracker component integrates with "Next Turn" button. All turn management requirements satisfied.
 
-### ⏳ Pending Tasks (2)
+- [x] **Task 6.9: Write Combat Store Tests** - Created __tests__/store/combatSlice.test.ts with 38 comprehensive tests. Covers: initial state (3 tests), addCombatant (6 tests including sorting, activation, UUID generation), removeCombatant (4 tests including active turn transfer), updateCombatantHp (4 tests including clamping), setActiveCombatant (2 tests), nextTurn (6 tests including cycling, round counter, skipping defeated), clearCombat (3 tests), startCombat (3 tests), selectors (7 tests for getActiveCombatant, getSortedCombatants, getCombatantById). All 38 tests passing. Total test count: 405 tests passing.
+
+### ⏳ Pending Tasks (1)
 
 **Function 6: Combat Tracker - Basic**
-- [ ] Task 6.9: Write Combat Store Tests
 - [ ] Task 6.10: Write Combat Component Tests
 
 ---
@@ -115,10 +116,10 @@ All 15 tasks completed successfully. See Session History for details.
 
 ## Test Suite Status
 
-**Total Tests:** 367 (all passing ✅)
+**Total Tests:** 405 (all passing ✅)
 - Iteration 1 Tests: 244
 - Iteration 2 Tests: 30
-- Iteration 3 Tests: 93 (stats utilities: 45, dashboard components: 48)
+- Iteration 3 Tests: 131 (stats utilities: 45, dashboard components: 48, combat store: 38)
 
 **Components/Utilities Tested:**
 - CharacterCard (15+ tests)
