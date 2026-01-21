@@ -48,13 +48,19 @@ interface CombatTrackerProps {
  * ```
  */
 export function CombatTracker({ onAddCombatants }: CombatTrackerProps) {
-  const combatants = useGameStore((state) => state.getSortedCombatants())
+  // Access state directly instead of calling selector functions during render
+  const combatants = useGameStore((state) => state.combatants)
   const round = useGameStore((state) => state.round)
   const isInCombat = useGameStore((state) => state.isInCombat)
   const nextTurn = useGameStore((state) => state.nextTurn)
   const clearCombat = useGameStore((state) => state.clearCombat)
   const removeCombatant = useGameStore((state) => state.removeCombatant)
-  const activeCombatant = useGameStore((state) => state.getActiveCombatant())
+  const getSortedCombatants = useGameStore((state) => state.getSortedCombatants)
+  const getActiveCombatant = useGameStore((state) => state.getActiveCombatant)
+
+  // Call selector functions here (not during render subscription)
+  const sortedCombatants = getSortedCombatants()
+  const activeCombatant = getActiveCombatant()
 
   const [showEndCombatConfirm, setShowEndCombatConfirm] = useState(false)
 
@@ -70,7 +76,7 @@ export function CombatTracker({ onAddCombatants }: CombatTrackerProps) {
   }
 
   // Empty state - no combatants
-  if (combatants.length === 0) {
+  if (sortedCombatants.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="text-6xl mb-4">⚔️</div>
@@ -140,21 +146,21 @@ export function CombatTracker({ onAddCombatants }: CombatTrackerProps) {
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
           <div className="text-blue-600 font-semibold mb-1">Players</div>
           <div className="text-2xl font-bold text-blue-700">
-            {combatants.filter((c) => c.isPlayer && c.currentHp > 0).length}
+            {sortedCombatants.filter((c) => c.isPlayer && c.currentHp > 0).length}
           </div>
           <div className="text-xs text-blue-600">alive</div>
         </div>
         <div className="bg-red-50 border border-red-200 rounded-lg p-3">
           <div className="text-red-600 font-semibold mb-1">Enemies</div>
           <div className="text-2xl font-bold text-red-700">
-            {combatants.filter((c) => !c.isPlayer && c.currentHp > 0).length}
+            {sortedCombatants.filter((c) => !c.isPlayer && c.currentHp > 0).length}
           </div>
           <div className="text-xs text-red-600">alive</div>
         </div>
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
           <div className="text-gray-600 font-semibold mb-1">Total</div>
           <div className="text-2xl font-bold text-gray-700">
-            {combatants.length}
+            {sortedCombatants.length}
           </div>
           <div className="text-xs text-gray-600">combatants</div>
         </div>
@@ -167,7 +173,7 @@ export function CombatTracker({ onAddCombatants }: CombatTrackerProps) {
           <span>Initiative Order</span>
         </h3>
         <div className="space-y-3">
-          {combatants.map((combatant, index) => (
+          {sortedCombatants.map((combatant, index) => (
             <div key={combatant.id} className="flex items-start gap-3">
               {/* Initiative Rank */}
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-600">

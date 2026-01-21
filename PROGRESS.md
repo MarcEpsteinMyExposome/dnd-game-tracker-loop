@@ -141,6 +141,29 @@ All 15 tasks completed successfully. See Session History for details.
 
 ---
 
+## Post-Iteration 3 Bug Fixes
+
+### ✅ RESOLVED: CombatTracker Infinite Loop (2026-01-21)
+
+**Problem:** Application crashed with "The result of getSnapshot should be cached to avoid an infinite loop" error when loading `/combat` page.
+
+**Root Cause:** In CombatTracker.tsx line 51, selector functions `getSortedCombatants()` and `getActiveCombatant()` were being called directly inside Zustand `useGameStore` hook subscriptions. These selectors create new arrays/objects on every call, causing React to detect state changes and trigger infinite re-renders.
+
+**Solution:**
+1. Changed to access selector functions themselves from store (not call them during render subscription)
+2. Call selector functions outside Zustand subscription, in component body
+3. Updated all references from `combatants` to `sortedCombatants`
+
+**Files Fixed:**
+- components/combat/CombatTracker.tsx (lines 51-63, 79, 143-157, 170)
+
+**Test Results:**
+- ✅ All 435 tests still passing
+- ✅ No test changes needed (runtime-only issue)
+- ✅ Application loads correctly at `/combat`
+
+---
+
 ## Next Action
 
 🎉 **ITERATION 3 COMPLETE!**
@@ -148,6 +171,7 @@ All 15 tasks completed successfully. See Session History for details.
 **Summary:**
 - ✅ Function 5 COMPLETE - Dashboard & Statistics (5 tasks)
 - ✅ Function 6 COMPLETE - Combat Tracker Basic (10 tasks)
+- ✅ Post-iteration bug fix applied
 - 15/15 tasks completed
 - 161 new tests (435 total)
 - All tests passing ✅
@@ -159,12 +183,14 @@ All 15 tasks completed successfully. See Session History for details.
 - Turn advancement with automatic defeated-skipping
 - HP tracking during combat
 - Add characters to combat from roster
+- Homepage updated to show Iteration 3 status
 - Comprehensive test coverage
 
 **Next Session Should:**
-1. Review and test the combat tracker in the browser
-2. Plan Iteration 4 tasks
-3. Continue with remaining functions from FUNCTIONS.md
+1. ✅ Bug fix applied and tested
+2. Update COMPLETED.md with Iteration 3 summary
+3. Create retrospective for Iteration 3
+4. Plan Iteration 4 tasks (Data Persistence + Monster Library)
 
 ---
 
