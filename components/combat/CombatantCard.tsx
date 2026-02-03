@@ -27,7 +27,7 @@ interface CombatantCardProps {
  *
  * Features:
  * - Initiative display for turn order
- * - Active turn indicator (gold border + glow)
+ * - Active turn indicator (magic purple glow)
  * - HP bar with color coding (green/yellow/red)
  * - Quick HP adjustment buttons
  * - Condition badges with tooltips
@@ -58,11 +58,11 @@ export function CombatantCard({
   const hpPercentage = (combatant.currentHp / combatant.maxHp) * 100
 
   // Determine HP bar color based on percentage
-  let hpColor = 'bg-green-500'
+  let hpColor = 'bg-emerald-500'
   if (hpPercentage <= 25) {
     hpColor = 'bg-red-500'
   } else if (hpPercentage <= 50) {
-    hpColor = 'bg-yellow-500'
+    hpColor = 'bg-amber-500'
   }
 
   const isDefeated = combatant.currentHp === 0
@@ -84,13 +84,15 @@ export function CombatantCard({
     combatant.name
   )
 
-  // Border style for active turn
+  // Border style for active turn - magic purple glow
   const borderClass = combatant.isActive
-    ? 'border-4 border-yellow-400 shadow-lg shadow-yellow-400/50'
-    : 'border border-gray-200'
+    ? 'border-4 border-purple-400 shadow-lg shadow-purple-500/50'
+    : 'border border-stone-600/40'
 
   // Background style for player vs enemy
-  const bgClass = combatant.isPlayer ? 'bg-blue-50/50' : 'bg-red-50/50'
+  const bgClass = combatant.isPlayer
+    ? 'bg-sky-900/30'
+    : 'bg-red-900/30'
 
   return (
     <div
@@ -103,8 +105,8 @@ export function CombatantCard({
       {/* Active Turn Indicator */}
       {combatant.isActive && (
         <div className="text-center mb-2">
-          <span className="inline-block bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
-            ⚔️ Active Turn
+          <span className="inline-block bg-gradient-to-r from-purple-500 to-violet-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-md">
+            ✨ Your Draw
           </span>
         </div>
       )}
@@ -112,7 +114,9 @@ export function CombatantCard({
       <div className="flex gap-3">
         {/* Avatar */}
         <div className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-gray-300">
+          <div className={`w-16 h-16 rounded-full overflow-hidden border-2 ${
+            combatant.isPlayer ? 'border-sky-500/60' : 'border-red-500/60'
+          }`}>
             <img
               src={avatarSrc}
               alt={`${combatant.name}'s avatar`}
@@ -120,7 +124,7 @@ export function CombatantCard({
               onError={(e) => {
                 // Fallback to initial if image fails to load
                 e.currentTarget.style.display = 'none'
-                e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full bg-gray-300 flex items-center justify-center text-xl font-bold text-gray-600">${combatant.name.charAt(0).toUpperCase()}</div>`
+                e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full bg-stone-700 flex items-center justify-center text-xl font-bold text-amber-200">${combatant.name.charAt(0).toUpperCase()}</div>`
               }}
             />
           </div>
@@ -129,7 +133,7 @@ export function CombatantCard({
           {showInitiative && (
             <div className="text-center mt-1">
               <span
-                className="inline-block bg-purple-600 text-white px-2 py-0.5 rounded text-xs font-bold"
+                className="inline-block bg-amber-700 text-amber-100 px-2 py-0.5 rounded text-xs font-bold border border-amber-500/40"
                 title="Initiative"
               >
                 {combatant.initiative}
@@ -142,18 +146,18 @@ export function CombatantCard({
         <div className="flex-1 min-w-0">
           {/* Name and Type */}
           <div className="mb-2">
-            <h3 className="text-base font-bold truncate">{combatant.name}</h3>
+            <h3 className="text-base font-bold truncate text-amber-100">{combatant.name}</h3>
             <div className="flex items-center gap-2 text-xs">
               <span
                 className={`inline-block px-2 py-0.5 rounded ${
                   combatant.isPlayer
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'bg-red-100 text-red-700'
+                    ? 'bg-sky-800/60 text-sky-200 border border-sky-600/40'
+                    : 'bg-red-800/60 text-red-200 border border-red-600/40'
                 }`}
               >
-                {combatant.isPlayer ? '👤 Player' : '💀 Enemy'}
+                {combatant.isPlayer ? '🤠 Deputy' : '🦂 Outlaw'}
               </span>
-              <span className="text-gray-600" title="Armor Class">
+              <span className="text-stone-400" title="Armor Class">
                 AC: {combatant.armorClass}
               </span>
             </div>
@@ -162,12 +166,12 @@ export function CombatantCard({
           {/* HP Bar */}
           <div className="mb-2">
             <div className="flex justify-between text-xs mb-1">
-              <span className="font-semibold">HP</span>
-              <span>
+              <span className="font-semibold text-amber-200">HP</span>
+              <span className="text-stone-300">
                 {combatant.currentHp}/{combatant.maxHp}
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-stone-700 rounded-full h-3 overflow-hidden">
               <div
                 className={`h-full ${hpColor} transition-all duration-300 ${
                   hpFlash ? 'opacity-70' : 'opacity-100'
@@ -176,8 +180,8 @@ export function CombatantCard({
               />
             </div>
             {isDefeated && (
-              <p className="text-red-600 text-xs font-bold mt-1 text-center">
-                ⚠️ DEFEATED
+              <p className="text-red-400 text-xs font-bold mt-1 text-center">
+                💀 DOWN & OUT
               </p>
             )}
           </div>
@@ -186,7 +190,7 @@ export function CombatantCard({
           <div className="grid grid-cols-4 gap-1 mb-2">
             <button
               onClick={() => adjustHp(-5)}
-              className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold hover:bg-red-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-red-800/60 text-red-200 px-2 py-1 rounded text-xs font-semibold hover:bg-red-700/60 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-red-600/30"
               title="Decrease HP by 5"
               disabled={isDefeated}
             >
@@ -194,7 +198,7 @@ export function CombatantCard({
             </button>
             <button
               onClick={() => adjustHp(-1)}
-              className="bg-red-50 text-red-600 px-2 py-1 rounded text-xs font-semibold hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-red-900/40 text-red-300 px-2 py-1 rounded text-xs font-semibold hover:bg-red-800/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-red-700/30"
               title="Decrease HP by 1"
               disabled={isDefeated}
             >
@@ -202,14 +206,14 @@ export function CombatantCard({
             </button>
             <button
               onClick={() => adjustHp(1)}
-              className="bg-green-50 text-green-600 px-2 py-1 rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+              className="bg-emerald-900/40 text-emerald-300 px-2 py-1 rounded text-xs font-semibold hover:bg-emerald-800/40 transition-colors border border-emerald-700/30"
               title="Increase HP by 1"
             >
               +1
             </button>
             <button
               onClick={() => adjustHp(5)}
-              className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold hover:bg-green-200 transition-colors"
+              className="bg-emerald-800/60 text-emerald-200 px-2 py-1 rounded text-xs font-semibold hover:bg-emerald-700/60 transition-colors border border-emerald-600/30"
               title="Increase HP by 5"
             >
               +5
@@ -229,7 +233,7 @@ export function CombatantCard({
           {onRemove && (
             <button
               onClick={() => onRemove(combatant)}
-              className="w-full bg-gray-200 text-gray-700 px-2 py-1 rounded text-xs font-medium hover:bg-gray-300 transition-colors"
+              className="w-full bg-stone-700/60 text-stone-300 px-2 py-1 rounded text-xs font-medium hover:bg-stone-600/60 transition-colors border border-stone-600/30"
               title="Remove from combat"
             >
               Remove
@@ -240,8 +244,8 @@ export function CombatantCard({
 
       {/* Notes (if present) */}
       {combatant.notes && (
-        <div className="mt-2 pt-2 border-t border-gray-300">
-          <p className="text-xs text-gray-600 italic">{combatant.notes}</p>
+        <div className="mt-2 pt-2 border-t border-stone-600/30">
+          <p className="text-xs text-stone-400 italic">{combatant.notes}</p>
         </div>
       )}
     </div>

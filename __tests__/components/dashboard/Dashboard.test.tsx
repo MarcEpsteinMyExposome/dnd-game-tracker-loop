@@ -68,10 +68,10 @@ describe('Dashboard', () => {
       render(<Dashboard />)
 
       expect(
-        screen.getByText('No characters in your roster yet.')
+        screen.getByText('No deputies in your posse yet.')
       ).toBeInTheDocument()
       expect(
-        screen.getByText('Create your first character to see team statistics here.')
+        screen.getByText('Create your first character to see posse statistics here.')
       ).toBeInTheDocument()
     })
 
@@ -91,11 +91,11 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const teamSizeCard = screen.getByTestId('stat-card-Team Size')
-      expect(teamSizeCard).toHaveTextContent('Team Size')
+      const teamSizeCard = screen.getByTestId('stat-card-Posse Size')
+      expect(teamSizeCard).toHaveTextContent('Posse Size')
       expect(teamSizeCard).toHaveTextContent('1')
-      expect(teamSizeCard).toHaveTextContent('1 character in the party')
-      expect(teamSizeCard).toHaveTextContent('👥')
+      expect(teamSizeCard).toHaveTextContent('1 deputy in the posse')
+      expect(teamSizeCard).toHaveTextContent('🤠')
       expect(teamSizeCard).toHaveAttribute('data-color', 'blue')
     })
 
@@ -109,9 +109,9 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const teamSizeCard = screen.getByTestId('stat-card-Team Size')
+      const teamSizeCard = screen.getByTestId('stat-card-Posse Size')
       expect(teamSizeCard).toHaveTextContent('3')
-      expect(teamSizeCard).toHaveTextContent('3 characters in the party')
+      expect(teamSizeCard).toHaveTextContent('3 deputies in the posse')
     })
   })
 
@@ -128,7 +128,7 @@ describe('Dashboard', () => {
       const avgHpCard = screen.getByTestId('stat-card-Average HP')
       expect(avgHpCard).toHaveTextContent('Average HP')
       expect(avgHpCard).toHaveTextContent('100%')
-      expect(avgHpCard).toHaveTextContent('Team health status')
+      expect(avgHpCard).toHaveTextContent('Posse health status')
       expect(avgHpCard).toHaveTextContent('❤️')
       expect(avgHpCard).toHaveAttribute('data-color', 'green')
     })
@@ -227,16 +227,16 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const healthyCard = screen.getByTestId('stat-card-Healthy')
+      const healthyCard = screen.getByTestId('stat-card-Ready to Ride')
       expect(healthyCard).toHaveTextContent('3')
       expect(healthyCard).toHaveTextContent('3 above 75% HP')
       expect(healthyCard).toHaveTextContent('💚')
       expect(healthyCard).toHaveAttribute('data-color', 'green')
 
-      const injuredCard = screen.getByTestId('stat-card-Injured')
+      const injuredCard = screen.getByTestId('stat-card-Wounded')
       expect(injuredCard).toHaveTextContent('0')
 
-      const unconsciousCard = screen.getByTestId('stat-card-Unconscious')
+      const unconsciousCard = screen.getByTestId('stat-card-Down & Out')
       expect(unconsciousCard).toHaveTextContent('0')
     })
 
@@ -250,16 +250,16 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const healthyCard = screen.getByTestId('stat-card-Healthy')
+      const healthyCard = screen.getByTestId('stat-card-Ready to Ride')
       expect(healthyCard).toHaveTextContent('0')
 
-      const injuredCard = screen.getByTestId('stat-card-Injured')
+      const injuredCard = screen.getByTestId('stat-card-Wounded')
       expect(injuredCard).toHaveTextContent('3')
       expect(injuredCard).toHaveTextContent('3 between 1-75% HP')
-      expect(injuredCard).toHaveTextContent('💛')
+      expect(injuredCard).toHaveTextContent('🩹')
       expect(injuredCard).toHaveAttribute('data-color', 'yellow')
 
-      const unconsciousCard = screen.getByTestId('stat-card-Unconscious')
+      const unconsciousCard = screen.getByTestId('stat-card-Down & Out')
       expect(unconsciousCard).toHaveTextContent('0')
     })
 
@@ -272,13 +272,13 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const healthyCard = screen.getByTestId('stat-card-Healthy')
+      const healthyCard = screen.getByTestId('stat-card-Ready to Ride')
       expect(healthyCard).toHaveTextContent('0')
 
-      const injuredCard = screen.getByTestId('stat-card-Injured')
+      const injuredCard = screen.getByTestId('stat-card-Wounded')
       expect(injuredCard).toHaveTextContent('0')
 
-      const unconsciousCard = screen.getByTestId('stat-card-Unconscious')
+      const unconsciousCard = screen.getByTestId('stat-card-Down & Out')
       expect(unconsciousCard).toHaveTextContent('2')
       expect(unconsciousCard).toHaveTextContent('2 at 0 HP')
       expect(unconsciousCard).toHaveTextContent('💀')
@@ -297,13 +297,13 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const healthyCard = screen.getByTestId('stat-card-Healthy')
+      const healthyCard = screen.getByTestId('stat-card-Ready to Ride')
       expect(healthyCard).toHaveTextContent('2')
 
-      const injuredCard = screen.getByTestId('stat-card-Injured')
+      const injuredCard = screen.getByTestId('stat-card-Wounded')
       expect(injuredCard).toHaveTextContent('2')
 
-      const unconsciousCard = screen.getByTestId('stat-card-Unconscious')
+      const unconsciousCard = screen.getByTestId('stat-card-Down & Out')
       expect(unconsciousCard).toHaveTextContent('1')
     })
 
@@ -313,10 +313,10 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const healthyCard = screen.getByTestId('stat-card-Healthy')
+      const healthyCard = screen.getByTestId('stat-card-Ready to Ride')
       expect(healthyCard).toHaveTextContent('0')
 
-      const injuredCard = screen.getByTestId('stat-card-Injured')
+      const injuredCard = screen.getByTestId('stat-card-Wounded')
       expect(injuredCard).toHaveTextContent('1')
     })
 
@@ -326,10 +326,10 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      const healthyCard = screen.getByTestId('stat-card-Healthy')
+      const healthyCard = screen.getByTestId('stat-card-Ready to Ride')
       expect(healthyCard).toHaveTextContent('1')
 
-      const injuredCard = screen.getByTestId('stat-card-Injured')
+      const injuredCard = screen.getByTestId('stat-card-Wounded')
       expect(injuredCard).toHaveTextContent('0')
     })
   })
@@ -361,7 +361,7 @@ describe('Dashboard', () => {
 
       const { rerender } = render(<Dashboard />)
 
-      let teamSizeCard = screen.getByTestId('stat-card-Team Size')
+      let teamSizeCard = screen.getByTestId('stat-card-Posse Size')
       expect(teamSizeCard).toHaveTextContent('1')
 
       // Add character
@@ -369,7 +369,7 @@ describe('Dashboard', () => {
       mockUseGameStore.mockReturnValue([...characters])
       rerender(<Dashboard />)
 
-      teamSizeCard = screen.getByTestId('stat-card-Team Size')
+      teamSizeCard = screen.getByTestId('stat-card-Posse Size')
       expect(teamSizeCard).toHaveTextContent('2')
     })
 
@@ -382,7 +382,7 @@ describe('Dashboard', () => {
 
       const { rerender } = render(<Dashboard />)
 
-      let teamSizeCard = screen.getByTestId('stat-card-Team Size')
+      let teamSizeCard = screen.getByTestId('stat-card-Posse Size')
       expect(teamSizeCard).toHaveTextContent('2')
 
       // Remove character
@@ -390,7 +390,7 @@ describe('Dashboard', () => {
       mockUseGameStore.mockReturnValue([...characters])
       rerender(<Dashboard />)
 
-      teamSizeCard = screen.getByTestId('stat-card-Team Size')
+      teamSizeCard = screen.getByTestId('stat-card-Posse Size')
       expect(teamSizeCard).toHaveTextContent('1')
     })
 
@@ -400,14 +400,14 @@ describe('Dashboard', () => {
 
       const { rerender } = render(<Dashboard />)
 
-      expect(screen.getByTestId('stat-card-Team Size')).toBeInTheDocument()
+      expect(screen.getByTestId('stat-card-Posse Size')).toBeInTheDocument()
 
       // Remove all characters
       mockUseGameStore.mockReturnValue([])
       rerender(<Dashboard />)
 
       expect(
-        screen.getByText('No characters in your roster yet.')
+        screen.getByText('No deputies in your posse yet.')
       ).toBeInTheDocument()
       expect(screen.queryByTestId(/stat-card/)).not.toBeInTheDocument()
     })
@@ -420,7 +420,7 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      expect(screen.getByTestId('stat-card-Team Size')).toBeInTheDocument()
+      expect(screen.getByTestId('stat-card-Posse Size')).toBeInTheDocument()
       expect(screen.getByTestId('stat-card-Average HP')).toBeInTheDocument()
     })
 
@@ -430,9 +430,9 @@ describe('Dashboard', () => {
 
       render(<Dashboard />)
 
-      expect(screen.getByTestId('stat-card-Healthy')).toBeInTheDocument()
-      expect(screen.getByTestId('stat-card-Injured')).toBeInTheDocument()
-      expect(screen.getByTestId('stat-card-Unconscious')).toBeInTheDocument()
+      expect(screen.getByTestId('stat-card-Ready to Ride')).toBeInTheDocument()
+      expect(screen.getByTestId('stat-card-Wounded')).toBeInTheDocument()
+      expect(screen.getByTestId('stat-card-Down & Out')).toBeInTheDocument()
     })
 
     it('renders all 5 stat cards when characters exist', () => {

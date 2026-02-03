@@ -75,6 +75,18 @@ __tests__/              # Jest tests (mirrors src structure)
 
 ---
 
+## User Preferences
+
+### Task-Based Workflow
+**IMPORTANT:** Always break projects into discrete tasks before starting implementation. This enables:
+- Parallel execution where tasks are independent
+- Better visibility into progress
+- Clearer scope for each piece of work
+
+Create task files in `.claude/tasks/` for each discrete unit of work. Run independent tasks in parallel when possible.
+
+---
+
 ## Code Patterns
 
 ### Testing

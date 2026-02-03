@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "D&D Game Tracker Loop - v2.0",
-  description: "Built using the RALPH loop methodology",
+  title: "Bang Your Dead v3",
+  description: "Western Gun & Magic Combat Tracker",
 };
 
 export default function RootLayout({
@@ -29,42 +29,45 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <PersistenceProvider>
           {/* Navigation */}
-          <nav className="bg-gray-800 text-white shadow-lg">
+          <nav className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-amber-100 shadow-lg border-b border-amber-900/50">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between h-16">
-                <Link href="/" className="text-xl font-bold hover:text-gray-300 transition-colors">
-                  🎲 D&D Game Tracker
+                <Link href="/" className="text-xl font-bold hover:text-amber-300 transition-colors flex items-center gap-2">
+                  <span className="text-2xl">🔫</span>
+                  <span className="bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200 bg-clip-text text-transparent">
+                    Bang Your Dead
+                  </span>
                 </Link>
                 <div className="flex gap-6">
                   <Link
                     href="/dashboard"
-                    className="hover:text-gray-300 transition-colors font-medium"
+                    className="hover:text-amber-300 transition-colors font-medium flex items-center gap-1"
                   >
-                    Dashboard
+                    <span className="text-sm">⭐</span> Dashboard
                   </Link>
                   <Link
                     href="/characters"
-                    className="hover:text-gray-300 transition-colors font-medium"
+                    className="hover:text-amber-300 transition-colors font-medium flex items-center gap-1"
                   >
-                    Characters
+                    <span className="text-sm">🤠</span> Characters
                   </Link>
                   <Link
                     href="/combat"
-                    className="hover:text-gray-300 transition-colors font-medium"
+                    className="hover:text-amber-300 transition-colors font-medium flex items-center gap-1"
                   >
-                    Combat
+                    <span className="text-sm">💥</span> Combat
                   </Link>
                   <Link
                     href="/monsters"
-                    className="hover:text-gray-300 transition-colors font-medium"
+                    className="hover:text-amber-300 transition-colors font-medium flex items-center gap-1"
                   >
-                    Monsters
+                    <span className="text-sm">🦂</span> Outlaws
                   </Link>
                   <Link
                     href="/settings"
-                    className="hover:text-gray-300 transition-colors font-medium"
+                    className="hover:text-amber-300 transition-colors font-medium flex items-center gap-1"
                   >
-                    Settings
+                    <span className="text-sm">⚙️</span> Settings
                   </Link>
                 </div>
               </div>

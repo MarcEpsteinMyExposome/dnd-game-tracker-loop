@@ -83,7 +83,7 @@ describe('CombatantCard', () => {
     it('shows player indicator for player characters', () => {
       render(<CombatantCard combatant={mockCombatant} />)
 
-      expect(screen.getByText(/Player/)).toBeInTheDocument()
+      expect(screen.getByText(/Deputy/)).toBeInTheDocument()
     })
 
     it('shows enemy indicator for non-player combatants', () => {
@@ -91,7 +91,7 @@ describe('CombatantCard', () => {
 
       render(<CombatantCard combatant={enemyCombatant} />)
 
-      expect(screen.getByText(/Enemy/)).toBeInTheDocument()
+      expect(screen.getByText(/Outlaw/)).toBeInTheDocument()
     })
 
     it('shows active turn indicator when combatant is active', () => {
@@ -99,13 +99,13 @@ describe('CombatantCard', () => {
 
       render(<CombatantCard combatant={activeCombatant} />)
 
-      expect(screen.getByText(/Active Turn/i)).toBeInTheDocument()
+      expect(screen.getByText(/Your Draw/i)).toBeInTheDocument()
     })
 
     it('does not show active turn indicator when combatant is not active', () => {
       render(<CombatantCard combatant={mockCombatant} />)
 
-      expect(screen.queryByText(/Active Turn/i)).not.toBeInTheDocument()
+      expect(screen.queryByText(/Your Draw/i)).not.toBeInTheDocument()
     })
 
     it('shows DEFEATED indicator when HP is 0', () => {
@@ -113,7 +113,7 @@ describe('CombatantCard', () => {
 
       render(<CombatantCard combatant={defeatedCombatant} />)
 
-      expect(screen.getByText(/DEFEATED/i)).toBeInTheDocument()
+      expect(screen.getByText(/DOWN & OUT/i)).toBeInTheDocument()
     })
 
     it('renders condition badges', () => {
@@ -236,7 +236,7 @@ describe('CombatantCard', () => {
       const { container } = render(<CombatantCard combatant={mockCombatant} />)
 
       const card = container.firstChild as HTMLElement
-      expect(card.className).toContain('bg-blue-50')
+      expect(card.className).toContain('bg-sky-900/30')
     })
 
     it('applies enemy background color for non-player combatants', () => {
@@ -245,7 +245,7 @@ describe('CombatantCard', () => {
       const { container } = render(<CombatantCard combatant={enemyCombatant} />)
 
       const card = container.firstChild as HTMLElement
-      expect(card.className).toContain('bg-red-50')
+      expect(card.className).toContain('bg-red-900/30')
     })
 
     it('applies active turn border when combatant is active', () => {
@@ -254,7 +254,7 @@ describe('CombatantCard', () => {
       const { container } = render(<CombatantCard combatant={activeCombatant} />)
 
       const card = container.firstChild as HTMLElement
-      expect(card.className).toContain('border-yellow-400')
+      expect(card.className).toContain('border-purple-400')
     })
 
     it('applies reduced opacity when combatant is defeated', () => {

@@ -66,11 +66,11 @@ export function Dashboard() {
   if (teamSize === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-400 text-lg mb-4">
-          No characters in your roster yet.
+        <p className="text-amber-200/70 text-lg mb-4">
+          No deputies in your posse yet.
         </p>
-        <p className="text-gray-500 text-sm">
-          Create your first character to see team statistics here.
+        <p className="text-stone-500 text-sm">
+          Create your first character to see posse statistics here.
         </p>
       </div>
     )
@@ -81,11 +81,11 @@ export function Dashboard() {
       {/* Main Stats Grid - Team Size and Average HP */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <StatCard
-          title="Team Size"
+          title="Posse Size"
           value={teamSize}
-          icon="👥"
+          icon="🤠"
           color="blue"
-          description={`${teamSize} ${teamSize === 1 ? 'character' : 'characters'} in the party`}
+          description={`${teamSize} ${teamSize === 1 ? 'deputy' : 'deputies'} in the posse`}
         />
 
         <StatCard
@@ -93,14 +93,14 @@ export function Dashboard() {
           value={`${averageHp}%`}
           icon="❤️"
           color={getAverageHpColor()}
-          description="Team health status"
+          description="Posse health status"
         />
       </div>
 
       {/* Health Status Breakdown */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
-          title="Healthy"
+          title="Ready to Ride"
           value={healthyCount}
           icon="💚"
           color="green"
@@ -108,15 +108,15 @@ export function Dashboard() {
         />
 
         <StatCard
-          title="Injured"
+          title="Wounded"
           value={injuredCount}
-          icon="💛"
+          icon="🩹"
           color="yellow"
           description={`${injuredCount} between 1-75% HP`}
         />
 
         <StatCard
-          title="Unconscious"
+          title="Down & Out"
           value={unconsciousCount}
           icon="💀"
           color="red"

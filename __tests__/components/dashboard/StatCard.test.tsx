@@ -70,8 +70,10 @@ describe('StatCard', () => {
     it('renders without description when not provided', () => {
       const { container } = render(<StatCard title="Team Size" value={5} />)
 
-      const description = container.querySelector('.opacity-80')
-      expect(description).not.toBeInTheDocument()
+      // Check there's no description paragraph
+      const paragraphs = container.querySelectorAll('p')
+      // Should only have the value paragraph
+      expect(paragraphs.length).toBe(1)
     })
   })
 
@@ -80,9 +82,8 @@ describe('StatCard', () => {
       const { container } = render(<StatCard title="Test" value={1} />)
 
       const card = container.firstChild as HTMLElement
-      expect(card).toHaveClass('from-blue-500')
-      expect(card).toHaveClass('to-blue-700')
-      expect(card).toHaveClass('border-blue-400')
+      expect(card).toHaveClass('from-sky-800')
+      expect(card).toHaveClass('to-blue-900')
     })
 
     it('applies green color variant', () => {
@@ -91,9 +92,8 @@ describe('StatCard', () => {
       )
 
       const card = container.firstChild as HTMLElement
-      expect(card).toHaveClass('from-green-500')
-      expect(card).toHaveClass('to-green-700')
-      expect(card).toHaveClass('border-green-400')
+      expect(card).toHaveClass('from-emerald-800')
+      expect(card).toHaveClass('to-green-900')
     })
 
     it('applies red color variant', () => {
@@ -102,9 +102,8 @@ describe('StatCard', () => {
       )
 
       const card = container.firstChild as HTMLElement
-      expect(card).toHaveClass('from-red-500')
-      expect(card).toHaveClass('to-red-700')
-      expect(card).toHaveClass('border-red-400')
+      expect(card).toHaveClass('from-red-800')
+      expect(card).toHaveClass('to-rose-900')
     })
 
     it('applies yellow color variant', () => {
@@ -113,9 +112,8 @@ describe('StatCard', () => {
       )
 
       const card = container.firstChild as HTMLElement
-      expect(card).toHaveClass('from-yellow-500')
-      expect(card).toHaveClass('to-yellow-700')
-      expect(card).toHaveClass('border-yellow-400')
+      expect(card).toHaveClass('from-amber-700')
+      expect(card).toHaveClass('to-orange-900')
     })
 
     it('applies purple color variant', () => {
@@ -124,9 +122,8 @@ describe('StatCard', () => {
       )
 
       const card = container.firstChild as HTMLElement
-      expect(card).toHaveClass('from-purple-500')
-      expect(card).toHaveClass('to-purple-700')
-      expect(card).toHaveClass('border-purple-400')
+      expect(card).toHaveClass('from-purple-800')
+      expect(card).toHaveClass('to-violet-900')
     })
   })
 
@@ -189,12 +186,12 @@ describe('StatCard', () => {
       const { container } = render(<StatCard title="Test" value={1} />)
 
       const card = container.firstChild as HTMLElement
-      expect(card).toHaveClass('rounded-lg')
+      expect(card).toHaveClass('rounded-xl')
       expect(card).toHaveClass('border-2')
       expect(card).toHaveClass('p-6')
       expect(card).toHaveClass('text-white')
-      expect(card).toHaveClass('shadow-lg')
-      expect(card).toHaveClass('transition-transform')
+      expect(card).toHaveClass('shadow-xl')
+      expect(card).toHaveClass('transition-all')
       expect(card).toHaveClass('hover:scale-105')
     })
   })

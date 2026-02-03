@@ -3,7 +3,7 @@
 /**
  * Monster Library Page
  *
- * Browse and manage monster stat blocks for D&D/Warhammer 40K encounters.
+ * Browse and manage monster stat blocks for encounters.
  * Accessible at /monsters route.
  *
  * Features:
@@ -115,13 +115,13 @@ export default function MonstersPage() {
       // Show success toast
       setToast({
         type: 'success',
-        message: `${monsters.length} ${monsters.length === 1 ? 'monster' : 'monsters'} added to combat!`,
+        message: `${monsters.length} ${monsters.length === 1 ? 'outlaw' : 'outlaws'} added to combat!`,
       })
     } catch (error) {
       console.error('Failed to add monsters to combat:', error)
       setToast({
         type: 'error',
-        message: 'Failed to add monsters to combat',
+        message: 'Failed to add outlaws to combat',
       })
     }
   }
@@ -166,7 +166,7 @@ export default function MonstersPage() {
       // Show success toast
       setToast({
         type: 'success',
-        message: `Encounter loaded! ${totalAdded} ${totalAdded === 1 ? 'monster' : 'monsters'} added to combat!`,
+        message: `Encounter loaded! ${totalAdded} ${totalAdded === 1 ? 'outlaw' : 'outlaws'} added to combat!`,
       })
     } catch (error) {
       console.error('Failed to load encounter:', error)
@@ -178,16 +178,26 @@ export default function MonstersPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-red-900 to-slate-900">
-      <div className="container mx-auto px-4 py-8">
+    <main className="min-h-screen bg-gradient-to-br from-stone-950 via-amber-950/70 to-stone-950 relative">
+      {/* Atmospheric background - wanted poster vibes */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-1/4 right-1/3 w-64 h-64 bg-amber-600/25 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 left-1/4 w-56 h-56 bg-orange-600/20 rounded-full blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 w-40 h-40 bg-red-600/15 rounded-full blur-xl" />
+      </div>
+
+      <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-8 text-center">
-            <h1 className="text-5xl font-bold text-red-400 mb-3">
-              🐉 Monster Library
+            <h1 className="text-5xl font-bold mb-3">
+              <span className="mr-2">🦂</span>
+              <span className="bg-gradient-to-r from-amber-300 via-orange-400 to-amber-300 bg-clip-text text-transparent">
+                Outlaw Bounties
+              </span>
             </h1>
-            <p className="text-orange-200 text-lg">
-              Browse monsters, filter by type, and add them to combat encounters
+            <p className="text-amber-200/80 text-lg">
+              Browse wanted outlaws, filter by type, and add them to showdowns
             </p>
           </div>
 
@@ -202,21 +212,21 @@ export default function MonstersPage() {
           <div className="mt-12 flex flex-wrap gap-4 justify-center">
             <Link
               href="/combat"
-              className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-lg transition-colors"
+              className="px-6 py-3 bg-gradient-to-r from-red-700 to-rose-600 hover:from-red-600 hover:to-rose-500 text-white font-semibold rounded-lg shadow-lg transition-all border border-red-500/30"
             >
-              ⚔️ Go to Combat Tracker
+              💥 Go to Showdown
             </Link>
             <Link
               href="/dashboard"
-              className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-lg transition-colors"
+              className="px-6 py-3 bg-gradient-to-r from-purple-700 to-violet-600 hover:from-purple-600 hover:to-violet-500 text-white font-semibold rounded-lg shadow-lg transition-all border border-purple-500/30"
             >
-              📊 Back to Dashboard
+              ⭐ Back to Dashboard
             </Link>
             <Link
               href="/characters"
-              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-lg transition-colors"
+              className="px-6 py-3 bg-gradient-to-r from-sky-700 to-blue-600 hover:from-sky-600 hover:to-blue-500 text-white font-semibold rounded-lg shadow-lg transition-all border border-sky-500/30"
             >
-              👥 Manage Characters
+              🤠 Manage Posse
             </Link>
           </div>
         </div>

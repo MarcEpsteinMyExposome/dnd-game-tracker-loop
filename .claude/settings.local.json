@@ -18,7 +18,8 @@
       "Bash(dir:*)",
       "Bash(npm install:*)",
       "Bash(where:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(findstr:*)"
     ],
     "deny": [
       "Bash(rm:*)",

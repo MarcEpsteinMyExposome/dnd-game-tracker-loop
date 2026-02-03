@@ -71,7 +71,7 @@ export function ConfirmDialog({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50"
       onClick={handleCancel}
       onKeyDown={handleKeyDown}
       role="dialog"
@@ -79,32 +79,32 @@ export function ConfirmDialog({
       aria-labelledby="dialog-title"
     >
       <div
-        className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl"
+        className="bg-gradient-to-br from-stone-800 to-stone-900 rounded-xl p-6 max-w-md w-full shadow-2xl border border-amber-900/40"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Title */}
-        <h3 id="dialog-title" className="text-xl font-bold mb-3">
+        <h3 id="dialog-title" className="text-xl font-bold mb-3 text-amber-100">
           {title}
         </h3>
 
         {/* Message */}
-        <p className="text-gray-700 mb-6">{message}</p>
+        <p className="text-stone-300 mb-6">{message}</p>
 
         {/* Actions */}
         <div className="flex gap-3 justify-end">
           <button
             onClick={handleCancel}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+            className="px-4 py-2 bg-stone-700 text-stone-200 rounded-lg hover:bg-stone-600 transition-colors border border-stone-600/50"
             autoFocus
           >
             {cancelText}
           </button>
           <button
             onClick={handleConfirm}
-            className={`px-4 py-2 rounded-md transition-colors ${
+            className={`px-4 py-2 rounded-lg transition-all font-semibold ${
               isDangerous
-                ? 'bg-red-600 text-white hover:bg-red-700'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
+                ? 'bg-gradient-to-r from-red-700 to-rose-600 text-white hover:from-red-600 hover:to-rose-500 border border-red-500/30'
+                : 'bg-gradient-to-r from-sky-700 to-blue-600 text-white hover:from-sky-600 hover:to-blue-500 border border-sky-500/30'
             }`}
           >
             {confirmText}

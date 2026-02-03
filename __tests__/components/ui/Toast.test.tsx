@@ -40,28 +40,30 @@ describe('Toast', () => {
     it('should render success toast with green styling', () => {
       const { container } = render(<Toast type="success" message="Success!" />)
       expect(screen.getByText('✅')).toBeInTheDocument()
-      const toast = container.querySelector('.border-green-500')
+      // Updated to match new western theme border class
+      const toast = container.querySelector('[class*="border-emerald"]')
       expect(toast).toBeInTheDocument()
     })
 
     it('should render error toast with red styling', () => {
       const { container } = render(<Toast type="error" message="Error!" />)
       expect(screen.getByText('❌')).toBeInTheDocument()
-      const toast = container.querySelector('.border-red-500')
+      const toast = container.querySelector('[class*="border-red"]')
       expect(toast).toBeInTheDocument()
     })
 
     it('should render warning toast with yellow styling', () => {
       const { container } = render(<Toast type="warning" message="Warning!" />)
       expect(screen.getByText('⚠️')).toBeInTheDocument()
-      const toast = container.querySelector('.border-yellow-500')
+      const toast = container.querySelector('[class*="border-amber"]')
       expect(toast).toBeInTheDocument()
     })
 
     it('should render info toast with blue styling', () => {
       const { container } = render(<Toast type="info" message="Info!" />)
-      expect(screen.getByText('ℹ️')).toBeInTheDocument()
-      const toast = container.querySelector('.border-blue-500')
+      // Updated icon for western theme
+      expect(screen.getByText('✨')).toBeInTheDocument()
+      const toast = container.querySelector('[class*="border-sky"]')
       expect(toast).toBeInTheDocument()
     })
   })

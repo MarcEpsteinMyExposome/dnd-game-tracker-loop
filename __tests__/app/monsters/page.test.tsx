@@ -105,13 +105,13 @@ describe('MonstersPage', () => {
   describe('Basic Rendering', () => {
     it('renders the page title', () => {
       render(<MonstersPage />)
-      expect(screen.getByText(/monster library/i)).toBeInTheDocument()
+      expect(screen.getByText(/outlaw bounties/i)).toBeInTheDocument()
     })
 
     it('renders the page description', () => {
       render(<MonstersPage />)
       expect(
-        screen.getByText(/browse monsters, filter by type, and add them to combat encounters/i)
+        screen.getByText(/browse wanted outlaws, filter by type, and add them to showdowns/i)
       ).toBeInTheDocument()
     })
 
@@ -122,7 +122,7 @@ describe('MonstersPage', () => {
 
     it('renders navigation links', () => {
       render(<MonstersPage />)
-      expect(screen.getByRole('link', { name: /go to combat tracker/i })).toHaveAttribute(
+      expect(screen.getByRole('link', { name: /go to showdown/i })).toHaveAttribute(
         'href',
         '/combat'
       )
@@ -130,7 +130,7 @@ describe('MonstersPage', () => {
         'href',
         '/dashboard'
       )
-      expect(screen.getByRole('link', { name: /manage characters/i })).toHaveAttribute(
+      expect(screen.getByRole('link', { name: /manage posse/i })).toHaveAttribute(
         'href',
         '/characters'
       )
@@ -245,7 +245,7 @@ describe('MonstersPage', () => {
 
       await waitFor(() => {
         expect(screen.getByTestId('toast-success')).toBeInTheDocument()
-        expect(screen.getByText(/2 monsters added to combat!/i)).toBeInTheDocument()
+        expect(screen.getByText(/2 outlaws added to combat!/i)).toBeInTheDocument()
       })
     })
 
@@ -288,7 +288,7 @@ describe('MonstersPage', () => {
 
       await waitFor(() => {
         expect(screen.getByTestId('toast-error')).toBeInTheDocument()
-        expect(screen.getByText(/failed to add monsters to combat/i)).toBeInTheDocument()
+        expect(screen.getByText(/failed to add outlaws to combat/i)).toBeInTheDocument()
       })
     })
   })

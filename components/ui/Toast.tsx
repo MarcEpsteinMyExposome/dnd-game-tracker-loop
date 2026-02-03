@@ -87,27 +87,27 @@ export function Toast({
     }
   }, [duration, onDismiss])
 
-  // Type-specific styling
+  // Type-specific styling with western theme
   const typeStyles = {
     success: {
-      bg: 'bg-green-500/20 border-green-500',
-      text: 'text-green-200',
+      bg: 'bg-emerald-900/80 border-emerald-500/60',
+      text: 'text-emerald-100',
       icon: '✅',
     },
     error: {
-      bg: 'bg-red-500/20 border-red-500',
-      text: 'text-red-200',
+      bg: 'bg-red-900/80 border-red-500/60',
+      text: 'text-red-100',
       icon: '❌',
     },
     warning: {
-      bg: 'bg-yellow-500/20 border-yellow-500',
-      text: 'text-yellow-200',
+      bg: 'bg-amber-900/80 border-amber-500/60',
+      text: 'text-amber-100',
       icon: '⚠️',
     },
     info: {
-      bg: 'bg-blue-500/20 border-blue-500',
-      text: 'text-blue-200',
-      icon: 'ℹ️',
+      bg: 'bg-sky-900/80 border-sky-500/60',
+      text: 'text-sky-100',
+      icon: '✨',
     },
   }
 
@@ -115,7 +115,7 @@ export function Toast({
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 max-w-md animate-slide-in-right ${styles.bg} border ${styles.text} rounded-lg p-4 shadow-lg backdrop-blur-sm`}
+      className={`fixed top-4 right-4 z-50 max-w-md animate-slide-in-right ${styles.bg} border ${styles.text} rounded-xl p-4 shadow-2xl backdrop-blur-sm`}
       role="alert"
       aria-live="polite"
       aria-atomic="true"

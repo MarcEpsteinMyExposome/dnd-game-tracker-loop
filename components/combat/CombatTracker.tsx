@@ -82,26 +82,26 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
   if (sortedCombatants.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="text-6xl mb-4">⚔️</div>
-        <h3 className="text-xl font-bold text-gray-700 mb-2">No Active Combat</h3>
-        <p className="text-gray-600 mb-6">
-          Add characters and monsters to begin combat
+        <div className="text-6xl mb-4">🔫</div>
+        <h3 className="text-xl font-bold text-amber-200 mb-2">No Active Showdown</h3>
+        <p className="text-stone-400 mb-6">
+          Add deputies and outlaws to begin the shootout
         </p>
         <div className="flex gap-3 justify-center">
           {onAddCombatants && (
             <button
               onClick={onAddCombatants}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              className="bg-gradient-to-r from-sky-700 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-sky-600 hover:to-blue-500 transition-all border border-sky-500/30"
             >
-              ➕ Add Characters
+              🤠 Add Deputies
             </button>
           )}
           {onAddMonsters && (
             <button
               onClick={onAddMonsters}
-              className="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
+              className="bg-gradient-to-r from-red-700 to-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-red-600 hover:to-rose-500 transition-all border border-red-500/30"
             >
-              🐉 Add Monsters
+              🦂 Add Outlaws
             </button>
           )}
         </div>
@@ -112,15 +112,15 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
   return (
     <div className="space-y-4">
       {/* Combat Header - Round Counter and Controls */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-lg p-4 shadow-lg">
+      <div className="bg-gradient-to-r from-amber-800 via-orange-800 to-amber-800 text-white rounded-xl p-4 shadow-lg border border-amber-600/40">
         <div className="flex items-center justify-between flex-wrap gap-4">
           {/* Round Counter */}
           <div>
-            <div className="text-sm uppercase tracking-wide opacity-90">Combat Round</div>
-            <div className="text-3xl font-bold">#{round}</div>
+            <div className="text-sm uppercase tracking-wide text-amber-200/80">Showdown Round</div>
+            <div className="text-3xl font-bold text-amber-100">#{round}</div>
             {activeCombatant && (
-              <div className="text-sm opacity-90 mt-1">
-                Current Turn: <span className="font-semibold">{activeCombatant.name}</span>
+              <div className="text-sm text-amber-200/80 mt-1">
+                Current Turn: <span className="font-semibold text-amber-100">{activeCombatant.name}</span>
               </div>
             )}
           </div>
@@ -130,34 +130,34 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
             {onAddCombatants && (
               <button
                 onClick={onAddCombatants}
-                className="bg-blue-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors"
-                title="Add characters to combat"
+                className="bg-sky-700 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-sky-600 transition-colors border border-sky-500/30"
+                title="Add deputies to showdown"
               >
-                ➕ Characters
+                🤠 Deputies
               </button>
             )}
             {onAddMonsters && (
               <button
                 onClick={onAddMonsters}
-                className="bg-orange-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-orange-600 transition-colors"
-                title="Add monsters to combat"
+                className="bg-orange-700 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-orange-600 transition-colors border border-orange-500/30"
+                title="Add outlaws to showdown"
               >
-                🐉 Monsters
+                🦂 Outlaws
               </button>
             )}
             <button
               onClick={handleNextTurn}
-              className="bg-yellow-400 text-yellow-900 px-6 py-2 rounded-lg font-bold hover:bg-yellow-300 transition-colors shadow-md"
+              className="bg-gradient-to-r from-purple-600 to-violet-600 text-white px-6 py-2 rounded-lg font-bold hover:from-purple-500 hover:to-violet-500 transition-all shadow-md border border-purple-400/30"
               title="Advance to next combatant's turn"
             >
-              ⏭️ Next Turn
+              ✨ Next Turn
             </button>
             <button
               onClick={() => setShowEndCombatConfirm(true)}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors shadow-md"
-              title="End combat and clear all combatants"
+              className="bg-red-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600 transition-colors shadow-md border border-red-500/30"
+              title="End showdown and clear all combatants"
             >
-              🛑 End Combat
+              🛑 End Showdown
             </button>
           </div>
         </div>
@@ -165,40 +165,40 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
 
       {/* Combat Status Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-          <div className="text-blue-600 font-semibold mb-1">Players</div>
-          <div className="text-2xl font-bold text-blue-700">
+        <div className="bg-sky-900/40 border border-sky-600/40 rounded-lg p-3">
+          <div className="text-sky-300 font-semibold mb-1">🤠 Deputies</div>
+          <div className="text-2xl font-bold text-sky-100">
             {sortedCombatants.filter((c) => c.isPlayer && c.currentHp > 0).length}
           </div>
-          <div className="text-xs text-blue-600">alive</div>
+          <div className="text-xs text-sky-400">standing</div>
         </div>
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-          <div className="text-red-600 font-semibold mb-1">Enemies</div>
-          <div className="text-2xl font-bold text-red-700">
+        <div className="bg-red-900/40 border border-red-600/40 rounded-lg p-3">
+          <div className="text-red-300 font-semibold mb-1">🦂 Outlaws</div>
+          <div className="text-2xl font-bold text-red-100">
             {sortedCombatants.filter((c) => !c.isPlayer && c.currentHp > 0).length}
           </div>
-          <div className="text-xs text-red-600">alive</div>
+          <div className="text-xs text-red-400">standing</div>
         </div>
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-          <div className="text-gray-600 font-semibold mb-1">Total</div>
-          <div className="text-2xl font-bold text-gray-700">
+        <div className="bg-stone-800/60 border border-stone-600/40 rounded-lg p-3">
+          <div className="text-stone-300 font-semibold mb-1">💥 Total</div>
+          <div className="text-2xl font-bold text-stone-100">
             {sortedCombatants.length}
           </div>
-          <div className="text-xs text-gray-600">combatants</div>
+          <div className="text-xs text-stone-400">combatants</div>
         </div>
       </div>
 
       {/* Combatants List */}
       <div>
-        <h3 className="text-lg font-bold text-gray-700 mb-3 flex items-center gap-2">
-          <span>⚔️</span>
-          <span>Initiative Order</span>
+        <h3 className="text-lg font-bold text-amber-200 mb-3 flex items-center gap-2">
+          <span>🔫</span>
+          <span>Draw Order</span>
         </h3>
         <div className="space-y-3">
           {sortedCombatants.map((combatant, index) => (
             <div key={combatant.id} className="flex items-start gap-3">
               {/* Initiative Rank */}
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-600">
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-900/60 border border-amber-600/40 flex items-center justify-center text-sm font-bold text-amber-200">
                 {index + 1}
               </div>
 
@@ -218,9 +218,9 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
       {/* End Combat Confirmation Dialog */}
       {showEndCombatConfirm && (
         <ConfirmDialog
-          title="End Combat?"
+          title="End Showdown?"
           message="This will remove all combatants and end the current encounter. This action cannot be undone."
-          confirmText="End Combat"
+          confirmText="End Showdown"
           cancelText="Cancel"
           isDangerous={true}
           onConfirm={handleEndCombat}

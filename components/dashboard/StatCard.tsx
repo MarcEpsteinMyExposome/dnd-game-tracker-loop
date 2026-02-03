@@ -60,13 +60,13 @@ export function StatCard({
   description,
   trend,
 }: StatCardProps) {
-  // Color variant classes using Tailwind CSS 4 syntax
+  // Western-themed color variant classes with magic accents
   const colorVariants = {
-    blue: 'bg-gradient-to-br from-blue-500 to-blue-700 border-blue-400',
-    green: 'bg-gradient-to-br from-green-500 to-green-700 border-green-400',
-    red: 'bg-gradient-to-br from-red-500 to-red-700 border-red-400',
-    yellow: 'bg-gradient-to-br from-yellow-500 to-yellow-700 border-yellow-400',
-    purple: 'bg-gradient-to-br from-purple-500 to-purple-700 border-purple-400',
+    blue: 'bg-gradient-to-br from-sky-800 to-blue-900 border-sky-500/50 shadow-sky-900/30',
+    green: 'bg-gradient-to-br from-emerald-800 to-green-900 border-emerald-500/50 shadow-emerald-900/30',
+    red: 'bg-gradient-to-br from-red-800 to-rose-900 border-red-500/50 shadow-red-900/30',
+    yellow: 'bg-gradient-to-br from-amber-700 to-orange-900 border-amber-500/50 shadow-amber-900/30',
+    purple: 'bg-gradient-to-br from-purple-800 to-violet-900 border-purple-500/50 shadow-purple-900/30',
   }
 
   // Trend arrow icons
@@ -79,13 +79,13 @@ export function StatCard({
 
   return (
     <div
-      className={`${colorClass} rounded-lg border-2 p-6 text-white shadow-lg transition-transform hover:scale-105`}
+      className={`${colorClass} rounded-xl border-2 p-6 text-white shadow-xl transition-all hover:scale-105 hover:shadow-2xl backdrop-blur-sm`}
       role="article"
       aria-label={`${title}: ${value}`}
     >
       {/* Header: Title and Icon */}
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold uppercase tracking-wide opacity-90">
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-amber-100/80">
           {title}
         </h3>
         {icon && (
@@ -97,7 +97,7 @@ export function StatCard({
 
       {/* Value Display */}
       <div className="flex items-baseline gap-2 mb-2">
-        <p className="text-4xl font-bold">{value}</p>
+        <p className="text-4xl font-bold text-amber-100">{value}</p>
         {trend && (
           <span
             className="text-2xl font-bold"
@@ -110,7 +110,7 @@ export function StatCard({
 
       {/* Description */}
       {description && (
-        <p className="text-sm opacity-80 mt-2">{description}</p>
+        <p className="text-sm text-white/70 mt-2">{description}</p>
       )}
     </div>
   )
