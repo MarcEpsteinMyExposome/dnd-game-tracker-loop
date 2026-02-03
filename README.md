@@ -1,80 +1,69 @@
-# D&D Game Tracker Loop - v2.0
+# D&D Game Tracker
 
-A rebuilt version of the D&D Game Tracker using the **RALPH Loop Methodology** for iterative development.
+A web-based game tracker for D&D and Warhammer 40K tabletop sessions.
 
-## Purpose
+## Features
 
-This project serves dual purposes:
-1. **Practical**: Build an improved D&D/Warhammer 40K game tracker
-2. **Educational**: Learn and demonstrate the RALPH loop development process
+- **Character Management** - Create, edit, and track characters with HP, AC, conditions
+- **Combat Tracker** - Initiative-based turn order, HP tracking, round counter
+- **Monster Library** - 15 pre-defined monsters with Quick Encounter presets
+- **Dashboard** - Team statistics and health overview
+- **Data Persistence** - Auto-save to localStorage with export/import
 
-## Project Status
-
-**Current Phase:** DEFINE ✅
-**Next Phase:** Create FUNCTIONS.md and begin Loop Iteration 1
-
-## How to Run
-
-### Option 1: Local Development
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Run the development server:
-   ```bash
-   npm run dev
-   ```
-
-3. Open http://localhost:3000 in your browser
-
-### Option 2: Run Tests
+## Quick Start
 
 ```bash
-npm test          # Run tests once
-npm run test:watch  # Run tests in watch mode
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Open http://localhost:3000
 ```
-
-## Loop Documentation
-
-- [DEFINE.md](DEFINE.md) - Project goals, requirements, and success criteria ✅
-- FUNCTIONS.md - Feature breakdown (coming next)
-- TASKS.md - Current iteration tasks (coming next)
-- PROGRESS.md - Loop status tracking (coming next)
-- COMPLETED.md - Historical completion record (coming next)
-- RETROSPECTIVE.md - Lessons learned (coming next)
 
 ## Tech Stack
 
-- **Framework**: Next.js 16.1 (App Router with Turbopack)
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS 4
-- **Runtime**: React 19.2
-- **State Management**: Zustand
-- **Validation**: Zod
-- **Testing**: Jest + React Testing Library
-- **Deployment**: Vercel (future)
+| Category | Technology |
+|----------|------------|
+| Framework | Next.js 16.1 (App Router) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4 |
+| State | Zustand 5.0 |
+| Validation | Zod 3.24 |
+| Testing | Jest + React Testing Library |
 
-## Key Differences from v1
+## Project Status
 
-- ✅ Test-driven development from the start
-- ✅ Structured schemas with Zod validation
-- ✅ Loop-based iterative development process
-- ✅ Comprehensive documentation at each phase
-- ✅ Better code organization and architecture
-- ✅ Visual dice rolling system (planned)
-- ✅ Data persistence with LocalStorage (planned)
+**Iteration 4 Complete** - 805 tests passing
 
-## Development Principles
+### Completed
+- Character CRUD with conditions system
+- Combat tracker with turn management
+- Monster library with Quick Encounters
+- LocalStorage persistence with export/import
+- Dashboard with team statistics
 
-1. **Iterative Development** - Build in small, testable increments
-2. **Test-Driven Mindset** - Tests are part of the learning journey
-3. **Structured from Start** - Use schemas and validation from day one
-4. **Progress Transparency** - All loop phases documented
-5. **Learning Over Perfection** - Prioritize understanding the process
+### Next Up (Iteration 5)
+- True initiative system (d20 + DEX)
+- Visual dice roller
 
----
+## Development
 
-**Version**: 2.0.0
-**Started**: 2026-01-20
+```bash
+npm run dev      # Development server
+npm test         # Run tests
+npm run build    # Production build
+npm run lint     # Lint check
+```
+
+## Documentation
+
+- [CLAUDE.md](CLAUDE.md) - Project context for Claude Code
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture
+- [DECISIONS.md](DECISIONS.md) - Architectural decisions
+- [PATTERNS.md](PATTERNS.md) - Code patterns
+
+## License
+
+Private project
