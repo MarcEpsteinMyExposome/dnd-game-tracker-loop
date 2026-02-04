@@ -3,7 +3,7 @@
 ## Project Overview
 
 **Project:** Bang Your Dead v3
-**Status:** Iteration 5 Complete (969 tests passing)
+**Status:** Iteration 5 Complete (1009 tests passing)
 **Next:** Iteration 6 - TBD
 
 A Western Gun & Magic themed combat tracker for tabletop RPG sessions. Features posse management, showdown tracking, outlaw bounties, and dice rolling.
@@ -25,7 +25,7 @@ A Western Gun & Magic themed combat tracker for tabletop RPG sessions. Features 
 
 ```bash
 npm run dev      # Start dev server (localhost:3000)
-npm test         # Run tests (969 passing)
+npm test         # Run tests (1009 passing)
 npm run build    # Production build
 npm run lint     # Run ESLint
 ```
@@ -48,10 +48,10 @@ components/             # React components
 ├── combat/             # CombatTracker, CombatantCard, AddMonstersModal, InitiativeRoller
 ├── monsters/           # MonsterCard, MonsterLibrary
 ├── dashboard/          # Dashboard, StatCard
-├── dice/               # DiceButton, DiceRoller, RollHistory
+├── dice/               # DiceButton, DiceRoller, DiceRollerModal, RollHistory
 ├── conditions/         # ConditionBadge, ConditionToggle, ConditionsModal
 ├── ui/                 # ConfirmDialog, LoadingSpinner, Toast, ErrorBoundary
-└── layout/             # PersistenceProvider
+└── layout/             # PersistenceProvider, Navigation
 
 lib/                    # Business logic
 ├── schemas/            # Zod validation schemas
@@ -75,8 +75,9 @@ __tests__/              # Jest tests (mirrors src structure)
 - **Data Persistence:** LocalStorage with auto-save, export/import JSON
 - **Dashboard:** Posse statistics with health status breakdown
 - **Visual Theme:** Western Gun & Magic aesthetic with purple magic accents
-- **Dice Rolling:** Full dice roller UI with d4-d20, custom notation (2d6+3)
+- **Dice Rolling:** Full dice roller UI with d4-d100, custom notation (2d6+3), accessible from combat and navigation
 - **Initiative System:** Roll initiative for combatants (d20 + DEX modifier)
+- **Character DEX Modifier:** Characters have DEX modifier field that flows to initiative rolls
 
 ---
 
@@ -97,6 +98,15 @@ Create task files in `.claude/tasks/` for each discrete unit of work. Run indepe
 - Update task file status (Not Started → In Progress → Complete)
 
 Do this proactively as part of completing work, not only when explicitly requested.
+
+### Task Completion Validation
+**IMPORTANT:** When spawning sub-agents via the Task tool, the calling agent must:
+1. Wait for the task to complete
+2. Validate the task completed successfully (check test results, verify files created)
+3. Update documentation files (README.md, CLAUDE.md) with any new features or status changes
+4. Update task files in `.claude/tasks/` if applicable
+
+Sub-agents focus on implementation; the parent is responsible for documentation updates after task completion.
 
 ---
 
@@ -149,7 +159,7 @@ This project was originally built using the "RALPH Loop" iterative development m
 
 - **[docs/archive/](docs/archive/)** - Original RALPH Loop files (INSTRUCTIONS_TO_LLM.md, DEFINE.md, FUNCTIONS.md, PROGRESS.md, etc.)
 
-The project has completed 5 full iterations with 969 passing tests. Now using modern Claude Code task-based workflow.
+The project has completed 5 full iterations with 1009 passing tests. Now using modern Claude Code task-based workflow.
 
 ---
 
@@ -161,9 +171,12 @@ The project has completed 5 full iterations with 969 passing tests. Now using mo
 **Features Added:**
 - Dice rolling system with crypto.getRandomValues() for randomness
 - Dice notation parser (XdY+Z format)
-- DiceButton, DiceRoller, RollHistory components
+- DiceButton, DiceRoller, DiceRollerModal, RollHistory components
 - Initiative rolling (d20 + DEX modifier)
 - Combat slice updates: rollInitiative, rollAllInitiatives, setManualInitiative
 - InitiativeRoller integrated into CombatTracker
+- DEX modifier field added to character schema and form
+- DiceRoller accessible from combat page (toggle button) and navigation (modal)
+- Navigation component with global dice roller access
 
 **Files:** See [.claude/tasks/iteration-5/](.claude/tasks/iteration-5/) for detailed breakdown.

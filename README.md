@@ -35,21 +35,23 @@ npm run dev
 
 ## Project Status
 
-**Iteration 4 Complete** - 805 tests passing
+**Iteration 5 Complete** - 1009 tests passing
 
 ### Completed
-- Character CRUD with conditions system
-- Combat tracker with turn management
+- Character CRUD with conditions system and DEX modifier
+- Combat tracker with turn management and integrated dice roller
+- Initiative system (d20 + DEX modifier) with roll all functionality
+- Visual dice roller (d4-d100, custom notation like 2d6+3)
 - Monster library with Quick Encounters
 - LocalStorage persistence with export/import
 - Dashboard with team statistics
+- Global dice roller accessible from navigation
 - Visual rebrand to Western Gun & Magic theme
 
-### Next Up (Iteration 5)
-- True initiative system (d20 + DEX)
-- Visual dice roller
+### Next Up (Iteration 6)
+- TBD
 
-See [.claude/tasks/iteration-5/](.claude/tasks/iteration-5/) for task breakdown.
+See [.claude/tasks/](.claude/tasks/) for task history.
 
 ## Development
 
