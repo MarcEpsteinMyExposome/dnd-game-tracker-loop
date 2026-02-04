@@ -27,7 +27,30 @@ export default function Home() {
         </div>
 
         {/* Status Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto mb-16">
+          {/* Iteration 5 Status */}
+          <div className="bg-gradient-to-br from-green-900/40 to-emerald-900/30 border-2 border-green-600/40 rounded-xl p-6 shadow-2xl backdrop-blur-sm hover:border-green-500/60 transition-all hover:shadow-green-900/20">
+            <h2 className="text-xl font-bold text-green-300 mb-3">
+              ✅ Dice Ready
+            </h2>
+            <p className="text-green-100 mb-3 font-semibold text-sm">
+              Initiative & Dice Rolling
+            </p>
+            <ul className="space-y-1 text-xs text-green-100/80">
+              <li>✓ Full dice roller (d4-d100)</li>
+              <li>✓ Custom notation (2d6+3)</li>
+              <li>✓ Initiative rolling (d20+DEX)</li>
+              <li>✓ Roll history tracking</li>
+              <li>✓ 1009 tests passing</li>
+            </ul>
+            <Link
+              href="/combat"
+              className="mt-4 block w-full bg-gradient-to-r from-green-700 to-emerald-600 hover:from-green-600 hover:to-emerald-500 text-white font-bold py-2 px-4 rounded-lg text-center transition-all shadow-lg text-sm border border-green-500/30"
+            >
+              🎲 Roll Dice →
+            </Link>
+          </div>
+
           {/* Iteration 4 Status */}
           <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/30 border-2 border-amber-600/40 rounded-xl p-6 shadow-2xl backdrop-blur-sm hover:border-amber-500/60 transition-all hover:shadow-amber-900/20">
             <h2 className="text-xl font-bold text-amber-300 mb-3">
@@ -41,7 +64,6 @@ export default function Home() {
               <li>✓ Export/Import JSON backups</li>
               <li>✓ 15 pre-defined outlaws</li>
               <li>✓ Quick Encounter presets</li>
-              <li>✓ 805 tests passing</li>
             </ul>
             <Link
               href="/monsters"
@@ -125,7 +147,7 @@ export default function Home() {
               Available Features
             </span>
           </h3>
-          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid md:grid-cols-3 lg:grid-cols-7 gap-4">
             {/* Feature 1 */}
             <div className="bg-stone-900/60 border border-amber-700/30 rounded-lg p-4 hover:border-amber-500/50 hover:bg-stone-900/80 transition-all group">
               <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🤠</div>
@@ -179,6 +201,15 @@ export default function Home() {
                 Auto-save to localStorage with export/import backups.
               </p>
             </div>
+
+            {/* Feature 7 */}
+            <div className="bg-stone-900/60 border border-green-600/30 rounded-lg p-4 hover:border-green-400/50 hover:bg-stone-900/80 transition-all group">
+              <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🎲</div>
+              <h4 className="text-lg font-bold text-green-200 mb-1">Dice Roller</h4>
+              <p className="text-stone-400 text-xs">
+                Full dice system with d4-d100, custom notation, and roll history.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -191,16 +222,13 @@ export default function Home() {
           <div className="relative z-10">
             <h3 className="text-2xl font-bold text-purple-300 mb-4 flex items-center justify-center gap-2">
               <span>✨</span>
-              Coming Next: Iteration 5
+              Coming Next: Iteration 6
               <span>✨</span>
             </h3>
-            <p className="text-purple-200 mb-4">Enhanced Combat - Initiative System & Dice Rolling</p>
-            <ul className="text-sm text-purple-100/80 space-y-1">
-              <li>🎲 True initiative rolling (dice-based, not AC placeholder)</li>
-              <li>🔫 D20 dice rolling system with modifiers</li>
-              <li>💥 Attack and damage roll integration</li>
-              <li>✨ Saving throw support with magic bonuses</li>
-            </ul>
+            <p className="text-purple-200 mb-4">To Be Determined</p>
+            <p className="text-sm text-purple-100/80">
+              Have ideas? The next iteration focus is open for suggestions!
+            </p>
           </div>
         </div>
       </div>
