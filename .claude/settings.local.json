@@ -13,6 +13,7 @@
       "Bash(git diff:*)",
       "Bash(npm test:*)",
       "Bash(npm run:*)",
+      "Bash(npm run build)",
       "Bash(ls:*)",
       "Bash(pwd:*)",
       "Bash(dir:*)",
@@ -24,8 +25,7 @@
     "deny": [
       "Bash(rm:*)",
       "Bash(git push:*)",
-      "Bash(git reset --hard:*)",
-      "Bash(npm run build:*)"
+      "Bash(git reset --hard:*)"
     ]
   }
 }
