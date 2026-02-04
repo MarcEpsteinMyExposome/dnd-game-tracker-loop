@@ -22,6 +22,8 @@ import { useState } from 'react'
 import { useGameStore } from '@/lib/store/gameStore'
 import { CombatantCard } from './CombatantCard'
 import { ConfirmDialog } from '../ui/ConfirmDialog'
+import { InitiativeRoller } from './InitiativeRoller'
+import { DiceRoller } from '../dice/DiceRoller'
 
 interface CombatTrackerProps {
   onAddCombatants?: () => void
@@ -66,6 +68,7 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
   const activeCombatant = getActiveCombatant()
 
   const [showEndCombatConfirm, setShowEndCombatConfirm] = useState(false)
+  const [showDiceRoller, setShowDiceRoller] = useState(false)
 
   // Handle next turn
   const handleNextTurn = () => {
@@ -145,6 +148,18 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
                 🦂 Outlaws
               </button>
             )}
+            <InitiativeRoller />
+            <button
+              onClick={() => setShowDiceRoller(!showDiceRoller)}
+              className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors border ${
+                showDiceRoller
+                  ? 'bg-purple-600 text-white border-purple-400/50'
+                  : 'bg-stone-700 text-stone-200 border-stone-500/30 hover:bg-stone-600'
+              }`}
+              title="Toggle dice roller"
+            >
+              🎲 Dice
+            </button>
             <button
               onClick={handleNextTurn}
               className="bg-gradient-to-r from-purple-600 to-violet-600 text-white px-6 py-2 rounded-lg font-bold hover:from-purple-500 hover:to-violet-500 transition-all shadow-md border border-purple-400/30"
@@ -187,6 +202,11 @@ export function CombatTracker({ onAddCombatants, onAddMonsters }: CombatTrackerP
           <div className="text-xs text-stone-400">combatants</div>
         </div>
       </div>
+
+      {/* Dice Roller Panel */}
+      {showDiceRoller && (
+        <DiceRoller compact />
+      )}
 
       {/* Combatants List */}
       <div>

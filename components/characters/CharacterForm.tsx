@@ -29,6 +29,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
     maxHp: character?.maxHp || 10,
     currentHp: character?.currentHp || 10,
     armorClass: character?.armorClass || 10,
+    dexModifier: character?.dexModifier ?? 0,
     avatarSeed: character?.avatarSeed || '',
     imageUrl: character?.imageUrl,
     conditions: character?.conditions || [],
@@ -157,7 +158,7 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <label htmlFor="level" className="block text-sm font-medium mb-1 text-slate-700">
             Level *
@@ -189,6 +190,24 @@ export function CharacterForm({ character, onClose, onSuccess }: CharacterFormPr
           />
           {errors.armorClass && (
             <p className="text-red-600 text-sm mt-1">{errors.armorClass}</p>
+          )}
+        </div>
+
+        <div>
+          <label htmlFor="dexModifier" className="block text-sm font-medium mb-1 text-slate-700">
+            DEX Mod
+          </label>
+          <input
+            id="dexModifier"
+            type="number"
+            min="-5"
+            max="10"
+            value={formData.dexModifier}
+            onChange={(e) => handleChange('dexModifier', parseInt(e.target.value) || 0)}
+            className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900"
+          />
+          {errors.dexModifier && (
+            <p className="text-red-600 text-sm mt-1">{errors.dexModifier}</p>
           )}
         </div>
       </div>

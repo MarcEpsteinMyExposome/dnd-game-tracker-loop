@@ -23,6 +23,7 @@ describe('CharacterSchema', () => {
     maxHp: 45,
     currentHp: 32,
     armorClass: 18,
+    dexModifier: 2,
     avatarSeed: 'raul-paladin',
     conditions: ['Poisoned'],
     createdAt: '2026-01-20T10:00:00.000Z',
@@ -63,6 +64,33 @@ describe('CharacterSchema', () => {
       const unconscious = { ...validCharacter, currentHp: 0 }
       const result = CharacterSchema.safeParse(unconscious)
       expect(result.success).toBe(true)
+    })
+
+    it('should validate character with dexModifier at minimum (-5)', () => {
+      const lowDex = { ...validCharacter, dexModifier: -5 }
+      const result = CharacterSchema.safeParse(lowDex)
+      expect(result.success).toBe(true)
+    })
+
+    it('should validate character with dexModifier at maximum (10)', () => {
+      const highDex = { ...validCharacter, dexModifier: 10 }
+      const result = CharacterSchema.safeParse(highDex)
+      expect(result.success).toBe(true)
+    })
+
+    it('should validate character with 0 dexModifier', () => {
+      const zeroDex = { ...validCharacter, dexModifier: 0 }
+      const result = CharacterSchema.safeParse(zeroDex)
+      expect(result.success).toBe(true)
+    })
+
+    it('should default dexModifier to 0 if not provided', () => {
+      const { dexModifier: _dexModifier, ...noDexModifier } = validCharacter
+      const result = CharacterSchema.safeParse(noDexModifier)
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.dexModifier).toBe(0)
+      }
     })
   })
 
@@ -132,6 +160,24 @@ describe('CharacterSchema', () => {
       const result = CharacterSchema.safeParse(highAc)
       expect(result.success).toBe(false)
     })
+
+    it('should reject character with dexModifier below -5', () => {
+      const tooLowDex = { ...validCharacter, dexModifier: -6 }
+      const result = CharacterSchema.safeParse(tooLowDex)
+      expect(result.success).toBe(false)
+    })
+
+    it('should reject character with dexModifier above 10', () => {
+      const tooHighDex = { ...validCharacter, dexModifier: 11 }
+      const result = CharacterSchema.safeParse(tooHighDex)
+      expect(result.success).toBe(false)
+    })
+
+    it('should reject character with non-integer dexModifier', () => {
+      const floatDex = { ...validCharacter, dexModifier: 2.5 }
+      const result = CharacterSchema.safeParse(floatDex)
+      expect(result.success).toBe(false)
+    })
   })
 
   describe('parseCharacter', () => {
@@ -173,11 +219,29 @@ describe('CreateCharacterSchema', () => {
       maxHp: 10,
       currentHp: 10,
       armorClass: 16,
+      dexModifier: 3,
       avatarSeed: 'fighter-seed',
       conditions: [],
     }
     const result = CreateCharacterSchema.safeParse(createData)
     expect(result.success).toBe(true)
+  })
+
+  it('should validate character creation with dexModifier', () => {
+    const createData = {
+      name: 'Agile Rogue',
+      characterClass: 'Rogue',
+      level: 5,
+      maxHp: 30,
+      currentHp: 30,
+      armorClass: 15,
+      dexModifier: 5,
+    }
+    const result = CreateCharacterSchema.safeParse(createData)
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.dexModifier).toBe(5)
+    }
   })
 
   it('should not require id, createdAt, updatedAt', () => {

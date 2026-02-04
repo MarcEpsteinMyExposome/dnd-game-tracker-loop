@@ -102,14 +102,20 @@ export const CombatantSchema = z.object({
   /**
    * Initiative value
    * Determines turn order (higher goes first)
-   * Can be rolled (d20 + DEX mod) or manually entered
-   * Initially may use AC as placeholder until true initiative implemented
+   * Rolled as d20 + DEX modifier or manually entered
    */
   initiative: z
     .number()
     .int()
     .min(-10, 'Initiative too low')
     .max(50, 'Initiative too high'),
+
+  /**
+   * Dexterity modifier for initiative rolls
+   * Typically -5 to +10 for most characters
+   * Used when rolling initiative (d20 + dexModifier)
+   */
+  dexModifier: z.number().int().min(-5).max(10).default(0),
 
   /**
    * Whether this combatant's turn is currently active
@@ -274,7 +280,8 @@ export type UpdateCombatant = z.infer<typeof UpdateCombatantSchema>
  */
 export function createCombatantFromCharacter(
   character: Character,
-  initiative?: number
+  initiative?: number,
+  dexModifier: number = 0
 ): Omit<Combatant, 'id' | 'addedAt'> {
   return {
     entityId: character.id,
@@ -283,7 +290,8 @@ export function createCombatantFromCharacter(
     armorClass: character.armorClass,
     maxHp: character.maxHp,
     currentHp: character.currentHp,
-    initiative: initiative ?? character.armorClass, // Temporary: use AC until true initiative
+    initiative: initiative ?? 10, // Default to 10, will be rolled
+    dexModifier,
     isActive: false,
     conditions: (character.conditions || []) as Condition[],
     imageUrl: character.imageUrl,
@@ -311,7 +319,8 @@ export function createCombatantFromCharacter(
 export function createCombatantFromMonster(
   monster: Monster,
   initiative?: number,
-  instanceName?: string
+  instanceName?: string,
+  dexModifier: number = 0
 ): Omit<Combatant, 'id' | 'addedAt'> {
   return {
     entityId: monster.id,
@@ -320,7 +329,8 @@ export function createCombatantFromMonster(
     armorClass: monster.armorClass,
     maxHp: monster.hitPoints,
     currentHp: monster.hitPoints,
-    initiative: initiative ?? monster.armorClass, // Temporary: use AC until true initiative
+    initiative: initiative ?? 10, // Default to 10, will be rolled
+    dexModifier,
     isActive: false,
     conditions: [] as Condition[],
     imageUrl: monster.imageUrl,
@@ -363,6 +373,7 @@ export function getCombatantHpPercentage(combatant: Combatant): number {
 
 /**
  * Sort combatants by initiative (descending - highest first)
+ * Ties are broken by dexModifier (higher goes first)
  *
  * @param combatants - Array of combatants to sort
  * @returns New sorted array (does not mutate original)
@@ -374,7 +385,14 @@ export function getCombatantHpPercentage(combatant: Combatant): number {
  * ```
  */
 export function sortByInitiative(combatants: Combatant[]): Combatant[] {
-  return [...combatants].sort((a, b) => b.initiative - a.initiative)
+  return [...combatants].sort((a, b) => {
+    // Primary sort by initiative (descending)
+    if (b.initiative !== a.initiative) {
+      return b.initiative - a.initiative
+    }
+    // Tie-breaker: higher DEX modifier goes first
+    return (b.dexModifier ?? 0) - (a.dexModifier ?? 0)
+  })
 }
 
 /**

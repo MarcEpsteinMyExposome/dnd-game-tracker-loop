@@ -178,10 +178,13 @@ export function CharacterCard({
         </div>
       </div>
 
-      {/* Armor Class */}
-      <div className="text-center mb-3">
+      {/* Armor Class & DEX Modifier */}
+      <div className="flex justify-center gap-2 mb-3">
         <span className="inline-block bg-gray-100 px-3 py-1 rounded-md text-sm">
           <span className="font-semibold">AC:</span> {character.armorClass}
+        </span>
+        <span className="inline-block bg-purple-100 px-3 py-1 rounded-md text-sm">
+          <span className="font-semibold">DEX:</span> {character.dexModifier >= 0 ? '+' : ''}{character.dexModifier}
         </span>
       </div>
 

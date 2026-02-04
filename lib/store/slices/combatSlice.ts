@@ -7,6 +7,7 @@
  * - Manage active turn
  * - Update combatant HP during combat
  * - Track round counter
+ * - Roll initiative for combatants
  *
  * @see Combatant schema in lib/schemas/combatant.schema.ts
  */
@@ -19,6 +20,7 @@ import {
   getNextCombatant,
   isCombatantDefeated,
 } from '../../schemas/combatant.schema'
+import { rollInitiative as rollInitiativeDie } from '../../dice/roller'
 
 /**
  * Combat slice state
@@ -36,6 +38,11 @@ export interface CombatSlice {
   nextTurn: () => void
   clearCombat: () => void
   startCombat: () => void
+
+  // Initiative actions
+  rollInitiative: (combatantId: string) => void
+  rollAllInitiatives: () => void
+  setManualInitiative: (combatantId: string, value: number) => void
 
   // Selectors
   getActiveCombatant: () => Combatant | undefined
@@ -293,6 +300,96 @@ export const createCombatSlice: StateCreator<CombatSlice> = (set, get) => ({
         })),
         round: 1,
         isInCombat: true,
+      }
+    })
+  },
+
+  /**
+   * Roll initiative for a single combatant
+   *
+   * Rolls d20 + dexModifier and updates the combatant's initiative
+   *
+   * @param combatantId - ID of combatant to roll for
+   *
+   * @example
+   * ```typescript
+   * rollInitiative('combatant-123')
+   * ```
+   */
+  rollInitiative: (combatantId: string) => {
+    set((state) => {
+      const combatant = state.combatants.find((c) => c.id === combatantId)
+      if (!combatant) return state
+
+      const rollResult = rollInitiativeDie(combatant.dexModifier ?? 0)
+      const updatedCombatants = state.combatants.map((c) =>
+        c.id === combatantId ? { ...c, initiative: rollResult.total } : c
+      )
+
+      return {
+        combatants: sortByInitiative(updatedCombatants),
+      }
+    })
+  },
+
+  /**
+   * Roll initiative for all combatants
+   *
+   * Rolls d20 + dexModifier for each combatant
+   *
+   * @example
+   * ```typescript
+   * rollAllInitiatives()
+   * ```
+   */
+  rollAllInitiatives: () => {
+    set((state) => {
+      const updatedCombatants = state.combatants.map((c) => {
+        const rollResult = rollInitiativeDie(c.dexModifier ?? 0)
+        return { ...c, initiative: rollResult.total }
+      })
+
+      const sorted = sortByInitiative(updatedCombatants)
+
+      // Preserve active combatant status or set first as active
+      const hasActive = sorted.some((c) => c.isActive)
+      const withActive = hasActive
+        ? sorted
+        : sorted.map((c, idx) => ({ ...c, isActive: idx === 0 }))
+
+      return {
+        combatants: withActive,
+      }
+    })
+  },
+
+  /**
+   * Set initiative manually for a combatant
+   *
+   * Validates the value is within range (-10 to 50)
+   *
+   * @param combatantId - ID of combatant
+   * @param value - Initiative value to set
+   *
+   * @example
+   * ```typescript
+   * setManualInitiative('combatant-123', 18)
+   * ```
+   */
+  setManualInitiative: (combatantId: string, value: number) => {
+    // Validate range
+    if (value < -10 || value > 50) {
+      console.warn(`Invalid initiative value: ${value}. Must be between -10 and 50.`)
+      return
+    }
+
+    set((state) => {
+      const updatedCombatants = state.combatants.map((c) =>
+        c.id === combatantId ? { ...c, initiative: Math.round(value) } : c
+      )
+
+      return {
+        combatants: sortByInitiative(updatedCombatants),
       }
     })
   },

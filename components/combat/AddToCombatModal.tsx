@@ -113,7 +113,8 @@ export function AddToCombatModal({ onClose }: AddToCombatModalProps) {
       const character = characters.find((c) => c.id === charId)
       if (character) {
         const initiative = initiativeValues[charId] ?? character.armorClass
-        const combatantData = createCombatantFromCharacter(character, initiative)
+        const dexModifier = character.dexModifier ?? 0
+        const combatantData = createCombatantFromCharacter(character, initiative, dexModifier)
         addCombatant(combatantData)
       }
     })

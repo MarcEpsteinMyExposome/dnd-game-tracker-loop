@@ -174,6 +174,7 @@ export function createMockCombatant(overrides: Partial<Combatant> = {}): Combata
     maxHp: 30,
     currentHp: 30,
     initiative: 10,
+    dexModifier: 0,
     isActive: false,
     conditions: [],
     avatarSeed: 'test-combatant-seed',

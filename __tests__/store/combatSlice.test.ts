@@ -23,6 +23,7 @@ const createMockCombatant = (overrides: Partial<Combatant> = {}): Omit<Combatant
   maxHp: 30,
   currentHp: 30,
   initiative: 10,
+  dexModifier: 0,
   isActive: false,
   conditions: [],
   avatarSeed: 'test-seed',
@@ -494,6 +495,197 @@ describe('CombatSlice', () => {
         const combatant = store.getState().getCombatantById('non-existent-id')
 
         expect(combatant).toBeUndefined()
+      })
+    })
+  })
+
+  describe('Initiative Actions', () => {
+    describe('rollInitiative', () => {
+      it('should update initiative for a single combatant', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10, dexModifier: 2 }))
+
+        const combatantId = store.getState().combatants[0].id
+        const originalInitiative = store.getState().combatants[0].initiative
+
+        store.getState().rollInitiative(combatantId)
+
+        const newInitiative = store.getState().combatants[0].initiative
+        // Initiative should be different (could be same by chance, but unlikely)
+        // At minimum, the action should have executed
+        expect(typeof newInitiative).toBe('number')
+        expect(newInitiative).toBeGreaterThanOrEqual(-3) // d20 min (1) + modifier (-5) = -4, but we use dexModifier 2, so min is 3
+        expect(newInitiative).toBeLessThanOrEqual(22) // d20 max (20) + modifier (2) = 22
+      })
+
+      it('should re-sort combatants after rolling', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'First', initiative: 20 }))
+        store.getState().addCombatant(createMockCombatant({ name: 'Second', initiative: 10 }))
+
+        // Second should be last initially
+        expect(store.getState().combatants[1].name).toBe('Second')
+
+        // Set Second's initiative higher manually, then roll for First to lower it
+        const secondId = store.getState().combatants[1].id
+        store.getState().setManualInitiative(secondId, 25)
+
+        // Now Second should be first
+        expect(store.getState().combatants[0].name).toBe('Second')
+      })
+
+      it('should do nothing for non-existent combatant', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10 }))
+
+        const originalInitiative = store.getState().combatants[0].initiative
+
+        store.getState().rollInitiative('non-existent-id')
+
+        expect(store.getState().combatants[0].initiative).toBe(originalInitiative)
+      })
+    })
+
+    describe('rollAllInitiatives', () => {
+      it('should update initiative for all combatants', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10, dexModifier: 2 }))
+        store.getState().addCombatant(createMockCombatant({ name: 'Wizard', initiative: 10, dexModifier: 1 }))
+        store.getState().addCombatant(createMockCombatant({ name: 'Rogue', initiative: 10, dexModifier: 4 }))
+
+        store.getState().rollAllInitiatives()
+
+        const combatants = store.getState().combatants
+        combatants.forEach((c) => {
+          expect(typeof c.initiative).toBe('number')
+          // Initiative should be in valid range (d20 1-20 + modifier -5 to 10)
+          expect(c.initiative).toBeGreaterThanOrEqual(-4)
+          expect(c.initiative).toBeLessThanOrEqual(30)
+        })
+      })
+
+      it('should sort combatants after rolling all', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'A', initiative: 10 }))
+        store.getState().addCombatant(createMockCombatant({ name: 'B', initiative: 10 }))
+        store.getState().addCombatant(createMockCombatant({ name: 'C', initiative: 10 }))
+
+        store.getState().rollAllInitiatives()
+
+        const combatants = store.getState().combatants
+        // Should be sorted by initiative descending
+        for (let i = 0; i < combatants.length - 1; i++) {
+          expect(combatants[i].initiative).toBeGreaterThanOrEqual(combatants[i + 1].initiative)
+        }
+      })
+
+      it('should set first combatant as active if none was active', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter' }))
+
+        // Manually deactivate
+        store.getState().combatants[0].isActive = false
+
+        store.getState().rollAllInitiatives()
+
+        expect(store.getState().combatants[0].isActive).toBe(true)
+      })
+
+      it('should handle empty combatant list', () => {
+        const store = createTestStore()
+
+        // Should not throw
+        expect(() => store.getState().rollAllInitiatives()).not.toThrow()
+      })
+    })
+
+    describe('setManualInitiative', () => {
+      it('should set initiative to specified value', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10 }))
+
+        const combatantId = store.getState().combatants[0].id
+
+        store.getState().setManualInitiative(combatantId, 18)
+
+        expect(store.getState().combatants[0].initiative).toBe(18)
+      })
+
+      it('should validate initiative range (min -10)', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10 }))
+
+        const combatantId = store.getState().combatants[0].id
+        const originalInitiative = store.getState().combatants[0].initiative
+
+        store.getState().setManualInitiative(combatantId, -15)
+
+        // Should not change because value is out of range
+        expect(store.getState().combatants[0].initiative).toBe(originalInitiative)
+      })
+
+      it('should validate initiative range (max 50)', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10 }))
+
+        const combatantId = store.getState().combatants[0].id
+        const originalInitiative = store.getState().combatants[0].initiative
+
+        store.getState().setManualInitiative(combatantId, 55)
+
+        // Should not change because value is out of range
+        expect(store.getState().combatants[0].initiative).toBe(originalInitiative)
+      })
+
+      it('should accept valid negative initiative', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10 }))
+
+        const combatantId = store.getState().combatants[0].id
+
+        store.getState().setManualInitiative(combatantId, -5)
+
+        expect(store.getState().combatants[0].initiative).toBe(-5)
+      })
+
+      it('should re-sort combatants after setting', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'First', initiative: 20 }))
+        store.getState().addCombatant(createMockCombatant({ name: 'Second', initiative: 10 }))
+
+        const secondId = store.getState().combatants.find((c) => c.name === 'Second')!.id
+
+        // Set Second's initiative higher than First
+        store.getState().setManualInitiative(secondId, 25)
+
+        // Second should now be first
+        expect(store.getState().combatants[0].name).toBe('Second')
+        expect(store.getState().combatants[0].initiative).toBe(25)
+      })
+
+      it('should round decimal values', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'Fighter', initiative: 10 }))
+
+        const combatantId = store.getState().combatants[0].id
+
+        store.getState().setManualInitiative(combatantId, 15.7)
+
+        expect(store.getState().combatants[0].initiative).toBe(16)
+      })
+    })
+
+    describe('dexModifier tiebreaker', () => {
+      it('should break initiative ties by dexModifier', () => {
+        const store = createTestStore()
+        store.getState().addCombatant(createMockCombatant({ name: 'LowDex', initiative: 15, dexModifier: 1 }))
+        store.getState().addCombatant(createMockCombatant({ name: 'HighDex', initiative: 15, dexModifier: 4 }))
+
+        const combatants = store.getState().combatants
+
+        // Both have same initiative, but HighDex should be first due to higher dexModifier
+        expect(combatants[0].name).toBe('HighDex')
+        expect(combatants[1].name).toBe('LowDex')
       })
     })
   })

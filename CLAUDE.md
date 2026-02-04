@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-**Project:** D&D Game Tracker Loop v2.0
-**Status:** Iteration 4 Complete (805 tests passing)
-**Next:** Iteration 5 - Initiative System & Dice Rolling
+**Project:** Bang Your Dead v3
+**Status:** Iteration 5 Complete (969 tests passing)
+**Next:** Iteration 6 - TBD
 
-A D&D/Warhammer 40K game tracker web application featuring character management, combat tracking, and monster library.
+A Western Gun & Magic themed combat tracker for tabletop RPG sessions. Features posse management, showdown tracking, outlaw bounties, and dice rolling.
 
 ---
 
@@ -25,7 +25,7 @@ A D&D/Warhammer 40K game tracker web application featuring character management,
 
 ```bash
 npm run dev      # Start dev server (localhost:3000)
-npm test         # Run tests (805 passing)
+npm test         # Run tests (969 passing)
 npm run build    # Production build
 npm run lint     # Run ESLint
 ```
@@ -45,9 +45,10 @@ app/                    # Next.js pages
 
 components/             # React components
 ├── characters/         # CharacterForm, CharacterCard, CharacterList
-├── combat/             # CombatTracker, CombatantCard, AddMonstersModal
+├── combat/             # CombatTracker, CombatantCard, AddMonstersModal, InitiativeRoller
 ├── monsters/           # MonsterCard, MonsterLibrary
 ├── dashboard/          # Dashboard, StatCard
+├── dice/               # DiceButton, DiceRoller, RollHistory
 ├── conditions/         # ConditionBadge, ConditionToggle, ConditionsModal
 ├── ui/                 # ConfirmDialog, LoadingSpinner, Toast, ErrorBoundary
 └── layout/             # PersistenceProvider
@@ -56,6 +57,7 @@ lib/                    # Business logic
 ├── schemas/            # Zod validation schemas
 ├── store/              # Zustand store + slices (characterSlice, combatSlice)
 ├── storage/            # LocalStorage persistence, migrations, export/import
+├── dice/               # Dice roller and notation parser
 ├── data/               # monsters.ts (15 monsters), encounters.ts (5 encounters)
 ├── utils/              # avatar.ts, stats.ts
 └── validation/         # helpers.ts
@@ -65,13 +67,16 @@ __tests__/              # Jest tests (mirrors src structure)
 
 ---
 
-## Current Features (Iteration 4 Complete)
+## Current Features (Iteration 5 Complete)
 
-- **Character Management:** CRUD, HP tracking, conditions, DiceBear avatars
-- **Combat Tracker:** Initiative order, turn management, round counter
-- **Monster Library:** 15 pre-defined monsters, Quick Encounters
+- **Posse Management:** CRUD, HP tracking, conditions, DiceBear avatars
+- **Showdown Tracker:** Initiative order, turn management, round counter
+- **Outlaw Bounties:** 15 pre-defined outlaws, Quick Encounters
 - **Data Persistence:** LocalStorage with auto-save, export/import JSON
-- **Dashboard:** Team statistics with health status breakdown
+- **Dashboard:** Posse statistics with health status breakdown
+- **Visual Theme:** Western Gun & Magic aesthetic with purple magic accents
+- **Dice Rolling:** Full dice roller UI with d4-d20, custom notation (2d6+3)
+- **Initiative System:** Roll initiative for combatants (d20 + DEX modifier)
 
 ---
 
@@ -84,6 +89,14 @@ __tests__/              # Jest tests (mirrors src structure)
 - Clearer scope for each piece of work
 
 Create task files in `.claude/tasks/` for each discrete unit of work. Run independent tasks in parallel when possible.
+
+### Documentation Updates
+**IMPORTANT:** Keep documentation current without being asked. After completing any significant work:
+- Update **README.md** if features, status, or project description changed
+- Update **CLAUDE.md** if project status, features list, or next steps changed
+- Update task file status (Not Started → In Progress → Complete)
+
+Do this proactively as part of completing work, not only when explicitly requested.
 
 ---
 
@@ -136,14 +149,21 @@ This project was originally built using the "RALPH Loop" iterative development m
 
 - **[docs/archive/](docs/archive/)** - Original RALPH Loop files (INSTRUCTIONS_TO_LLM.md, DEFINE.md, FUNCTIONS.md, PROGRESS.md, etc.)
 
-The project has completed 4 full iterations with 805 passing tests. Now using modern Claude Code task-based workflow.
+The project has completed 5 full iterations with 969 passing tests. Now using modern Claude Code task-based workflow.
 
 ---
 
-## Next Iteration (5)
+## Completed Iterations
 
+### Iteration 5 (Complete)
 **Focus:** Enhanced Combat - Initiative System & Dice Rolling
-- Function 9: True Initiative Rolling (d20 + DEX modifier)
-- Function 10: Dice Rolling System
 
-See `.claude/tasks/` for detailed planning.
+**Features Added:**
+- Dice rolling system with crypto.getRandomValues() for randomness
+- Dice notation parser (XdY+Z format)
+- DiceButton, DiceRoller, RollHistory components
+- Initiative rolling (d20 + DEX modifier)
+- Combat slice updates: rollInitiative, rollAllInitiatives, setManualInitiative
+- InitiativeRoller integrated into CombatTracker
+
+**Files:** See [.claude/tasks/iteration-5/](.claude/tasks/iteration-5/) for detailed breakdown.

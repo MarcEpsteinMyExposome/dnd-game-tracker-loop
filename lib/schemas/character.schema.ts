@@ -87,6 +87,13 @@ export const CharacterSchema = z.object({
     .max(30, 'AC cannot exceed 30'),
 
   /**
+   * Dexterity modifier for initiative rolls
+   * Typically -5 to +10 for most characters
+   * Used when rolling initiative (d20 + dexModifier)
+   */
+  dexModifier: z.number().int().min(-5).max(10).default(0),
+
+  /**
    * Custom image URL or base64 data
    * Optional - if not provided, use avatarSeed for generated avatar
    * Can be:
@@ -241,6 +248,7 @@ export const defaultCharacter: Partial<CreateCharacter> = {
   maxHp: 10,
   currentHp: 10,
   armorClass: 10,
+  dexModifier: 0,
   conditions: [],
   avatarSeed: 'default-seed',
 }

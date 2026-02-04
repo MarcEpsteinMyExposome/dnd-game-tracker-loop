@@ -347,7 +347,7 @@ describe('MonstersPage', () => {
         armorClass: 13,
         maxHp: 7,
         currentHp: 7,
-        initiative: 13, // Defaults to AC
+        initiative: 10, // Default to 10, will be rolled
         isActive: false,
         isPlayer: false,
         conditions: [],

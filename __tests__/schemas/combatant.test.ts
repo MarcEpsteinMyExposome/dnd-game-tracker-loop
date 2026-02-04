@@ -31,6 +31,7 @@ describe('CombatantSchema', () => {
     maxHp: 45,
     currentHp: 32,
     initiative: 15,
+    dexModifier: 2,
     isActive: true,
     conditions: ['Poisoned'],
     avatarSeed: 'raul-paladin',
@@ -133,6 +134,7 @@ describe('createCombatantFromCharacter', () => {
     maxHp: 45,
     currentHp: 32,
     armorClass: 18,
+    dexModifier: 2,
     avatarSeed: 'raul-paladin',
     conditions: ['Poisoned'],
     createdAt: '2026-01-20T10:00:00.000Z',
@@ -152,9 +154,9 @@ describe('createCombatantFromCharacter', () => {
     expect(combatant.initiative).toBe(20)
   })
 
-  it('should default initiative to AC if not provided', () => {
+  it('should default initiative to 10 if not provided', () => {
     const combatant = createCombatantFromCharacter(mockCharacter)
-    expect(combatant.initiative).toBe(mockCharacter.armorClass)
+    expect(combatant.initiative).toBe(10) // Default to 10, will be rolled
   })
 
   it('should copy conditions from character', () => {
@@ -165,6 +167,16 @@ describe('createCombatantFromCharacter', () => {
   it('should set isActive to false', () => {
     const combatant = createCombatantFromCharacter(mockCharacter)
     expect(combatant.isActive).toBe(false)
+  })
+
+  it('should use dexModifier if provided', () => {
+    const combatant = createCombatantFromCharacter(mockCharacter, 15, 3)
+    expect(combatant.dexModifier).toBe(3)
+  })
+
+  it('should default dexModifier to 0 if not provided', () => {
+    const combatant = createCombatantFromCharacter(mockCharacter, 15)
+    expect(combatant.dexModifier).toBe(0)
   })
 })
 
@@ -198,9 +210,9 @@ describe('createCombatantFromMonster', () => {
     expect(combatant.initiative).toBe(12)
   })
 
-  it('should default initiative to AC if not provided', () => {
+  it('should default initiative to 10 if not provided', () => {
     const combatant = createCombatantFromMonster(mockMonster)
-    expect(combatant.initiative).toBe(mockMonster.armorClass)
+    expect(combatant.initiative).toBe(10) // Default to 10, will be rolled
   })
 
   it('should use instance name if provided', () => {

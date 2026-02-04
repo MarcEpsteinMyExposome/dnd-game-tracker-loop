@@ -1,13 +1,13 @@
-# D&D Game Tracker
+# Bang Your Dead v3
 
-A web-based game tracker for D&D and Warhammer 40K tabletop sessions.
+A Western Gun & Magic themed combat tracker for tabletop RPG sessions.
 
 ## Features
 
-- **Character Management** - Create, edit, and track characters with HP, AC, conditions
-- **Combat Tracker** - Initiative-based turn order, HP tracking, round counter
-- **Monster Library** - 15 pre-defined monsters with Quick Encounter presets
-- **Dashboard** - Team statistics and health overview
+- **Posse Management** - Create, edit, and track deputies with HP, AC, conditions
+- **Showdown Tracker** - Initiative-based turn order, HP tracking, round counter
+- **Outlaw Bounties** - 15 pre-defined outlaws with Quick Encounter presets
+- **Dashboard** - Posse statistics and health overview
 - **Data Persistence** - Auto-save to localStorage with export/import
 
 ## Quick Start
@@ -43,10 +43,13 @@ npm run dev
 - Monster library with Quick Encounters
 - LocalStorage persistence with export/import
 - Dashboard with team statistics
+- Visual rebrand to Western Gun & Magic theme
 
 ### Next Up (Iteration 5)
 - True initiative system (d20 + DEX)
 - Visual dice roller
+
+See [.claude/tasks/iteration-5/](.claude/tasks/iteration-5/) for task breakdown.
 
 ## Development
 
