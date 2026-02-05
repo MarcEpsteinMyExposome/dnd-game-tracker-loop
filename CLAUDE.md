@@ -32,6 +32,32 @@ npm run lint     # Run ESLint
 
 ---
 
+## Key Pages
+
+| Page | URL | Description |
+|------|-----|-------------|
+| Home | `/` | Landing with iteration status cards |
+| Characters | `/characters` | Posse management (CRUD, HP, conditions) |
+| Combat | `/combat` | Showdown tracker with dice roller |
+| Dashboard | `/dashboard` | Posse statistics |
+| Monsters | `/monsters` | Outlaw bounty library |
+| Settings | `/settings` | Export/import data |
+
+---
+
+## Documentation Files
+
+| File | Purpose |
+|------|---------|
+| `CLAUDE.md` | **This file** - Start here |
+| `TASKS.md` | Task list with status |
+| `SESSION.md` | Session notes for continuity |
+| `ARCHITECTURE.md` | System architecture, data flow |
+| `DECISIONS.md` | Architectural Decision Records (9 ADRs) |
+| `PATTERNS.md` | Code patterns, testing conventions |
+
+---
+
 ## Project Structure
 
 ```
@@ -81,7 +107,16 @@ __tests__/              # Jest tests (mirrors src structure)
 
 ---
 
-## User Preferences
+## Task Management Protocol
+
+**When completing a task:**
+1. Mark status as `DONE` in `TASKS.md`
+2. Update the task file with completion notes
+3. **Move task file to `.claude/tasks/archive/`**
+4. Update `SESSION.md` with session notes
+5. Update `CLAUDE.md` if features changed
+
+Task specs live in `.claude/tasks/` (active) and `.claude/tasks/archive/` (completed).
 
 ### Task-Based Workflow
 **IMPORTANT:** Always break projects into discrete tasks before starting implementation. This enables:
@@ -89,13 +124,14 @@ __tests__/              # Jest tests (mirrors src structure)
 - Better visibility into progress
 - Clearer scope for each piece of work
 
-Create task files in `.claude/tasks/` for each discrete unit of work. Run independent tasks in parallel when possible.
+Create task files in `.claude/tasks/` for each discrete unit of work. Use IDs like `IT6-01`, `IT6-02` for iteration 6 tasks. Run independent tasks in parallel when possible.
 
 ### Documentation Updates
 **IMPORTANT:** Keep documentation current without being asked. After completing any significant work:
+- Update **TASKS.md** with task status
 - Update **README.md** if features, status, or project description changed
 - Update **CLAUDE.md** if project status, features list, or next steps changed
-- Update task file status (Not Started → In Progress → Complete)
+- Update **SESSION.md** with session notes
 
 Do this proactively as part of completing work, not only when explicitly requested.
 
@@ -103,22 +139,17 @@ Do this proactively as part of completing work, not only when explicitly request
 **IMPORTANT:** When spawning sub-agents via the Task tool, the calling agent must:
 1. Wait for the task to complete
 2. Validate the task completed successfully (check test results, verify files created)
-3. Update documentation files (README.md, CLAUDE.md) with any new features or status changes
-4. Update task files in `.claude/tasks/` if applicable
+3. Update documentation files (TASKS.md, README.md, CLAUDE.md) with any new features or status changes
+4. Move completed task files to `.claude/tasks/archive/`
 
 Sub-agents focus on implementation; the parent is responsible for documentation updates after task completion.
 
 ---
 
-## Code Patterns
+## Common Issues
 
-### Testing
-- Use accessible queries: `getByRole`, `getByLabelText` (not test IDs)
-- Test user behavior, not implementation details
-- All features require tests before completion
-
-### Zustand Selectors
-**IMPORTANT:** Never call selector functions during Zustand subscription:
+### Zustand Selector Infinite Loop
+**Problem:** Calling selector functions during subscription causes infinite re-renders.
 ```typescript
 // WRONG - causes infinite loop
 const combatants = useGameStore((state) => state.getSortedCombatants())
@@ -128,28 +159,25 @@ const getSortedCombatants = useGameStore((state) => state.getSortedCombatants)
 const sortedCombatants = getSortedCombatants()
 ```
 
-### Tailwind CSS 4
-Use slash syntax for opacity (required in Tailwind 4):
+### Tailwind CSS 4 Opacity Syntax
+**Problem:** Old `bg-opacity-30` syntax doesn't work in Tailwind 4.
 ```typescript
-// CORRECT
+// CORRECT (Tailwind 4)
 className="bg-green-900/30 border-green-500/50"
 
 // WRONG (Tailwind 3 syntax, breaks in Tailwind 4)
 className="bg-green-900 bg-opacity-30"
 ```
 
-### Zod Schemas
+### Testing Patterns
+- Use accessible queries: `getByRole`, `getByLabelText` (not test IDs)
+- Test user behavior, not implementation details
+- All features require tests before completion
+
+### Zod Validation
 - Schemas are source of truth for TypeScript types
 - Use `safeParse()` for user input validation
 - All data entering system must be validated
-
----
-
-## Architecture References
-
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Full system architecture, data flow
-- **[DECISIONS.md](DECISIONS.md)** - Architectural Decision Records (9 ADRs)
-- **[PATTERNS.md](PATTERNS.md)** - Code patterns, testing conventions
 
 ---
 
