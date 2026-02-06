@@ -27,6 +27,23 @@ interface MonsterCardProps {
   onAddToCombat?: (monster: Monster) => void
 
   /**
+   * Callback when "Edit" button is clicked (custom monsters only)
+   * @param monster - The monster to edit
+   */
+  onEdit?: (monster: Monster) => void
+
+  /**
+   * Callback when "Delete" button is clicked (custom monsters only)
+   * @param monster - The monster to delete
+   */
+  onDelete?: (monster: Monster) => void
+
+  /**
+   * Whether this is a custom (user-created) monster
+   */
+  isCustom?: boolean
+
+  /**
    * Optional CSS classes for custom styling
    */
   className?: string
@@ -53,7 +70,7 @@ interface MonsterCardProps {
  * />
  * ```
  */
-export function MonsterCard({ monster, onAddToCombat, className = '' }: MonsterCardProps) {
+export function MonsterCard({ monster, onAddToCombat, onEdit, onDelete, isCustom = false, className = '' }: MonsterCardProps) {
   // Get avatar source (custom image, generated avatar, or fallback)
   const avatarSrc = getAvatarSource(
     monster.imageUrl,
@@ -197,6 +214,15 @@ export function MonsterCard({ monster, onAddToCombat, className = '' }: MonsterC
         </div>
       )}
 
+      {/* Custom Monster Badge */}
+      {isCustom && (
+        <div className="flex justify-center mb-2">
+          <span className="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 border border-purple-300 rounded-full">
+            ✨ Custom
+          </span>
+        </div>
+      )}
+
       {/* Add to Combat Button */}
       {onAddToCombat && (
         <button
@@ -206,6 +232,30 @@ export function MonsterCard({ monster, onAddToCombat, className = '' }: MonsterC
         >
           ⚔️ Add to Combat
         </button>
+      )}
+
+      {/* Edit/Delete Buttons (custom monsters only) */}
+      {isCustom && (onEdit || onDelete) && (
+        <div className="flex gap-2 mt-2">
+          {onEdit && (
+            <button
+              onClick={() => onEdit(monster)}
+              className="flex-1 bg-stone-600 text-white font-medium py-1.5 px-3 rounded-md hover:bg-stone-500 transition-colors text-sm"
+              aria-label={`Edit ${monster.name}`}
+            >
+              ✏️ Edit
+            </button>
+          )}
+          {onDelete && (
+            <button
+              onClick={() => onDelete(monster)}
+              className="flex-1 bg-red-700 text-white font-medium py-1.5 px-3 rounded-md hover:bg-red-600 transition-colors text-sm"
+              aria-label={`Delete ${monster.name}`}
+            >
+              🗑️ Delete
+            </button>
+          )}
+        </div>
       )}
     </div>
   )

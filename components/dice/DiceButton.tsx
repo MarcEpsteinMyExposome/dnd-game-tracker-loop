@@ -43,6 +43,8 @@ function getDieIcon(sides: number): string {
       return '⬢' // Hexagon for d12
     case 20:
       return '⬟' // Icosahedron approximation
+    case 30:
+      return '◯' // Circle for d30 (triacontahedron)
     case 100:
       return '%' // Percentile
     default:
@@ -179,7 +181,7 @@ export function DiceButtonRow({
   size = 'md',
   disabled = false,
 }: DiceButtonRowProps) {
-  const standardDice: StandardDie[] = [4, 6, 8, 10, 12, 20]
+  const standardDice: StandardDie[] = [4, 6, 8, 10, 12, 20, 30]
 
   return (
     <div className="flex flex-wrap gap-2 justify-center" role="group" aria-label="Dice roller buttons">

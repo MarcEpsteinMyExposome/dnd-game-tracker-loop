@@ -17,6 +17,7 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { CharacterSlice, createCharacterSlice } from './slices/characterSlice'
 import { CombatSlice, createCombatSlice } from './slices/combatSlice'
+import { MonsterSlice, createMonsterSlice } from './slices/monsterSlice'
 import { migrateState, CURRENT_VERSION } from '@/lib/storage/migrations'
 
 /**
@@ -32,7 +33,7 @@ import { migrateState, CURRENT_VERSION } from '@/lib/storage/migrations'
  * - MonsterSlice (Iteration 4)
  * - SettingsSlice (Iteration 6)
  */
-export interface GameStore extends CharacterSlice, CombatSlice {
+export interface GameStore extends CharacterSlice, CombatSlice, MonsterSlice {
   /**
    * Version of the store schema
    * Useful for data migrations if store structure changes
@@ -82,6 +83,9 @@ export const useGameStore = create<GameStore>()(
 
         // Combat slice
         ...createCombatSlice(...a),
+
+        // Monster slice (custom monsters)
+        ...createMonsterSlice(...a),
       }),
       {
         // Persistence configuration
@@ -95,6 +99,7 @@ export const useGameStore = create<GameStore>()(
           combatants: state.combatants,
           round: state.round,
           isInCombat: state.isInCombat,
+          customMonsters: state.customMonsters,
         }),
 
         // Migration function

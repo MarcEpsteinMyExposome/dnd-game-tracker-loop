@@ -22,10 +22,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import MonsterLibrary, { MonsterWithCount } from '@/components/monsters/MonsterLibrary'
+import { MonsterForm } from '@/components/monsters/MonsterForm'
 import { Monster } from '@/lib/schemas/monster.schema'
 import { createCombatantFromMonster } from '@/lib/schemas/combatant.schema'
 import { useGameStore } from '@/lib/store/gameStore'
 import { Toast } from '@/components/ui/Toast'
+import { ConfirmDialog } from '@/components/ui/ConfirmDialog'
 
 /**
  * MonstersPage - Monster library browser page
@@ -43,10 +45,19 @@ import { Toast } from '@/components/ui/Toast'
  */
 export default function MonstersPage() {
   const addCombatant = useGameStore((state) => state.addCombatant)
+  const deleteMonster = useGameStore((state) => state.deleteMonster)
+
   const [toast, setToast] = useState<{
     type: 'success' | 'error' | 'warning' | 'info'
     message: string
   } | null>(null)
+
+  // Modal state for create/edit form
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [editingMonster, setEditingMonster] = useState<Monster | undefined>()
+
+  // Modal state for delete confirmation
+  const [deletingMonster, setDeletingMonster] = useState<Monster | undefined>()
 
   /**
    * Handle adding a single monster to combat
@@ -177,6 +188,50 @@ export default function MonstersPage() {
     }
   }
 
+  // Handle create monster
+  const handleCreateMonster = () => {
+    setEditingMonster(undefined)
+    setIsFormOpen(true)
+  }
+
+  // Handle edit monster
+  const handleEditMonster = (monster: Monster) => {
+    setEditingMonster(monster)
+    setIsFormOpen(true)
+  }
+
+  // Handle delete monster click (shows confirmation)
+  const handleDeleteMonster = (monster: Monster) => {
+    setDeletingMonster(monster)
+  }
+
+  // Confirm delete
+  const confirmDelete = () => {
+    if (deletingMonster) {
+      deleteMonster(deletingMonster.id)
+      setToast({
+        type: 'success',
+        message: `${deletingMonster.name} has been deleted`,
+      })
+      setDeletingMonster(undefined)
+    }
+  }
+
+  // Handle form close
+  const handleFormClose = () => {
+    setIsFormOpen(false)
+    setEditingMonster(undefined)
+  }
+
+  // Handle form success
+  const handleFormSuccess = () => {
+    setToast({
+      type: 'success',
+      message: editingMonster ? 'Outlaw updated!' : 'Outlaw created!',
+    })
+    handleFormClose()
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-stone-950 via-amber-950/70 to-stone-950 relative">
       {/* Atmospheric background - wanted poster vibes */}
@@ -206,6 +261,9 @@ export default function MonstersPage() {
             onAddToCombat={handleAddToCombat}
             onAddAllToCombat={handleAddAllToCombat}
             onLoadEncounter={handleLoadEncounter}
+            onCreateMonster={handleCreateMonster}
+            onEditMonster={handleEditMonster}
+            onDeleteMonster={handleDeleteMonster}
           />
 
           {/* Quick Action Links */}
@@ -239,6 +297,35 @@ export default function MonstersPage() {
           message={toast.message}
           onDismiss={() => setToast(null)}
           duration={3000}
+        />
+      )}
+
+      {/* Monster Form Modal */}
+      {isFormOpen && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+          <div className="bg-stone-900 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-hidden border border-stone-700 shadow-xl">
+            <h3 className="text-xl font-bold text-amber-200 mb-4">
+              {editingMonster ? `Edit ${editingMonster.name}` : '✨ Create New Outlaw'}
+            </h3>
+            <MonsterForm
+              monster={editingMonster}
+              onClose={handleFormClose}
+              onSuccess={handleFormSuccess}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      {deletingMonster && (
+        <ConfirmDialog
+          title="Delete Outlaw"
+          message={`Are you sure you want to delete ${deletingMonster.name}? This action cannot be undone.`}
+          confirmText="Delete"
+          cancelText="Cancel"
+          isDangerous={true}
+          onConfirm={confirmDelete}
+          onCancel={() => setDeletingMonster(undefined)}
         />
       )}
     </main>

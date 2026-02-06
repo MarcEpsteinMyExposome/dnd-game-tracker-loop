@@ -24,6 +24,7 @@
 import { useState, useMemo } from 'react'
 import { Monster, MonsterType } from '@/lib/schemas/monster.schema'
 import { getAllMonsters, getMonsterCategories } from '@/lib/data/monsters'
+import { useGameStore } from '@/lib/store/gameStore'
 import {
   getAllEncounters,
   resolveEncounterMonsters,
@@ -61,6 +62,23 @@ interface MonsterLibraryProps {
   onLoadEncounter?: (monsters: MonsterWithCount[]) => void
 
   /**
+   * Callback when "Create Outlaw" button is clicked
+   */
+  onCreateMonster?: () => void
+
+  /**
+   * Callback when "Edit" is clicked on a custom monster
+   * @param monster - The monster to edit
+   */
+  onEditMonster?: (monster: Monster) => void
+
+  /**
+   * Callback when "Delete" is clicked on a custom monster
+   * @param monster - The monster to delete
+   */
+  onDeleteMonster?: (monster: Monster) => void
+
+  /**
    * Optional CSS classes for custom styling
    */
   className?: string
@@ -95,6 +113,9 @@ export default function MonsterLibrary({
   onAddToCombat,
   onAddAllToCombat,
   onLoadEncounter,
+  onCreateMonster,
+  onEditMonster,
+  onDeleteMonster,
   className = '',
 }: MonsterLibraryProps) {
   const [activeCategory, setActiveCategory] = useState<MonsterType | 'All'>('All')
@@ -102,8 +123,19 @@ export default function MonsterLibrary({
   const [sortBy, setSortBy] = useState<SortOption>('name')
   const [selectedEncounter, setSelectedEncounter] = useState<string>('')
 
-  // Get all monsters from library
-  const allMonsters = getAllMonsters()
+  // Get custom monsters from store
+  const customMonsters = useGameStore((state) => state.customMonsters)
+
+  // Get all monsters from library and combine with custom
+  const libraryMonsters = getAllMonsters()
+  const allMonsters = useMemo(() => {
+    return [...libraryMonsters, ...customMonsters]
+  }, [libraryMonsters, customMonsters])
+
+  // Track which monster IDs are custom
+  const customMonsterIds = useMemo(() => {
+    return new Set(customMonsters.map((m) => m.id))
+  }, [customMonsters])
 
   // Get unique categories for filter tabs
   const categories = getMonsterCategories()
@@ -187,20 +219,34 @@ export default function MonsterLibrary({
           <h2 className="text-2xl font-bold text-slate-100">Monster Library</h2>
           <p className="text-sm text-slate-400 mt-1">
             {filteredMonsters.length} {filteredMonsters.length === 1 ? 'monster' : 'monsters'}
+            {customMonsters.length > 0 && ` (${customMonsters.length} custom)`}
             {searchQuery && ` matching "${searchQuery}"`}
           </p>
         </div>
 
-        {/* Add All to Combat button */}
-        {onAddAllToCombat && filteredMonsters.length > 0 && (
-          <button
-            onClick={handleAddAllToCombat}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
-            aria-label={`Add all ${filteredMonsters.length} monsters to combat`}
-          >
-            Add All to Combat ({filteredMonsters.length})
-          </button>
-        )}
+        <div className="flex gap-2 flex-wrap">
+          {/* Create Outlaw button */}
+          {onCreateMonster && (
+            <button
+              onClick={onCreateMonster}
+              className="px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500 text-white rounded-lg font-medium transition-colors border border-purple-400/30"
+              aria-label="Create a new custom outlaw"
+            >
+              ✨ Create Outlaw
+            </button>
+          )}
+
+          {/* Add All to Combat button */}
+          {onAddAllToCombat && filteredMonsters.length > 0 && (
+            <button
+              onClick={handleAddAllToCombat}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
+              aria-label={`Add all ${filteredMonsters.length} monsters to combat`}
+            >
+              Add All to Combat ({filteredMonsters.length})
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Quick Encounter Section */}
@@ -350,13 +396,19 @@ export default function MonsterLibrary({
       {/* Monster grid */}
       {filteredMonsters.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredMonsters.map((monster) => (
-            <MonsterCard
-              key={monster.id}
-              monster={monster}
-              onAddToCombat={onAddToCombat}
-            />
-          ))}
+          {filteredMonsters.map((monster) => {
+            const isCustom = customMonsterIds.has(monster.id)
+            return (
+              <MonsterCard
+                key={monster.id}
+                monster={monster}
+                onAddToCombat={onAddToCombat}
+                isCustom={isCustom}
+                onEdit={isCustom ? onEditMonster : undefined}
+                onDelete={isCustom ? onDeleteMonster : undefined}
+              />
+            )
+          })}
         </div>
       ) : (
         /* Empty state */

@@ -22,7 +22,7 @@ export interface DiceRoll {
 /**
  * Standard D&D dice sides
  */
-export const STANDARD_DICE = [4, 6, 8, 10, 12, 20, 100] as const
+export const STANDARD_DICE = [4, 6, 8, 10, 12, 20, 30, 100] as const
 export type StandardDie = (typeof STANDARD_DICE)[number]
 
 /**

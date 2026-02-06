@@ -207,6 +207,7 @@ describe('Core Dice Roller', () => {
       expect(isStandardDie(10)).toBe(true)
       expect(isStandardDie(12)).toBe(true)
       expect(isStandardDie(20)).toBe(true)
+      expect(isStandardDie(30)).toBe(true)
       expect(isStandardDie(100)).toBe(true)
     })
 
@@ -214,7 +215,6 @@ describe('Core Dice Roller', () => {
       expect(isStandardDie(3)).toBe(false)
       expect(isStandardDie(5)).toBe(false)
       expect(isStandardDie(7)).toBe(false)
-      expect(isStandardDie(30)).toBe(false)
     })
   })
 
@@ -226,11 +226,12 @@ describe('Core Dice Roller', () => {
       expect(STANDARD_DICE).toContain(10)
       expect(STANDARD_DICE).toContain(12)
       expect(STANDARD_DICE).toContain(20)
+      expect(STANDARD_DICE).toContain(30)
       expect(STANDARD_DICE).toContain(100)
     })
 
-    it('should have exactly 7 dice types', () => {
-      expect(STANDARD_DICE).toHaveLength(7)
+    it('should have exactly 8 dice types', () => {
+      expect(STANDARD_DICE).toHaveLength(8)
     })
   })
 
